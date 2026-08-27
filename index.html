@@ -310,8 +310,9 @@ footer{padding:36px 24px;text-align:center;font-family:var(--en);font-size:12px;
   <div class="wrap">
     <h2 class="rv">お問い合わせ</h2>
     <p class="lead rv">検討段階でのご質問だけでも構いません。1〜2営業日で返信します。</p>
-    <!-- 送信先の実装箇所：Formspree等を使う場合は action="https://formspree.io/f/xxxx" method="post" を設定し、下の onsubmit を削除 -->
-    <form class="rv" action="#" method="post" onsubmit="event.preventDefault();alert('送信先を設定すると送信できます。');">
+    <form class="rv" action="https://formspree.io/f/xoeqawry" method="POST">
+      <input type="hidden" name="_subject" value="takashima-yuto.vercel.app からのお問い合わせ">
+      <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
       <div class="f"><label>お問い合わせの種類<i>必須</i></label>
         <div class="radios">
           <label><input type="radio" name="type" value="相談" checked>相談してみたい</label>
@@ -320,7 +321,7 @@ footer{padding:36px 24px;text-align:center;font-family:var(--en);font-size:12px;
         </div></div>
       <div class="f"><label for="nm">氏名<i>必須</i></label><input id="nm" name="name" required autocomplete="name"></div>
       <div class="f"><label for="co">会社名・役職</label><input id="co" name="company" autocomplete="organization"></div>
-      <div class="f"><label for="ml">メールアドレス<i>必須</i></label><input id="ml" name="email" type="email" required autocomplete="email"></div>
+      <div class="f"><label for="ml">メールアドレス<i>必須</i></label><input id="ml" name="_replyto" type="email" required autocomplete="email"></div>
       <div class="f"><label for="bd">内容<i>必須</i></label><textarea id="bd" name="body" required placeholder="まとまっていなくて構いません。"></textarea></div>
       <div class="ctarow" style="margin-top:8px"><button class="cta" type="submit">送信する</button><small>いただいた内容は、返信の目的以外には使いません。</small></div>
     </form>
