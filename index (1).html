@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>高嶌悠人 | 経営者の、隣に座る。</title>
+<meta name="description" content="高嶌悠人の個人サイト。経営者や事業を任された方の隣に座り、話を聞き、一緒に整理し、決めるところまで付き合います。壁打ち相手、相談役・顧問、社長補佐、経営企画。">
+<meta property="og:title" content="高嶌悠人 | 経営者の、隣に座る。">
+<meta property="og:description" content="経営者や事業を任された方の隣に座り、話を聞き、一緒に整理し、決めるところまで付き合います。">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<!-- <meta property="og:image" content="https://（ドメイン）/ogp.png"> -->
+<!-- <link rel="icon" href="/favicon.svg" type="image/svg+xml"> -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@900&family=Noto+Sans+JP:wght@400;500&family=Outfit:wght@400;500;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FFFFFF;--ink:#111111;--gray:#6E6E73;--mist:#F5F5F7;--line:#E2E2E6;--dark:#1B1B1D;
+  --head:"Zen Kaku Gothic New",sans-serif;--body:"Noto Sans JP",sans-serif;--en:"Outfit",sans-serif;
+  --max:720px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scrollbar-gutter:stable;scroll-behavior:smooth}
+body{font-family:var(--body);color:var(--ink);background:var(--bg);font-size:15px;line-height:1.95;letter-spacing:.02em;word-break:auto-phrase;line-break:strict;overflow-wrap:anywhere}
+h1,h2,h3{font-family:var(--head);font-weight:900;text-wrap:balance;letter-spacing:.04em}
+.en,.num{font-family:var(--en)}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+p+p{margin-top:1.4em}
+
+/* curtain */
+#curtain{position:fixed;inset:0;background:var(--bg);z-index:100;display:flex;align-items:center;justify-content:center;transition:transform 1.4s cubic-bezier(.76,0,.24,1) 2.6s}
+#curtain.up{transform:translateY(-100%)}
+#curtain svg{width:min(60vw,320px);height:auto}
+#curtain text{font-family:var(--head);font-weight:900;font-size:64px;letter-spacing:.2em;fill:transparent;stroke:var(--ink);stroke-width:1;stroke-dasharray:900;stroke-dashoffset:900;animation:draw 1.8s ease-in-out forwards,fill .9s ease 1.6s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes fill{to{fill:var(--ink);stroke-width:0}}
+
+/* logo pill */
+.logo{position:fixed;top:20px;left:20px;z-index:60;padding:13px 26px 13px 30px;border-radius:999px;background:rgba(255,255,255,.78);border:1px solid rgba(17,17,17,.14);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);font-family:var(--head);font-weight:900;font-size:17px;letter-spacing:.24em;line-height:1;white-space:nowrap;transition:background .3s,border-color .3s}
+.logo:hover{background:rgba(255,255,255,.95);border-color:var(--ink)}
+
+/* vertical nav */
+.vnav{position:fixed;right:20px;top:50%;transform:translateY(-50%);z-index:60;writing-mode:vertical-rl;word-break:keep-all;overflow-wrap:normal;line-break:auto}
+.vnav ul{list-style:none;display:flex;flex-direction:row;flex-wrap:nowrap;gap:22px;white-space:nowrap}
+.vnav li{flex:none}
+.vnav a{display:block;font-size:12px;color:var(--gray);letter-spacing:.2em;padding:0 6px;border-right:1px solid transparent;transition:color .3s,border-color .3s;white-space:nowrap}
+.vnav a.cur,.vnav a:hover{color:var(--ink);border-right-color:var(--ink)}
+@media (max-height:760px){.vnav ul{gap:14px}.vnav a{font-size:11px}}
+@media (max-height:620px){.vnav ul{gap:9px}.vnav a{font-size:10px;letter-spacing:.12em}}
+
+/* sections */
+section{padding:112px 24px}
+.wrap{max-width:var(--max);margin:0 auto}
+.alt{background:var(--mist)}
+h2{font-size:clamp(26px,3.6vw,34px);line-height:1.4;margin-bottom:18px}
+.lead{font-size:17px;line-height:1.9;margin-bottom:40px}
+.rv{opacity:0;transform:translateY(18px);transition:opacity 1.2s cubic-bezier(.22,1,.36,1),transform 1.2s cubic-bezier(.22,1,.36,1)}
+.rv.on{opacity:1;transform:none}
+
+/* hero */
+#top{min-height:88svh;display:flex;align-items:center;justify-content:center;text-align:center;padding:80px 24px 40px}
+#top h1{font-size:clamp(30px,min(6.2vw,7.5vh),64px);line-height:1.35;margin-bottom:28px}
+#top .sub{font-size:16px;line-height:1.9;max-width:560px;margin:0 auto 36px}
+
+/* CTA */
+.cta{display:inline-block;background:var(--ink);color:#fff;border:0;border-radius:999px;padding:16px 36px;font-family:var(--body);font-size:15px;font-weight:500;letter-spacing:.1em;cursor:pointer;transition:opacity .3s}
+.cta:hover{opacity:.8}
+.ctarow{text-align:center;margin-top:48px}
+.ctarow small{display:block;margin-top:12px;font-size:12px;color:var(--gray)}
+
+/* pain */
+.pain{list-style:none;border-top:1px solid var(--line)}
+.pain li{padding:26px 0;border-bottom:1px solid var(--line);font-family:var(--head);font-size:19px;line-height:1.6;letter-spacing:.04em}
+
+/* overview */
+.pills{list-style:none;display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.pills li{border:1px solid var(--ink);border-radius:999px;padding:6px 16px;font-size:13px;letter-spacing:.06em}
+
+/* features */
+.feat{display:grid;gap:36px}
+.feat h3{font-size:20px;line-height:1.5;margin-bottom:8px}
+
+/* flow (dark) */
+.dark{background:var(--dark);color:#fff}
+.dark .lead,.dark h2{color:#fff}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.step{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:24px 20px;display:flex;flex-direction:column}
+.step .num{font-size:13px;letter-spacing:.2em;color:rgba(255,255,255,.55);margin-bottom:8px}
+.step h3{font-size:18px;margin-bottom:8px;line-height:1.5;min-height:calc(1.5em * 2)}
+.step p{font-size:14px;line-height:1.8;color:rgba(255,255,255,.85);word-break:normal;display:flex;flex-direction:column;flex:1}
+.step .dur{display:block;margin-top:auto;padding-top:12px;font-family:var(--en);font-size:12px;color:rgba(255,255,255,.55);letter-spacing:.08em}
+.after{margin-top:32px;font-size:14px;color:rgba(255,255,255,.75);text-align:center}
+
+/* plans */
+.plans{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.plan{border:1px solid var(--line);border-radius:16px;padding:28px 24px;background:#fff}
+.plan h3{font-size:19px;line-height:1.5;margin-bottom:6px}
+.plan .big{font-family:var(--en);font-size:30px;font-weight:800;letter-spacing:.02em;line-height:1.2;margin:14px 0 4px}
+.plan .big small{font-family:var(--body);font-size:12px;font-weight:400;color:var(--gray);margin-left:6px;letter-spacing:.06em}
+.plan .in{font-size:14px;line-height:1.8;margin-top:12px}
+.plan .in b{font-weight:500;display:block;color:var(--gray);font-size:12px;letter-spacing:.1em;margin-bottom:2px}
+.plan ul{list-style:none}
+.plan li{position:relative;padding-left:14px}
+.plan li::before{content:"–";position:absolute;left:0;color:var(--gray)}
+.fee{margin-top:28px;padding:22px 24px;border:1px solid var(--line);border-radius:16px;font-size:14px;line-height:1.85}
+
+/* faq */
+.faq{border-top:1px solid var(--line)}
+.faq details{border-bottom:1px solid var(--line)}
+.faq button{width:100%;text-align:left;background:none;border:0;padding:22px 40px 22px 0;font:inherit;font-family:var(--head);font-weight:900;font-size:16px;line-height:1.6;color:var(--ink);cursor:pointer;position:relative;letter-spacing:.03em}
+.faq button::after{content:"+";position:absolute;right:4px;top:50%;transform:translateY(-50%);font-family:var(--en);font-weight:400;font-size:22px;color:var(--gray);transition:transform .3s}
+.faq button[aria-expanded="true"]::after{transform:translateY(-50%) rotate(45deg)}
+.faq .a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s ease}
+.faq .a.open{grid-template-rows:1fr}
+.faq .a>div{overflow:hidden}
+.faq .a p{padding:0 0 24px;font-size:14px;line-height:1.9;color:var(--ink)}
+
+/* operator */
+dl.tbl{border-top:1px solid var(--line);margin-top:8px}
+dl.tbl div{display:grid;grid-template-columns:120px 1fr;gap:20px;padding:16px 0;border-bottom:1px solid var(--line);font-size:14px}
+dl.tbl dt{color:var(--gray)}
+dl.tbl ul{list-style:none}
+.books{margin-top:20px;font-size:13px;line-height:1.9}
+.books h3{font-size:15px;margin-top:20px;letter-spacing:.03em}
+.books .m{color:var(--gray);font-size:12px}
+
+/* form */
+.f{margin-bottom:26px}
+label{display:block;font-size:13px;margin-bottom:8px;letter-spacing:.06em}
+label i{font-style:normal;font-size:10px;color:var(--gray);margin-left:8px;letter-spacing:.1em}
+input,textarea{width:100%;border:0;border-bottom:1px solid var(--line);padding:10px 0;font:inherit;background:transparent;color:var(--ink);border-radius:0}
+textarea{min-height:140px;resize:vertical}
+.radios{display:flex;gap:22px;flex-wrap:wrap;font-size:14px}
+.radios label{display:flex;align-items:center;gap:8px;margin:0}
+.radios input{width:auto}
+
+footer{padding:36px 24px;text-align:center;font-family:var(--en);font-size:12px;color:var(--gray);letter-spacing:.14em;border-top:1px solid var(--line)}
+
+@media (max-width:860px){
+  .steps{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:720px){
+  section{padding:80px 20px}
+  .step h3{min-height:0}
+  .vnav{right:6px}
+  .vnav a{font-size:10px;letter-spacing:.14em;padding:0 3px}
+  .vnav ul{gap:12px}
+  .steps,.plans{grid-template-columns:1fr}
+  dl.tbl div{grid-template-columns:1fr;gap:2px}
+  .wrap{padding-right:22px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  #curtain{display:none}
+  .rv,.rv.on{transition:none;opacity:1;transform:none}
+  .faq .a,.faq button::after{transition:none}
+}
+</style>
+</head>
+<body>
+
+<div id="curtain" aria-hidden="true">
+  <svg viewBox="0 0 320 90" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="高嶌悠人">
+    <text x="50%" y="70" text-anchor="middle">高嶌悠人</text>
+  </svg>
+</div>
+
+<a class="logo" href="#top">高嶌悠人</a>
+
+<nav class="vnav" aria-label="ページ内ナビゲーション">
+  <ul>
+    <li><a href="#pain">こんなとき</a></li>
+    <li><a href="#service">できること</a></li>
+    <li><a href="#feature">特徴</a></li>
+    <li><a href="#flow">進め方</a></li>
+    <li><a href="#plan">関わり方</a></li>
+    <li><a href="#faq">よくある質問</a></li>
+    <li><a href="#profile">プロフィール</a></li>
+    <li><a href="#contact">お問い合わせ</a></li>
+  </ul>
+</nav>
+
+<main>
+
+<section id="top">
+  <div class="wrap">
+    <h1 class="rv">経営者の、隣に座る。</h1>
+    <p class="sub rv">社内では話しにくいこと、まだ言葉になっていないこと。<br>話を聞き、一緒に整理し、決めるところまで付き合います。</p>
+    <p class="rv"><a class="cta" href="#contact">相談してみる</a></p>
+  </div>
+</section>
+
+<section id="pain" class="alt">
+  <div class="wrap">
+    <h2 class="rv">こんなとき、相談する相手がいない。</h2>
+    <p class="lead rv">経営者や事業を任された方から、よく聞く言葉です。</p>
+    <ul class="pain rv">
+      <li>決めなければいけないのに、社内の誰にも相談できない。</li>
+      <li>頭の中では考えているのに、言葉になっていない。</li>
+      <li>コンサルタントに頼むほどの話ではないが、一人で抱えるには重い。</li>
+      <li>任された事業を、どこから手をつければいいか分からない。</li>
+    </ul>
+  </div>
+</section>
+
+<section id="service">
+  <div class="wrap">
+    <h2 class="rv">聞いて、整理して、一緒に考えます。</h2>
+    <p class="lead rv">立場は、経営者や事業責任者の隣。答えを持ち込むのではなく、あなたの立場で一緒に考えます。</p>
+    <div class="rv">
+      <p>まず、話を聞きます。何を大事にしているのか、何が引っかかっているのか、これまでの経緯はどうか。聞いたことをもとに、いま決めるべきことと、あとでいいことを一緒に整理します。決めるのはあなたですが、決めるまで隣にいます。必要になれば、人・もの・サービスの手配まで一緒に検討します。</p>
+      <p>一度きりの相談ではなく、長く続く関わりを前提にしています。事業のこと、会社のこと、人のこと、文化のこと。回を重ねるほど前提の説明が要らなくなり、話が早くなります。</p>
+    </div>
+    <ul class="pills rv">
+      <li>壁打ち相手</li><li>相談役・顧問</li><li>社長補佐</li><li>経営企画</li><li>会議の設計・進行</li><li>人・サービスの手配</li>
+    </ul>
+  </div>
+</section>
+
+<section id="feature" class="alt">
+  <div class="wrap">
+    <h2 class="rv">選ばれている理由</h2>
+    <p class="lead rv">肩書きや資料ではなく、話しやすさと、その後の動きで判断してもらっています。</p>
+    <div class="feat">
+      <div class="rv"><h3>一対一で聞く経験の積み重ね</h3><p>広告会社の営業として一社と向き合うことから始まり、キャリア支援の現場では学生・若手社会人との一対一の面談を数多く重ねてきました。聞くこと、言葉にすることを仕事の中心に置いてきた経験が土台です。</p></div>
+      <div class="rv"><h3>経営者の側から見る</h3><p>2014年から自分の会社を経営し、上場企業や取引先の経営者と机を並べてきました。外から助言する立場ではなく、同じ側に座って、社内の事情や言いにくいことまで含めて考えます。</p></div>
+      <div class="rv"><h3>相談で終わらせない</h3><p>整理がついたあと、人が足りない、専門性が足りないという場面があります。その場合は、これまで一緒に仕事をしてきたパートナーや会社に声をかけ、動く体制まで一緒に作ります。</p></div>
+      <div class="rv"><h3>頻度も形も、相手に合わせる</h3><p>月に一度の面談から、週に数時間の常駐、必要なときだけの連絡まで。最初に決めきらず、続けながら合う形に変えていきます。</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="flow" class="dark">
+  <div class="wrap">
+    <h2 class="rv">進め方</h2>
+    <p class="lead rv">最初の面談から、続けるかどうかを決めるまで。</p>
+    <div class="steps rv">
+      <div class="step"><div class="num">01</div><h3>お問い合わせ</h3><p>フォームからご連絡ください。内容が固まっていなくて構いません。<span class="dur">1〜2営業日で返信</span></p></div>
+      <div class="step"><div class="num">02</div><h3>初回面談</h3><p>オンラインまたは対面で、いまの状況を聞きます。この段階で費用はかかりません。<span class="dur">60〜90分</span></p></div>
+      <div class="step"><div class="num">03</div><h3>関わり方の相談</h3><p>頻度・形・費用を提案します。合わなければ、ここで終わって構いません。<span class="dur">面談後 1週間以内</span></p></div>
+      <div class="step"><div class="num">04</div><h3>開始</h3><p>決めた形で始めます。合わなければ、月単位で見直します。<span class="dur">月単位</span></p></div>
+    </div>
+    <p class="after rv">始めたあとも、聞く・整理する・決める・動かす、を繰り返します。</p>
+  </div>
+</section>
+
+<section id="plan">
+  <div class="wrap">
+    <h2 class="rv">関わり方</h2>
+    <p class="lead rv">目安として4つの形を置いています。実際は、初回面談のあとに相談して決めます。</p>
+    <div class="plans rv">
+      <div class="plan"><h3>壁打ち</h3><p class="big">月1回<small>60〜90分</small></p><div class="in"><b>含まれるもの</b><ul><li>面談（オンライン・対面）</li><li>面談メモの共有</li></ul></div><div class="in"><b>含まれないもの</b><ul><li>面談外の連絡・資料作成</li></ul></div></div>
+      <div class="plan"><h3>相談役・顧問</h3><p class="big">月2〜4回<small>＋随時連絡</small></p><div class="in"><b>含まれるもの</b><ul><li>定例面談</li><li>チャット・電話での随時相談</li><li>会議への同席</li></ul></div><div class="in"><b>含まれないもの</b><ul><li>実務の代行</li></ul></div></div>
+      <div class="plan"><h3>社長補佐・経営企画</h3><p class="big">週1〜2日<small>稼働</small></p><div class="in"><b>含まれるもの</b><ul><li>会議の設計・進行</li><li>社内外の調整</li><li>計画・資料の作成</li></ul></div><div class="in"><b>含まれないもの</b><ul><li>専門家（士業・エンジニア等）の実務</li></ul></div></div>
+      <div class="plan"><h3>プロジェクト</h3><p class="big">案件ごと<small>期間・体制を設計</small></p><div class="in"><b>含まれるもの</b><ul><li>要件整理・進行管理</li><li>必要な人・サービスの手配</li></ul></div><div class="in"><b>含まれないもの</b><ul><li>手配先の費用（別途・事前に提示）</li></ul></div></div>
+    </div>
+    <div class="fee rv">
+      <p>費用は、この場では公開していません。相談の内容と頻度で大きく変わるため、初回面談のあとに、内訳を明記した見積もりをお渡しします。見積もりに含まれない費用（外部への手配、交通費など）は、発生する前に必ず確認します。契約は月単位で、翌月からの終了ができます。</p>
+    </div>
+    <div class="ctarow rv"><a class="cta" href="#contact">まず話してみる</a><small>初回面談に費用はかかりません。</small></div>
+  </div>
+</section>
+
+<section id="faq" class="alt">
+  <div class="wrap">
+    <h2 class="rv">よくある質問</h2>
+    <p class="lead rv">申し込む前に気になることに、先に答えておきます。</p>
+    <div class="faq rv">
+      <div><h3 class="q"><button aria-expanded="false" aria-controls="a1">相談内容がまとまっていなくても大丈夫ですか。</button></h3><div class="a" id="a1"><div><p>大丈夫です。まとまっていないものを一緒に言葉にするのが最初の仕事です。「何となく引っかかっている」程度で構いません。</p></div></div></div>
+      <div><h3 class="q"><button aria-expanded="false" aria-controls="a2">コンサルティングと何が違いますか。</button></h3><div class="a" id="a2"><div><p>結論や提案書を納品する仕事ではありません。あなたの隣に座り、あなたの基準で一緒に考え、決めるところまで付き合います。決めるのはあなたです。</p></div></div></div>
+      <div><h3 class="q"><button aria-expanded="false" aria-controls="a3">秘密は守られますか。</button></h3><div class="a" id="a3"><div><p>開始前に秘密保持契約を結びます。社内の人間関係や財務など、話しにくい内容ほど大事な手がかりになるため、外に出ることはありません。</p></div></div></div>
+      <div><h3 class="q"><button aria-expanded="false" aria-controls="a4">札幌以外でも対応できますか。</button></h3><div class="a" id="a4"><div><p>できます。オンラインが基本で、対面が必要な場合は伺います。これまでも北海道から関東・関西まで、遠隔と訪問を組み合わせて続けています。</p></div></div></div>
+      <div><h3 class="q"><button aria-expanded="false" aria-controls="a5">途中でやめられますか。</button></h3><div class="a" id="a5"><div><p>月単位の契約で、翌月からの終了ができます。違約金はありません。</p></div></div></div>
+      <div><h3 class="q"><button aria-expanded="false" aria-controls="a6">実務まで手伝ってもらえますか。</button></h3><div class="a" id="a6"><div><p>会議の進行や調整、計画づくりまでは対応します。エンジニアや士業などの専門的な実務が必要な場合は、パートナーに声をかけ、体制ごと一緒に作ります。費用は事前に提示します。</p></div></div></div>
+      <div><h3 class="q"><button aria-expanded="false" aria-controls="a7">経営者ではなく、部長や事業責任者でも相談できますか。</button></h3><div class="a" id="a7"><div><p>できます。事業や組織を任された方からの相談も多く受けています。上司に相談しにくいことも、聞きます。</p></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="profile">
+  <div class="wrap">
+    <h2 class="rv">高嶌 悠人</h2>
+    <p class="lead rv">広告、人材、IT、メディア、PR。領域を越えて重ねてきた経験が、そのまま今の仕事になっています。</p>
+    <div class="rv">
+      <p>北海道札幌市生まれ。北海道苫小牧東高等学校を経て、慶應義塾大学法学部政治学科を卒業。新卒で株式会社電通に入社し、営業として広告、マーケティング、ブランディングに携わりました。その後、キャリア・教育系ベンチャーの株式会社ガクーで人材事業部の事業部長を務め、採用や育成、事業の立ち上げに向き合いました。</p>
+      <p>2014年に株式会社カイカを設立。上場企業からの出資を受けて就職情報サイトやキャリア支援スクールを運営したのち、株式会社ビートルの取締役としてPR・地方創生案件を担当。現在はカイカ代表として、PM（プロジェクトマネジメント）を軸に企業の課題に取り組んでいます。玄米食品ブランド BiNoo を展開する株式会社イノウエ企画の代表取締役も、共同代表として兼任しています。</p>
+      <p>学生時代はアイスホッケーのゴールキーパー。小学校から高校まで各チームで主将を務め、U18・U20日本代表に選出されました。最後尾から全体を見て、伝えて、最後は引き受ける。その姿勢は、いまも仕事の土台です。</p>
+      <dl class="tbl">
+        <div><dt>現職</dt><dd><ul><li>株式会社カイカ 代表取締役</li><li>株式会社イノウエ企画 代表取締役（共同代表）</li></ul></dd></div>
+        <div><dt>職歴</dt><dd><ul><li>株式会社電通</li><li>株式会社ガクー（人材事業部 事業部長）</li><li>株式会社ビートル 取締役</li></ul></dd></div>
+        <div><dt>学歴</dt><dd><ul><li>北海道苫小牧東高等学校</li><li>慶應義塾大学法学部政治学科</li></ul></dd></div>
+        <div><dt>競技歴</dt><dd><ul><li>アイスホッケー U18日本代表（世界選手権ディビジョン2 準優勝）</li><li>U20日本代表・全日本代表候補</li><li>冬季国体 優勝（高校3年時）</li></ul></dd></div>
+        <div><dt>拠点</dt><dd>北海道札幌市（全国対応）</dd></div>
+      </dl>
+      <div class="books">
+        <p>就職活動・キャリアに関する書籍の監修・執筆を続けています。</p>
+        <h3>こう動く！就職活動オールガイド</h3><p class="m">監修 ／ 成美堂出版 ／ '17年版〜'28年版（毎年改訂・最新刊 2026年4月）</p>
+        <h3>転職のSPI＆一般常識</h3><p class="m">共著 ／ 一ツ橋書店 ／ 2016〜2022年度版</p>
+        <h3>人気No.1「内定塾」が教える エントリーシート・履歴書の書き方</h3><p class="m">高橋書店 ／ 2014〜2016年度版</p>
+        <h3>これだけ覚える！一般常識＆最新時事</h3><p class="m">高橋書店 ／ 2015・2017年度版</p>
+        <h3>最新最強の面接・自己PR・グループディスカッション ／ 女子学生のための最強の就職面接</h3><p class="m">成美堂出版</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="alt">
+  <div class="wrap">
+    <h2 class="rv">お問い合わせ</h2>
+    <p class="lead rv">検討段階でのご質問だけでも構いません。1〜2営業日で返信します。</p>
+    <form class="rv" action="https://formspree.io/f/xoeqawry" method="POST">
+      <input type="hidden" name="_subject" value="takashima-yuto.vercel.app からのお問い合わせ">
+      <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+      <div class="f"><label>お問い合わせの種類<i>必須</i></label>
+        <div class="radios">
+          <label><input type="radio" name="type" value="相談" checked>相談してみたい</label>
+          <label><input type="radio" name="type" value="質問">質問がある</label>
+          <label><input type="radio" name="type" value="その他">その他</label>
+        </div></div>
+      <div class="f"><label for="nm">氏名<i>必須</i></label><input id="nm" name="name" required autocomplete="name"></div>
+      <div class="f"><label for="co">会社名・役職</label><input id="co" name="company" autocomplete="organization"></div>
+      <div class="f"><label for="ml">メールアドレス<i>必須</i></label><input id="ml" name="_replyto" type="email" required autocomplete="email"></div>
+      <div class="f"><label for="bd">内容<i>必須</i></label><textarea id="bd" name="body" required placeholder="まとまっていなくて構いません。"></textarea></div>
+      <div class="ctarow" style="margin-top:8px"><button class="cta" type="submit">送信する</button><small>いただいた内容は、返信の目的以外には使いません。</small></div>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<footer>© YUTO TAKASHIMA</footer>
+
+<script>
+(function(){
+  var c=document.getElementById('curtain');
+  requestAnimationFrame(function(){c.classList.add('up');});
+  setTimeout(function(){c.style.display='none';},4200);
+
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target);}});},{threshold:.1});
+  document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(i%4)*120+'ms';io.observe(el);});
+
+  var links=document.querySelectorAll('.vnav a'),map=[];
+  links.forEach(function(a){var s=document.querySelector(a.getAttribute('href'));if(s)map.push([s,a]);});
+  var so=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){links.forEach(function(a){a.classList.remove('cur')});map.forEach(function(p){if(p[0]===e.target)p[1].classList.add('cur')});}});},{rootMargin:'-45% 0px -50% 0px'});
+  map.forEach(function(p){so.observe(p[0]);});
+
+  document.querySelectorAll('.faq button').forEach(function(b){
+    b.addEventListener('click',function(){
+      var open=b.getAttribute('aria-expanded')==='true';
+      b.setAttribute('aria-expanded',!open);
+      document.getElementById(b.getAttribute('aria-controls')).classList.toggle('open',!open);
+    });
+  });
+})();
+</script>
+</body>
+</html>
