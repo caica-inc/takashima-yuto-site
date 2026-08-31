@@ -47,7 +47,7 @@ br.pc{display:inline}
 #curtain{position:fixed;inset:0;background:var(--bg);z-index:200;display:flex;align-items:center;justify-content:center;transition:transform 1.5s cubic-bezier(.65,0,.35,1)}
 #curtain.up{transform:translateY(-100%)}
 #curtain svg{width:min(64vw,360px);height:auto}
-#curtain text{font-family:var(--head);font-weight:900;font-size:60px;letter-spacing:.16em;fill:transparent;stroke:var(--text);stroke-width:.9;stroke-dasharray:1200;stroke-dashoffset:1200;animation:draw 2.2s var(--ease) .3s forwards,fill 1.1s ease 2.2s forwards}
+#curtain .mark path{fill:transparent;stroke:var(--text);stroke-width:1.6;vector-effect:non-scaling-stroke;stroke-dasharray:1;stroke-dashoffset:1;animation:draw 2.2s ease-in-out .25s forwards,fill 1s ease 2s forwards}
 @keyframes draw{to{stroke-dashoffset:0}}
 @keyframes fill{to{fill:var(--text);stroke-width:0}}
 
@@ -136,8 +136,7 @@ dl.dt li::before{content:"–";position:absolute;left:0;color:var(--sub)}
 .faq .a p{padding:0 0 26px;font-size:14.5px;line-height:1.9}
 
 /* profile */
-.pname{margin-bottom:36px;display:grid;grid-template-columns:180px 1fr;gap:32px;align-items:center}
-.portrait{width:180px;height:180px;border-radius:var(--r);object-fit:cover;display:block}
+.pname{margin-bottom:30px}
 .pname h3{font-size:26px;letter-spacing:.06em}
 .pname .lat{font-size:11px;letter-spacing:.26em;color:var(--sub);text-transform:uppercase}
 .pname .role{margin-top:14px;font-size:13.5px;line-height:1.9}
@@ -178,8 +177,6 @@ footer .cr{font-family:var(--lat);font-size:12px;letter-spacing:.14em;color:rgba
   .vnav ul{gap:12px}
   .vnav a{font-size:10px;letter-spacing:.14em;padding-left:9px}
   dl.dt>div{grid-template-columns:1fr;gap:4px}
-  .pname{grid-template-columns:1fr;gap:22px;justify-items:start}
-  .portrait{width:150px;height:150px}
   #top{padding:130px 24px 90px}
 }
 @media (max-width:720px){
@@ -216,7 +213,7 @@ footer .cr{font-family:var(--lat);font-size:12px;letter-spacing:.14em;color:rgba
   .btn,.req{background-color:#1D1D1F !important;color:#FFFFFF !important;-webkit-text-fill-color:#FFFFFF !important}
   input,textarea{background-color:#FFFFFF !important;border-color:#E4E4E8 !important;color:#1D1D1F !important;-webkit-text-fill-color:#1D1D1F !important}
   #curtain{background-color:#FFFFFF !important}
-  #curtain text{fill:#1D1D1F;stroke:#1D1D1F}
+  #curtain .mark path{stroke:#1D1D1F}
   .logo{background-color:rgba(255,255,255,.86) !important;color:#1D1D1F !important;-webkit-text-fill-color:#1D1D1F !important;border-color:rgba(29,29,31,.08) !important}
   .rows,.rows article,.faq,.faq>div,dl.dt,dl.dt>div{border-color:#E4E4E8 !important}
 }
@@ -225,8 +222,13 @@ footer .cr{font-family:var(--lat);font-size:12px;letter-spacing:.14em;color:rgba
 <body>
 
 <div id="curtain" aria-hidden="true">
-  <svg viewBox="0 0 320 90" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="高嶌悠人">
-    <text x="50%" y="68" dx="4.8" text-anchor="middle">高嶌悠人</text>
+  <svg viewBox="0 0 400 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="高嶌悠人">
+    <g class="mark">
+    <path pathLength="1" transform="translate(6.85,93.81) scale(0.08885,-0.08885)" d="M359 533H630V493H359ZM221 627V398H777V627ZM418 857V779H58V656H941V779H568V857ZM306 214V-61H431V-18H680C689 -44 696 -72 699 -94C765 -94 817 -92 859 -70C901 -49 913 -11 913 52V368H95V-96H237V249H767V55C767 44 762 41 749 41H691V214ZM431 119H564V77H431Z"/>
+    <path pathLength="1" transform="translate(104.58,93.81) scale(0.08885,-0.08885)" d="M260 65C273 16 281 -48 280 -88L401 -61C400 -22 389 40 373 87ZM413 64C432 20 450 -39 455 -76L569 -46C562 -9 542 48 520 91ZM423 855V755H245V833H98V645H402L395 612H172V98L122 109C107 53 76 -5 37 -35L151 -95C198 -52 230 17 245 83L184 96H642L561 67C584 34 608 -11 615 -41L663 -23C673 -47 679 -74 680 -95C729 -96 775 -96 802 -93C832 -90 861 -82 883 -59C907 -33 921 24 930 142C932 158 933 188 933 188H322V212H966V301H322V326H837V612H548L564 645H919V833H765V755H573V855ZM716 7C705 35 685 69 664 96H781C776 49 768 25 760 16C752 9 744 7 730 7ZM322 432H690V408H322ZM322 505V530H690V505Z"/>
+    <path pathLength="1" transform="translate(202.31,93.81) scale(0.08885,-0.08885)" d="M155 221C133 140 89 65 27 17L147 -64C219 -5 257 85 284 177ZM587 857C559 782 512 708 456 651V730H323V316H456V354C474 333 499 301 516 274C489 288 461 300 436 310L348 217L383 200H293V81C293 -36 324 -77 461 -77C488 -77 562 -77 589 -77C692 -77 730 -43 746 92C788 40 825 -16 843 -58L975 19C942 86 864 176 798 241L676 172C698 149 721 123 743 96C705 105 646 126 619 146C614 63 608 51 576 51C555 51 498 51 481 51C443 51 437 54 437 83V170C475 147 509 123 529 102L624 205C606 220 582 237 554 253C609 276 658 303 701 337C755 292 820 257 898 232C917 271 958 329 989 358C917 375 855 402 803 438C844 490 876 552 900 623H960V749H694C706 772 716 795 726 819ZM750 623C737 590 721 559 701 532C679 560 660 590 645 623ZM456 546C475 528 492 510 503 497C517 509 532 523 546 538C564 502 584 469 606 438C563 408 513 384 456 366ZM239 855C188 754 99 654 10 592C36 564 79 502 95 473C112 486 129 501 146 517V264H281V672C314 717 343 764 367 811Z"/>
+    <path pathLength="1" transform="translate(300.04,93.81) scale(0.08885,-0.08885)" d="M398 835C391 704 413 261 15 30C66 -4 113 -49 139 -87C332 39 436 215 493 383C553 208 665 22 878 -86C900 -46 943 3 990 38C619 214 571 625 563 769L566 835Z"/>
+    </g>
   </svg>
 </div>
 
@@ -390,11 +392,8 @@ footer .cr{font-family:var(--lat);font-size:12px;letter-spacing:.14em;color:rgba
     </div>
     <div class="rv" style="max-width:760px">
       <div class="pname">
-        <img class="portrait" src="/portrait.jpg" width="760" height="760" alt="高嶌悠人" loading="lazy">
-        <div>
-          <h3>高嶌 悠人</h3><span class="lat">Yuto Takashima</span>
-          <p class="role">株式会社カイカ 代表取締役<span>Representative Director, CAICA Inc.</span><br>プロジェクトマネージャー<span>Project Manager</span></p>
-        </div>
+        <h3>高嶌 悠人</h3><span class="lat">Yuto Takashima</span>
+        <p class="role">株式会社カイカ 代表取締役<span>Representative Director, CAICA Inc.</span><br>プロジェクトマネージャー<span>Project Manager</span></p>
       </div>
       <p>北海道札幌市生まれ。北海道苫小牧東高等学校を経て、慶應義塾大学法学部政治学科を卒業。</p>
       <p>新卒で株式会社電通に入社し、営業として広告、マーケティング、ブランディングに携わりました。その後、学生時代から関心のあった教育・キャリアの分野へ。キャリア・教育系ベンチャーの株式会社ガクーで人材事業部の事業部長を務め、採用や育成、事業の立ち上げに向き合いながら、ITの相談対応や検索広告、Webサイト制作などの実務も重ねました。</p>
