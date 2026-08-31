@@ -47,11 +47,11 @@ br.pc{display:inline}
 #curtain{position:fixed;inset:0;background:var(--bg);z-index:200;display:flex;align-items:center;justify-content:center;transition:transform 1.5s cubic-bezier(.65,0,.35,1)}
 #curtain.up{transform:translateY(-100%)}
 #curtain svg{width:min(64vw,360px);height:auto}
-#curtain .mark path{fill:transparent;stroke:var(--text);stroke-width:1.2;vector-effect:non-scaling-stroke;stroke-dasharray:1;stroke-dashoffset:1;animation:draw 1.5s ease-in-out forwards,fill .9s ease forwards}
-#curtain .mark path:nth-child(1){animation-delay:.25s,1.95s}
-#curtain .mark path:nth-child(2){animation-delay:.5s,2.2s}
-#curtain .mark path:nth-child(3){animation-delay:.75s,2.45s}
-#curtain .mark path:nth-child(4){animation-delay:1s,2.7s}
+#curtain .mark path{fill:transparent;stroke:var(--text);stroke-width:1.2;vector-effect:non-scaling-stroke;stroke-dasharray:1;stroke-dashoffset:1;animation:draw 1.7s ease-in-out forwards,fill .8s ease 2.6s forwards}
+#curtain .mark path:nth-child(1){animation-delay:.2s,2.6s}
+#curtain .mark path:nth-child(2){animation-delay:.35s,2.6s}
+#curtain .mark path:nth-child(3){animation-delay:.5s,2.6s}
+#curtain .mark path:nth-child(4){animation-delay:.65s,2.6s}
 @keyframes draw{to{stroke-dashoffset:0}}
 @keyframes fill{to{fill:var(--text);stroke-width:0}}
 
@@ -491,8 +491,8 @@ footer .cr{font-family:var(--lat);font-size:12px;letter-spacing:.14em;color:rgba
 if('scrollRestoration' in history){history.scrollRestoration='manual';}
 (function(){
   var c=document.getElementById('curtain');
-  setTimeout(function(){window.scrollTo(0,0);c.classList.add('up');},3900);
-  setTimeout(function(){c.style.display='none';},5500);
+  setTimeout(function(){window.scrollTo(0,0);c.classList.add('up');},3700);
+  setTimeout(function(){c.style.display='none';},5300);
 
   var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.1});
   document.querySelectorAll('.rv').forEach(function(el){io.observe(el);});
