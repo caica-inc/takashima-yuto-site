@@ -52,7 +52,7 @@ br.pc{display:inline}
 @keyframes fill{to{fill:var(--text);stroke-width:0}}
 
 /* fixed logo */
-.logo{position:fixed;top:20px;left:24px;z-index:120;display:inline-block;padding:14px 28px;border-radius:999px;background:rgba(255,255,255,.72);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(29,29,31,.08);font-family:var(--head);font-weight:900;font-size:19px;letter-spacing:.12em;line-height:1;transition:transform .4s var(--ease),opacity .4s}
+.logo{position:fixed;top:20px;left:24px;z-index:120;display:inline-block;padding:16px 30px;border-radius:999px;background:rgba(255,255,255,.72);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(29,29,31,.08);font-family:var(--head);font-weight:900;font-size:26px;letter-spacing:.1em;line-height:1;transition:transform .4s var(--ease),opacity .4s}
 .logo.hide{transform:translateY(-140%);opacity:0}
 
 /* vertical nav */
@@ -161,7 +161,7 @@ input:focus,textarea:focus{border-color:var(--text);outline:none}
 
 /* footer */
 footer{background:var(--dark);padding:72px 40px;text-align:center}
-footer .cap{display:inline-block;border:1px solid rgba(255,255,255,.32);border-radius:999px;padding:14px 28px;font-family:var(--head);font-weight:900;font-size:19px;letter-spacing:.12em;line-height:1;color:#fff}
+footer .cap{display:inline-block;border:1px solid rgba(255,255,255,.32);border-radius:999px;padding:16px 30px;font-family:var(--head);font-weight:900;font-size:26px;letter-spacing:.1em;line-height:1;color:#fff}
 footer nav{margin:34px 0 26px;font-size:13.5px;color:rgba(255,255,255,.62);display:flex;justify-content:center;gap:10px 26px;flex-wrap:wrap}
 footer nav a:hover{color:#fff}
 footer .cr{font-family:var(--lat);font-size:12px;letter-spacing:.14em;color:rgba(255,255,255,.45)}
@@ -179,7 +179,8 @@ footer .cr{font-family:var(--lat);font-size:12px;letter-spacing:.14em;color:rgba
   #top{padding:130px 24px 90px}
 }
 @media (max-width:720px){
-  .logo{top:14px;left:16px;padding:9px 18px;font-size:13px}
+  .logo{top:14px;left:16px;padding:12px 22px;font-size:19px}
+  footer .cap{padding:12px 22px;font-size:19px}
   .wrap{padding-right:22px}
 }
 @media (prefers-reduced-motion:reduce){
