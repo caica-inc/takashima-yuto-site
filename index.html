@@ -52,7 +52,7 @@ br.pc{display:inline}
 @keyframes fill{to{fill:var(--text);stroke-width:0}}
 
 /* fixed logo */
-.logo{position:fixed;top:20px;left:24px;z-index:120;display:inline-block;padding:13px 26px;border-radius:999px;background:rgba(255,255,255,.72);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(29,29,31,.08);font-family:var(--head);font-weight:900;font-size:17px;letter-spacing:.14em;line-height:1;transition:transform .4s var(--ease),opacity .4s}
+.logo{position:fixed;top:20px;left:24px;z-index:120;display:inline-block;padding:14px 28px;border-radius:999px;background:rgba(255,255,255,.72);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(29,29,31,.08);font-family:var(--head);font-weight:900;font-size:19px;letter-spacing:.12em;line-height:1;transition:transform .4s var(--ease),opacity .4s}
 .logo.hide{transform:translateY(-140%);opacity:0}
 
 /* vertical nav */
@@ -160,10 +160,11 @@ input:focus,textarea:focus{border-color:var(--text);outline:none}
 #msg.show{display:block}
 
 /* footer */
-footer{background:var(--bg);border-top:1px solid var(--line);padding:56px 40px;text-align:center}
-footer .cap{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:10px 24px;font-family:var(--head);font-weight:900;font-size:14px;letter-spacing:.16em}
-footer nav{margin:26px 0 22px;font-size:13px;color:var(--sub);display:flex;justify-content:center;gap:8px 22px;flex-wrap:wrap}
-footer .cr{font-family:var(--lat);font-size:11px;letter-spacing:.16em;color:var(--sub)}
+footer{background:var(--dark);padding:72px 40px;text-align:center}
+footer .cap{display:inline-block;border:1px solid rgba(255,255,255,.32);border-radius:999px;padding:14px 28px;font-family:var(--head);font-weight:900;font-size:19px;letter-spacing:.12em;line-height:1;color:#fff}
+footer nav{margin:34px 0 26px;font-size:13.5px;color:rgba(255,255,255,.62);display:flex;justify-content:center;gap:10px 26px;flex-wrap:wrap}
+footer nav a:hover{color:#fff}
+footer .cr{font-family:var(--lat);font-size:12px;letter-spacing:.14em;color:rgba(255,255,255,.45)}
 
 @media (max-width:1200px){.wrap{padding-right:26px}}
 @media (hover:none){html{scrollbar-gutter:auto}}
@@ -191,11 +192,15 @@ footer .cr{font-family:var(--lat);font-size:11px;letter-spacing:.16em;color:var(
 
 /* 端末のダークモードでも白基調を保つ */
 @media (prefers-color-scheme:dark){
-  html,body,main,section,footer{background-color:#FFFFFF !important}
+  html,body,main,section{background-color:#FFFFFF !important}
+  footer{background-color:#232327 !important}
   section.tint{background-color:#F5F5F7 !important}
   section.dark{background-color:#232327 !important}
-  body,p,li,dd,h1,h2,h3,label,.faq button,.vnav a.cur,footer .cap,.pname h3{color:#1D1D1F !important;-webkit-text-fill-color:#1D1D1F !important}
-  .en,.note,.m,dl.dt dt,footer .cr,footer nav a,.vnav a,.rows h3 em,.pname .lat,.books .m{color:#6E6E73 !important;-webkit-text-fill-color:#6E6E73 !important}
+  body,p,li,dd,h1,h2,h3,label,.faq button,.vnav a.cur,.pname h3{color:#1D1D1F !important;-webkit-text-fill-color:#1D1D1F !important}
+  footer .cap{color:#FFFFFF !important;-webkit-text-fill-color:#FFFFFF !important;border-color:rgba(255,255,255,.32) !important}
+  .en,.note,.m,dl.dt dt,.vnav a,.rows h3 em,.pname .lat,.books .m{color:#6E6E73 !important;-webkit-text-fill-color:#6E6E73 !important}
+  footer nav a{color:rgba(255,255,255,.62) !important;-webkit-text-fill-color:rgba(255,255,255,.62) !important}
+  footer .cr{color:rgba(255,255,255,.45) !important;-webkit-text-fill-color:rgba(255,255,255,.45) !important}
   section.dark h2,section.dark h3,section.dark p,section.dark .n{color:#FFFFFF !important;-webkit-text-fill-color:#FFFFFF !important}
   section.dark .en,section.dark .note{color:rgba(255,255,255,.6) !important;-webkit-text-fill-color:rgba(255,255,255,.6) !important}
   section.dark .card{background-color:rgba(255,255,255,.05) !important;border-color:rgba(255,255,255,.13) !important}
@@ -207,7 +212,7 @@ footer .cr{font-family:var(--lat);font-size:11px;letter-spacing:.16em;color:var(
   #curtain{background-color:#FFFFFF !important}
   #curtain text{fill:#1D1D1F;stroke:#1D1D1F}
   .logo{background-color:rgba(255,255,255,.86) !important;color:#1D1D1F !important;-webkit-text-fill-color:#1D1D1F !important;border-color:rgba(29,29,31,.08) !important}
-  .rows,.rows article,.faq,.faq>div,dl.dt,dl.dt>div,footer{border-color:#E4E4E8 !important}
+  .rows,.rows article,.faq,.faq>div,dl.dt,dl.dt>div{border-color:#E4E4E8 !important}
 }
 </style>
 </head>
