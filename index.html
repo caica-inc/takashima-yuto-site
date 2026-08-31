@@ -136,7 +136,8 @@ dl.dt li::before{content:"–";position:absolute;left:0;color:var(--sub)}
 .faq .a p{padding:0 0 26px;font-size:14.5px;line-height:1.9}
 
 /* profile */
-.pname{margin-bottom:30px}
+.pname{margin-bottom:36px;display:grid;grid-template-columns:180px 1fr;gap:32px;align-items:center}
+.portrait{width:180px;height:180px;border-radius:var(--r);object-fit:cover;display:block}
 .pname h3{font-size:26px;letter-spacing:.06em}
 .pname .lat{font-size:11px;letter-spacing:.26em;color:var(--sub);text-transform:uppercase}
 .pname .role{margin-top:14px;font-size:13.5px;line-height:1.9}
@@ -177,6 +178,8 @@ footer .cr{font-family:var(--lat);font-size:12px;letter-spacing:.14em;color:rgba
   .vnav ul{gap:12px}
   .vnav a{font-size:10px;letter-spacing:.14em;padding-left:9px}
   dl.dt>div{grid-template-columns:1fr;gap:4px}
+  .pname{grid-template-columns:1fr;gap:22px;justify-items:start}
+  .portrait{width:150px;height:150px}
   #top{padding:130px 24px 90px}
 }
 @media (max-width:720px){
@@ -387,8 +390,11 @@ footer .cr{font-family:var(--lat);font-size:12px;letter-spacing:.14em;color:rgba
     </div>
     <div class="rv" style="max-width:760px">
       <div class="pname">
-        <h3>高嶌 悠人</h3><span class="lat">Yuto Takashima</span>
-        <p class="role">株式会社カイカ 代表取締役<span>Representative Director, CAICA Inc.</span><br>プロジェクトマネージャー<span>Project Manager</span></p>
+        <img class="portrait" src="/portrait.jpg" width="760" height="760" alt="高嶌悠人" loading="lazy">
+        <div>
+          <h3>高嶌 悠人</h3><span class="lat">Yuto Takashima</span>
+          <p class="role">株式会社カイカ 代表取締役<span>Representative Director, CAICA Inc.</span><br>プロジェクトマネージャー<span>Project Manager</span></p>
+        </div>
       </div>
       <p>北海道札幌市生まれ。北海道苫小牧東高等学校を経て、慶應義塾大学法学部政治学科を卒業。</p>
       <p>新卒で株式会社電通に入社し、営業として広告、マーケティング、ブランディングに携わりました。その後、学生時代から関心のあった教育・キャリアの分野へ。キャリア・教育系ベンチャーの株式会社ガクーで人材事業部の事業部長を務め、採用や育成、事業の立ち上げに向き合いながら、ITの相談対応や検索広告、Webサイト制作などの実務も重ねました。</p>
