@@ -50,17 +50,17 @@ p+p{margin-top:1.5em}
 @keyframes fill{to{fill:var(--text);stroke-width:0}}
 
 /* fixed logo */
-.logo{position:fixed;top:20px;left:24px;z-index:120;display:inline-block;padding:11px 24px;border-radius:999px;background:rgba(255,255,255,.72);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(29,29,31,.08);font-family:var(--head);font-weight:900;font-size:15px;letter-spacing:.16em;line-height:1;transition:transform .4s var(--ease),opacity .4s}
+.logo{position:fixed;top:20px;left:24px;z-index:120;display:inline-block;padding:13px 26px;border-radius:999px;background:rgba(255,255,255,.72);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(29,29,31,.08);font-family:var(--head);font-weight:900;font-size:17px;letter-spacing:.14em;line-height:1;transition:transform .4s var(--ease),opacity .4s}
 .logo.hide{transform:translateY(-140%);opacity:0}
 
 /* vertical nav */
-.vnav{position:fixed;right:18px;top:50%;transform:translateY(-50%);z-index:120;writing-mode:vertical-rl;word-break:keep-all;line-break:auto}
+.vnav{position:fixed;right:16px;top:50%;transform:translateY(-50%);z-index:120;writing-mode:vertical-rl;word-break:keep-all;line-break:auto;background:var(--bg);border:1px solid var(--line);border-radius:var(--r);padding:26px 12px}
 .vnav ul{list-style:none;display:flex;flex-direction:row;flex-wrap:nowrap;gap:20px;white-space:nowrap}
 .vnav li{flex:none}
-.vnav a{display:block;font-size:11px;letter-spacing:.22em;color:var(--sub);padding-left:14px;position:relative;transition:color .3s}
+.vnav a{display:block;font-size:11px;letter-spacing:.22em;color:var(--sub);padding-left:13px;position:relative;transition:color .3s,font-weight .3s}
 .vnav a::before{content:"";position:absolute;left:3px;top:0;width:1px;height:0;background:var(--text);transition:height .3s var(--ease)}
 .vnav a:hover{color:var(--text)}
-.vnav a.cur{color:var(--text)}
+.vnav a.cur{color:var(--text);font-weight:500}
 .vnav a.cur::before{height:100%}
 @media (max-height:700px){.vnav ul{gap:13px}}
 
@@ -105,9 +105,9 @@ section{background:var(--bg);padding:120px 40px}
 
 /* rows */
 .rows{border-top:1px solid var(--line)}
-.rows article{padding:40px 0;border-bottom:1px solid var(--line)}
-.rows h3{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:12px}
-.rows h3 em{font-family:var(--lat);font-style:normal;font-weight:400;font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--sub)}
+.rows article{padding:44px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:280px 1fr;gap:48px;align-items:start}
+.rows h3{margin-bottom:0}
+.rows h3 em{display:block;font-family:var(--lat);font-style:normal;font-weight:400;font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--sub);margin-top:10px;line-height:1.6}
 
 /* pills */
 .pills{list-style:none;display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}
@@ -166,6 +166,7 @@ footer .cr{font-family:var(--lat);font-size:11px;letter-spacing:.16em;color:var(
 @media (hover:none){html{scrollbar-gutter:auto}}
 @media (max-width:860px){
   .c3,.c2{grid-template-columns:1fr}
+  .rows article{grid-template-columns:1fr;gap:14px}
   section{padding:96px 24px}
   .vnav{right:8px}
   .vnav ul{gap:12px}
