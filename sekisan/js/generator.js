@@ -57,7 +57,76 @@
     cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb } };
   }
 
-  /** ①設計積算条件リスト */
+  /** ①設計積算条件リスト(行モデルから生成。編集画面での修正が反映される) */
+  function buildJoukenListFromRows(wb, header, rows) {
+    const ws = wb.addWorksheet('設計積算条件リスト', {
+      pageSetup: { orientation: 'landscape', paperSize: 9, fitToPage: true, fitToWidth: 1, fitToHeight: 0 },
+    });
+    ws.columns = [
+      { width: 26 }, { width: 6 }, { width: 10 }, { width: 10 }, { width: 10 },
+      { width: 9 }, { width: 7 }, { width: 10 }, { width: 10 },
+      { width: 14 }, { width: 20 }, { width: 34 }, { width: 24 }, { width: 14 },
+    ];
+    ws.addRow(['設計積算条件リスト']).font = { size: 14, bold: true };
+    ws.addRow([`工事名：　${header.kojiName}（${header.stage}）`]).font = { size: 11 };
+    ws.addRow([]);
+    const head = ws.addRow(['種　　別', '夜間○', '項　目　１', '項　目　２', '項　目　３', '単位数量', '単　位', '数　　量', '数　量\n(変更)', '内　　容', '根拠又は理由', '設計の考え方及び措置', '摘　　要', '基準書コード']);
+    head.eachCell((c) => { c.font = { bold: true }; fill(c, COLORS.head); border(c); c.alignment = { horizontal: 'center', vertical: 'middle', wrapText: true }; });
+    ws.views = [{ state: 'frozen', ySplit: 4 }];
+
+    for (const r of rows) {
+      const indent = r.kind === 'section' ? '' : r.kind === 'price' ? '　' : r.kind === 'material' ? '　　' : '';
+      const name = indent + r.name + (r.kind === 'price' && r.spec ? '\n' + indent + r.spec : '');
+      const row = ws.addRow([
+        name, r.yakan === '－' ? '' : r.yakan, '', '', '',
+        r.taniSuryo, r.unit, r.qty, r.qty2,
+        r.content, r.reason, r.measure, r.remark, r.code,
+      ]);
+      row.eachCell({ includeEmpty: true }, (c, col) => {
+        if (col > 14) return;
+        border(c);
+        c.alignment = { vertical: 'top', wrapText: true };
+      });
+      if (r.kind === 'section') {
+        fill(row.getCell(1), COLORS.section);
+        row.getCell(1).font = { bold: true };
+        row.getCell(1).alignment = { vertical: 'top', wrapText: true, indent: Math.max(0, r.level - 1) };
+      }
+      if (r.kind === 'saibetsu') {
+        row.getCell(1).font = { bold: true };
+        if (r.flags.market) { fill(row.getCell(1), COLORS.orange); fill(row.getCell(2), COLORS.orange); }
+        if (r.flags.unitIssue && !r.resolved) fill(row.getCell(7), COLORS.red);
+        if (r.flags.taniIssue && !r.resolved) fill(row.getCell(6), COLORS.red);
+      }
+      if (r.kind === 'price') {
+        if (r.flags.original) { fill(row.getCell(10), COLORS.blue); fill(row.getCell(11), COLORS.blue); }
+        if (r.flags.market) fill(row.getCell(1), COLORS.orange);
+      }
+      if (r.kind === 'material' && r.flags.disposal) {
+        fill(row.getCell(10), COLORS.pink); fill(row.getCell(11), COLORS.pink);
+      }
+    }
+
+    const last = ws.rowCount;
+    if (last > 5) {
+      ws.dataValidations.add(`J5:J${last}`, { type: 'list', allowBlank: true, formulae: ['"' + CONTENT_LIST.join(',') + '"'] });
+      ws.dataValidations.add(`K5:K${last}`, { type: 'list', allowBlank: true, formulae: ['"' + REASON_LIST.join(',') + '"'] });
+    }
+    ws.addRow([]);
+    const legend = [
+      ['市場単価（夜間作業の有無を確認して「○」）', COLORS.orange],
+      ['単位・単位数量の不一致（要確認）', COLORS.red],
+      ['独自歩掛かり（内容を確認して入力）', COLORS.blue],
+      ['登録材料・処分費（単価出典を入力）', COLORS.pink],
+    ];
+    for (const [label, color] of legend) {
+      const r = ws.addRow(['', label]);
+      fill(r.getCell(1), color);
+    }
+    return ws;
+  }
+
+  /** ①設計積算条件リスト(旧: ツリー直接走査版。互換のため残置) */
   function buildJoukenList(wb, tree, issues) {
     const ws = wb.addWorksheet('設計積算条件リスト', {
       pageSetup: { orientation: 'landscape', paperSize: 9, fitToPage: true, fitToWidth: 1, fitToHeight: 0 },
@@ -256,11 +325,12 @@
    * @param tree    SekisanParser.buildTree の結果
    * @param issues  SekisanParser.runChecks の結果
    */
-  async function buildWorkbook(ExcelJS, tree, issues) {
+  async function buildWorkbook(ExcelJS, tree, issues, rows) {
     const wb = new ExcelJS.Workbook();
     wb.creator = 'KCM積算ツール';
     wb.created = new Date();
-    buildJoukenList(wb, tree, issues);
+    if (rows) buildJoukenListFromRows(wb, tree.header, rows);
+    else buildJoukenList(wb, tree, issues);
     buildSoukatsu(wb, tree);
     buildYuudou(wb, tree);
     buildChecks(wb, tree, issues);

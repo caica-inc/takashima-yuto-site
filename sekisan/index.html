@@ -9,17 +9,17 @@
   :root {
     --ink: #1c2430; --sub: #5a6472; --line: #d8dde4; --bg: #f4f6f8;
     --accent: #0f6ab4; --accent2: #0c5490;
-    --orange: #f4b084; --red: #ff7b7b; --blue: #9dc3e6; --pink: #f8cbdc;
+    --orange: #f4b084; --red: #ffb3b3; --blue: #9dc3e6; --pink: #f8cbdc;
   }
   * { box-sizing: border-box; }
   body { margin: 0; font-family: "Hiragino Sans", "Noto Sans JP", Meiryo, sans-serif; color: var(--ink); background: var(--bg); line-height: 1.65; }
   header { background: #fff; border-bottom: 1px solid var(--line); padding: 20px 24px; }
   header h1 { margin: 0; font-size: 20px; }
   header p { margin: 6px 0 0; color: var(--sub); font-size: 13px; }
-  main { max-width: 980px; margin: 0 auto; padding: 24px 16px 64px; }
+  main { max-width: 1240px; margin: 0 auto; padding: 24px 16px 64px; }
   section { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 20px 22px; margin-bottom: 20px; }
   h2 { font-size: 16px; margin: 0 0 12px; border-left: 4px solid var(--accent); padding-left: 10px; }
-  #dropzone { border: 2px dashed var(--line); border-radius: 10px; padding: 34px 16px; text-align: center; color: var(--sub); cursor: pointer; transition: .15s; }
+  #dropzone { border: 2px dashed var(--line); border-radius: 10px; padding: 30px 16px; text-align: center; color: var(--sub); cursor: pointer; transition: .15s; }
   #dropzone.over { border-color: var(--accent); background: #eef6fd; }
   #dropzone strong { color: var(--ink); }
   .hint { font-size: 12.5px; color: var(--sub); margin-top: 10px; }
@@ -29,21 +29,43 @@
   button.secondary { background: #fff; color: var(--accent); border: 1px solid var(--accent); }
   #status { min-height: 1.4em; font-size: 13px; color: var(--sub); margin-top: 10px; }
   #status.error { color: #c0392b; }
+  #restoreBar { background: #fff8e6; border: 1px solid #e6cf8a; border-radius: 10px; padding: 12px 16px; margin-bottom: 16px; font-size: 13.5px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
   dl { display: grid; grid-template-columns: 8em 1fr; gap: 4px 12px; margin: 0; font-size: 14px; }
   dt { color: var(--sub); }
   dd { margin: 0; }
   #counts { font-size: 13px; color: var(--sub); margin: 10px 0 0; }
-  #tree { max-height: 420px; overflow: auto; border: 1px solid var(--line); border-radius: 8px; margin-top: 12px; font-size: 13px; }
-  #tree .tr { display: grid; grid-template-columns: 1fr 4.5em 7em 8em; padding: 3px 10px; border-bottom: 1px solid #eef1f4; }
-  #tree .tr.lv1 { background: #e9eef4; font-weight: 700; }
-  #tree .tr.lv2 { background: #f3f6f9; font-weight: 600; }
-  #tree .tr .q { text-align: right; font-variant-numeric: tabular-nums; }
-  #tree .tr .tag { font-size: 11px; color: var(--sub); text-align: right; }
-  #tree .tr.market .nm { background: var(--orange); border-radius: 4px; }
-  #tree .tr.orig .tag { color: #1d5c9e; font-weight: 600; }
-  #issues { margin: 8px 0 0; padding-left: 20px; font-size: 13px; }
-  #issues li { margin-bottom: 6px; }
-  #issues li.ok { color: #2e7d32; list-style: none; margin-left: -20px; }
+
+  /* 残件パネル */
+  #pendingBadge { display: inline-block; background: #c0392b; color: #fff; border-radius: 999px; padding: 1px 12px; font-size: 13px; margin-left: 8px; }
+  #pendingBadge.done { background: #2e7d32; }
+  #pendingList { margin: 8px 0 0; padding-left: 20px; font-size: 13px; max-height: 180px; overflow: auto; }
+  #pendingList li { margin-bottom: 5px; }
+  #pendingList li.ok { color: #2e7d32; list-style: none; margin-left: -20px; }
+  #pendingList a { color: var(--ink); text-decoration: none; }
+  #pendingList a:hover { color: var(--accent); }
+
+  /* 編集テーブル */
+  #editorWrap { overflow: auto; max-height: 62vh; border: 1px solid var(--line); border-radius: 8px; margin-top: 12px; }
+  #editorTable { border-collapse: collapse; font-size: 12px; width: 100%; min-width: 1180px; }
+  #editorTable th { position: sticky; top: 0; background: #eef1f5; border: 1px solid var(--line); padding: 6px 6px; font-weight: 600; z-index: 2; white-space: nowrap; }
+  #editorTable td { border: 1px solid #e6eaef; padding: 4px 6px; vertical-align: top; background: #fff; }
+  #editorTable td.nm { min-width: 220px; }
+  #editorTable td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  #editorTable td.wide { min-width: 240px; white-space: pre-wrap; }
+  #editorTable td.code { font-family: ui-monospace, monospace; font-size: 11px; color: var(--sub); white-space: nowrap; }
+  #editorTable td.edit { background: #fbfdff; outline: none; }
+  #editorTable td.edit:focus { background: #eef6fd; box-shadow: inset 0 0 0 2px var(--accent); }
+  #editorTable select { font-size: 12px; max-width: 160px; }
+  tr.r-section td { background: #f0f3f7 !important; font-weight: 700; }
+  tr.r-saibetsu td.nm { font-weight: 700; }
+  tr.r-material td { color: #333; }
+  tr.f-market td.nm, tr.f-market td.yakan { background: var(--orange) !important; }
+  tr.f-orig select, tr.f-orig td.wide { background: #eaf2fb; }
+  tr.f-disp td.wide { background: #fdf0f6; }
+  tr.f-issue td.num, tr.f-issue td.nm { background: var(--red) !important; }
+  tr.flash td { background: #fff3bf !important; transition: background .3s; }
+  #editorTable td.resolve { white-space: nowrap; font-size: 11px; }
+
   .legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; margin-top: 12px; color: var(--sub); }
   .legend span::before { content: ""; display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; }
   .legend .l-orange::before { background: var(--orange); }
@@ -54,25 +76,31 @@
   details summary { cursor: pointer; color: var(--ink); font-weight: 600; }
   .flow { background: #f7f9fb; border: 1px solid var(--line); border-radius: 8px; padding: 12px 16px; font-size: 13px; margin-top: 10px; }
   footer { text-align: center; color: var(--sub); font-size: 12px; padding: 20px; }
-  .actions { display: flex; gap: 12px; align-items: center; margin-top: 14px; }
+  .actions { display: flex; gap: 12px; align-items: center; margin-top: 14px; flex-wrap: wrap; }
 </style>
 </head>
 <body>
 <header>
   <h1>KCM積算ツール（積算業務支援）</h1>
-  <p>新土木工事積算システムの「入力データリスト」から、設計積算条件リスト・数量総括表などの帳票を自動作成します。データはすべてブラウザ内で処理され、外部に送信されません。</p>
+  <p>新土木工事積算システムの「入力データリスト」から、設計積算条件リスト・数量総括表などの帳票を自動作成。確認・入力作業はブラウザ上で行い、最終帳票をExcelで出力します。データはすべて端末内で処理され、外部に送信されません。</p>
 </header>
 <main>
+  <div id="restoreBar" hidden>
+    <span id="restoreInfo"></span>
+    <button id="restoreBtn" class="secondary">続きから再開</button>
+    <button id="restoreDismiss" class="secondary">破棄</button>
+  </div>
+
   <section>
-    <h2>1. 入力データリストを読み込む</h2>
+    <h2>1. 読み込む</h2>
     <div id="dropzone" onclick="document.getElementById('fileInput').click()">
-      <strong>PDF / Excel（.xlsx / .xlsm）ファイルをここにドラッグ＆ドロップ</strong><br>
+      <strong>PDF / Excel（.xlsx / .xlsm）／ 作業ファイル（.json）をここにドラッグ＆ドロップ</strong><br>
       またはクリックして選択
-      <input type="file" id="fileInput" accept=".pdf,.xlsx,.xlsm,.txt" hidden>
+      <input type="file" id="fileInput" accept=".pdf,.xlsx,.xlsm,.txt,.json" hidden>
     </div>
     <p class="hint">
       ・新土積システムから「鏡ページ無し・STまで」で印刷したPDFをそのまま読み込めます（Acrobat・DocuWorksでの変換は不要です）。<br>
-      ・Acrobat等でExcel変換済みのファイル、コピー＆ペーストのテキストにも対応しています。
+      ・Acrobat等でExcel変換済みのファイル、コピー＆ペーストのテキスト、保存した作業ファイル(.json)にも対応しています。
     </p>
     <details style="margin-top:12px">
       <summary>テキストを貼り付けて読み込む</summary>
@@ -83,20 +111,33 @@
   </section>
 
   <section id="result" hidden>
-    <h2>2. 解析結果の確認</h2>
+    <h2>2. 解析結果</h2>
     <div id="meta"></div>
     <p id="counts"></p>
-    <div id="tree"></div>
-    <h2 style="margin-top:20px">自動チェック（<span id="issueCount">0</span>件）</h2>
-    <ul id="issues"></ul>
+  </section>
+
+  <section id="editorSec" hidden>
+    <h2>3. 設計積算条件リストの確認・入力 <span id="pendingBadge">残 <span id="pendingCount">0</span> 件</span></h2>
+    <p class="hint">色付きの箇所を確認・入力してください。項目をクリックすると該当行へ移動します。入力内容は自動保存され、Excel出力にも反映されます。</p>
+    <ul id="pendingList"></ul>
     <div class="legend">
-      <span class="l-orange">市場単価（夜間の有無を確認）</span>
-      <span class="l-red">単位・単位数量の不一致</span>
-      <span class="l-blue">独自歩掛かり</span>
-      <span class="l-pink">登録材料・処分費</span>
+      <span class="l-orange">市場単価（夜間○/－を選択）</span>
+      <span class="l-red">単位・単位数量の不一致（確認済チェック）</span>
+      <span class="l-blue">独自歩掛かり（設計の考え方を入力）</span>
+      <span class="l-pink">処分費（出典を入力）</span>
+    </div>
+    <div id="editorWrap">
+      <table id="editorTable">
+        <thead><tr>
+          <th>種別</th><th>夜間○</th><th>単位数量</th><th>単位</th><th>数量</th><th>数量(変更)</th>
+          <th>内容</th><th>根拠又は理由</th><th>設計の考え方及び措置</th><th>摘要</th><th>基準書コード</th><th>確認</th>
+        </tr></thead>
+        <tbody id="editorBody"></tbody>
+      </table>
     </div>
     <div class="actions">
-      <button id="exportBtn">Excel帳票を出力（設計積算条件リスト・数量総括表・誘導員集計・チェック結果）</button>
+      <button id="exportBtn">Excel帳票を出力（条件リスト・数量総括表・誘導員集計・チェック結果）</button>
+      <button id="saveBtn" class="secondary">作業ファイルを保存（.json）</button>
     </div>
   </section>
 
@@ -105,17 +146,16 @@
     <details>
       <summary>作成フロー（旧システムとの違い）</summary>
       <div class="flow">
-        【旧】新土積システム → 入力データリスト印刷(PDF) → <b>Acrobat 11でExcel変換</b> → 入力データリスト編集システム(マクロ) → 各帳票マクロで作成<br>
-        【新】新土積システム → 入力データリスト印刷(PDF) → <b>このページに読み込むだけ</b> → 帳票を一括出力<br><br>
-        Acrobatのバージョン依存・DocuWorks変換でのレイアウト崩れ（2022〜2023年に近江さん・矢野さんが検証した課題）を、
-        PDFを直接解析することで回避しています。
+        【旧】新土積システム → 入力データリスト印刷(PDF) → <b>Acrobat 11でExcel変換</b> → 入力データリスト編集システム(マクロ) → 各帳票マクロで作成 → Excel上で目視確認・手入力<br>
+        【新】新土積システム → 入力データリスト印刷(PDF) → <b>このページに読み込む</b> → ブラウザ上で確認・入力（残件数を自動表示） → 最終帳票をExcel出力<br><br>
+        Acrobatのバージョン依存・DocuWorks変換でのレイアウト崩れ（2022〜2023年に検証された課題）を、PDFを直接解析することで回避しています。
       </div>
     </details>
     <details style="margin-top:8px">
       <summary>出力される帳票</summary>
       <div class="flow">
-        ① 設計積算条件リスト … 内容・根拠又は理由を自動入力（「積算基準書(赤本)どおり」「独自歩掛」「材料単価」等）。夜間○は一括割増率50%で自動判定。プルダウン・色分けは旧Ver2.2.2の様式を踏襲。<br>
-        ② 数量総括表 … 工事区分〜細別の階層と規格・数量を自動転記。変更工事は当初/変更/増減の列構成。<br>
+        ① 設計積算条件リスト … 内容・根拠又は理由を自動入力し、ブラウザでの修正を反映。夜間○は一括割増率50%で自動判定。色分け・プルダウンは旧Ver2.2.2の様式を踏襲。<br>
+        ② 数量総括表 … 工事区分〜細別の階層と規格・数量を自動転記。<br>
         ③ 交通誘導員集計 … 交通誘導警備員の計上箇所を一覧化。<br>
         ④ チェック結果 … 単位不一致・単位数量不一致などの自動チェック一覧。
       </div>
@@ -126,6 +166,7 @@
 <script src="vendor/exceljs.min.js"></script>
 <script src="vendor/pdf.min.js"></script>
 <script src="js/parser.js"></script>
+<script src="js/model.js"></script>
 <script src="js/generator.js"></script>
 <script src="js/app.js"></script>
 </body>
