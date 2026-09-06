@@ -3,13 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>道路許認可支援GISマップ（プロトタイプ）</title>
+<title>関東甲信地域 業務支援マップ（AI再現版）</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <style>
   :root {
-    --blue: #1a73e8;
-    --green: #188038;
-    --orange: #f9ab00;
+    --blue: #1a73e8;    /* 国道 */
+    --green: #188038;   /* 県道 */
+    --orange: #f9ab00;  /* 市道 */
+    --purple: #7b1fa2;  /* 高速道路 */
     --gray: #5f6368;
     --panel-bg: #ffffff;
     --border: #dadce0;
@@ -18,25 +19,19 @@
   html, body { height: 100%; margin: 0; font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, system-ui, sans-serif; }
   #map { position: absolute; inset: 0; }
 
-  /* ---- 検索ボックス（Googleマップ風） ---- */
+  /* ---- 検索ボックス ---- */
   #searchBox {
     position: absolute; top: 12px; left: 12px; z-index: 1000;
-    width: 360px; max-width: calc(100vw - 24px);
+    width: 340px; max-width: calc(100vw - 24px);
     background: var(--panel-bg); border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,.25);
     display: flex; align-items: center; padding: 4px 8px;
   }
-  #searchBox input {
-    flex: 1; border: none; outline: none; font-size: 15px; padding: 8px;
-    background: transparent;
-  }
-  #searchBox button {
-    border: none; background: none; cursor: pointer; font-size: 16px;
-    color: var(--gray); padding: 6px 8px;
-  }
+  #searchBox input { flex: 1; border: none; outline: none; font-size: 15px; padding: 8px; background: transparent; }
+  #searchBox button { border: none; background: none; cursor: pointer; font-size: 16px; color: var(--gray); padding: 6px 8px; }
   #searchResults {
     position: absolute; top: 58px; left: 12px; z-index: 1000;
-    width: 360px; max-width: calc(100vw - 24px);
+    width: 340px; max-width: calc(100vw - 24px);
     background: var(--panel-bg); border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,.25); overflow: hidden;
   }
@@ -46,35 +41,33 @@
   /* ---- サイドパネル ---- */
   #panel {
     position: absolute; top: 12px; right: 12px; z-index: 1000;
-    width: 300px; max-width: calc(100vw - 24px);
+    width: 310px; max-width: calc(100vw - 24px);
     max-height: calc(100% - 24px);
     background: var(--panel-bg); border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,.25);
     display: flex; flex-direction: column; overflow: hidden;
   }
-  #panel header {
-    padding: 12px 16px; border-bottom: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: space-between;
-  }
+  #panel header { padding: 12px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
   #panel header h1 { font-size: 15px; margin: 0; }
   #panel header small { display: block; color: var(--gray); font-size: 11px; font-weight: normal; margin-top: 2px; }
   #panelBody { overflow-y: auto; padding: 8px 16px 16px; }
   #panelToggle { border: none; background: none; cursor: pointer; font-size: 14px; color: var(--gray); }
   .section-title { font-size: 12px; color: var(--gray); margin: 14px 0 6px; font-weight: bold; }
+  select#branchSelect {
+    width: 100%; font-size: 14px; padding: 8px; border: 1px solid var(--border);
+    border-radius: 6px; background: #fff;
+  }
   .layer-row { display: flex; align-items: center; gap: 8px; padding: 5px 0; font-size: 13px; cursor: pointer; }
   .layer-row .swatch { width: 22px; height: 5px; border-radius: 3px; flex-shrink: 0; }
+  .layer-row .box { width: 14px; height: 14px; border-radius: 3px; flex-shrink: 0; opacity: .7; }
   .layer-row .dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; border: 2px solid #fff; box-shadow: 0 0 2px rgba(0,0,0,.5); }
   .basemap-row { display: flex; gap: 6px; flex-wrap: wrap; }
-  .basemap-row button {
+  .basemap-row button, .tool-row button {
     flex: 1; min-width: 60px; font-size: 12px; padding: 6px 4px; cursor: pointer;
     border: 1px solid var(--border); background: #fff; border-radius: 6px;
   }
   .basemap-row button.active { background: #e8f0fe; border-color: var(--blue); color: var(--blue); font-weight: bold; }
   .tool-row { display: flex; gap: 6px; margin-top: 4px; }
-  .tool-row button {
-    flex: 1; font-size: 12px; padding: 7px 4px; cursor: pointer;
-    border: 1px solid var(--border); background: #fff; border-radius: 6px;
-  }
   .tool-row button.active { background: #fce8e6; border-color: #d93025; color: #d93025; }
   #note {
     margin-top: 14px; font-size: 11px; color: var(--gray);
@@ -94,17 +87,16 @@
   .popup-table th, .popup-table td { text-align: left; padding: 3px 6px 3px 0; vertical-align: top; font-size: 12px; }
   .popup-table th { color: var(--gray); white-space: nowrap; font-weight: normal; }
   .badge { display: inline-block; font-size: 11px; padding: 1px 8px; border-radius: 10px; color: #fff; }
+  .sample-note { margin-top: 6px; color: #d93025; font-size: 11px; }
 
-  @media (max-width: 640px) {
-    #panel { top: auto; bottom: 12px; max-height: 45%; }
-  }
+  @media (max-width: 640px) { #panel { top: auto; bottom: 12px; max-height: 50%; } }
 </style>
 </head>
 <body>
 <div id="map"></div>
 
 <div id="searchBox">
-  <input id="searchInput" type="text" placeholder="住所・地名で検索（例：さいたま市北区）" autocomplete="off">
+  <input id="searchInput" type="text" placeholder="住所・地名で検索（例：長野市）" autocomplete="off">
   <button id="searchBtn" title="検索">&#128269;</button>
 </div>
 <div id="searchResults" hidden></div>
@@ -112,19 +104,28 @@
 <div id="panel">
   <header>
     <div>
-      <h1>道路許認可支援GISマップ</h1>
-      <small>関東甲信地域 業務支援マップ（AI再現プロトタイプ）</small>
+      <h1>関東甲信地域 業務支援マップ</h1>
+      <small>道路許認可支援業務用GISマップ（AI再現版・サンプルデータ）</small>
     </div>
     <button id="panelToggle" title="開閉">▲</button>
   </header>
   <div id="panelBody">
-    <div class="section-title">道路レイヤ（管理者区分）</div>
-    <label class="layer-row"><input type="checkbox" data-layer="chokkatsu" checked><span class="swatch" style="background:var(--blue)"></span>直轄国道（国土交通省）</label>
-    <label class="layer-row"><input type="checkbox" data-layer="kendo" checked><span class="swatch" style="background:var(--green)"></span>都道府県道</label>
-    <label class="layer-row"><input type="checkbox" data-layer="shido" checked><span class="swatch" style="background:var(--orange)"></span>市町村道</label>
+    <div class="section-title">支店の選択</div>
+    <select id="branchSelect">
+      <option value="all">全支店（関東甲信 一都八県）</option>
+    </select>
 
-    <div class="section-title">施設レイヤ</div>
-    <label class="layer-row"><input type="checkbox" data-layer="offices" checked><span class="dot" style="background:var(--blue)"></span>国道事務所・出張所（窓口）</label>
+    <div class="section-title">表示レイヤー</div>
+    <label class="layer-row"><input type="checkbox" data-layer="muni" checked><span class="box" style="background:#9e9e9e"></span>市町村界</label>
+    <label class="layer-row"><input type="checkbox" data-layer="did" checked><span class="box" style="background:#e91e63"></span>DID区域（人口集中地区）</label>
+    <label class="layer-row"><input type="checkbox" data-layer="kokudo" checked><span class="swatch" style="background:var(--blue)"></span>主要道路：国道</label>
+    <label class="layer-row"><input type="checkbox" data-layer="kendo" checked><span class="swatch" style="background:var(--green)"></span>主要道路：県道</label>
+    <label class="layer-row"><input type="checkbox" data-layer="shido" checked><span class="swatch" style="background:var(--orange)"></span>主要道路：市道</label>
+    <label class="layer-row"><input type="checkbox" data-layer="highway" checked><span class="swatch" style="background:var(--purple)"></span>高速道路</label>
+    <label class="layer-row"><input type="checkbox" data-layer="police" checked><span class="dot" style="background:#3949ab"></span>公共施設：警察署</label>
+    <label class="layer-row"><input type="checkbox" data-layer="michinoeki" checked><span class="dot" style="background:#00897b"></span>公共施設：道の駅</label>
+    <label class="layer-row"><input type="checkbox" data-layer="kankatsu" checked><span class="dot" style="background:#1a73e8"></span>管轄情報：国道事務所ほか</label>
+    <label class="layer-row"><input type="checkbox" data-layer="kyudo" checked><span class="swatch" style="background:#616161"></span>管轄情報：旧国道18号（旧道）</label>
 
     <div class="section-title">ベースマップ</div>
     <div class="basemap-row">
@@ -137,13 +138,16 @@
     <div class="section-title">ツール</div>
     <div class="tool-row">
       <button id="measureBtn">距離計測</button>
+      <button id="kmlBtn">KML書出</button>
+    </div>
+    <div class="tool-row">
       <button id="importBtn">GeoJSON読込</button>
       <button id="locateBtn">現在地</button>
     </div>
     <input type="file" id="importFile" accept=".geojson,.json" hidden>
 
     <div id="note">
-      ⚠️ 表示中の路線・事務所データは<strong>デモ用サンプル</strong>です（位置・区間は概略）。実運用時は道路台帳・国土数値情報等の実データ（GeoJSON）に差し替えてください。「GeoJSON読込」から自前データを重ねられます。
+      ⚠️ 表示中のデータは<strong>デモ用サンプル</strong>です（区域・線形・位置は概略）。実運用時は国土数値情報（行政区域／DID／道路／高速道路／警察署／道の駅）や道路台帳等の実データに差し替えてください。「KML書出」で表示中データをGoogle Earth用KMLとして保存できます（実物と同じ納品形式）。
     </div>
   </div>
 </div>
@@ -163,77 +167,54 @@ const baseLayers = {
 };
 
 const map = L.map('map', { zoomControl: false, layers: [baseLayers.std] })
-  .setView([36.0, 139.5], 8); // 関東甲信全域
+  .setView([36.0, 139.4], 8); // 関東甲信全域
 L.control.zoom({ position: 'bottomright' }).addTo(map);
 L.control.scale({ imperial: false, position: 'bottomleft' }).addTo(map);
 
 // ============================================================
-// サンプルデータ：国道事務所（関東甲信・位置は概略）
+// 支店定義（関東甲信 一都八県・9支店）
 // ============================================================
-const CAT = {
-  chokkatsu: { label: '直轄国道', color: '#1a73e8', weight: 5 },
-  kendo:     { label: '都道府県道', color: '#188038', weight: 4 },
-  shido:     { label: '市町村道', color: '#f9ab00', weight: 4 }
+const BRANCHES = {
+  saitama:    { name: 'さいたま支店（埼玉県）', pref: '埼玉県',  bounds: [[35.75, 138.70], [36.30, 139.95]] },
+  tokyo:      { name: '東京支店（東京都）',     pref: '東京都',  bounds: [[35.50, 138.94], [35.90, 139.95]] },
+  yokohama:   { name: '横浜支店（神奈川県）',   pref: '神奈川県', bounds: [[35.12, 138.90], [35.65, 139.80]] },
+  chiba:      { name: '千葉支店（千葉県）',     pref: '千葉県',  bounds: [[34.90, 139.70], [36.10, 140.90]] },
+  mito:       { name: '水戸支店（茨城県）',     pref: '茨城県',  bounds: [[35.75, 139.65], [36.95, 140.90]] },
+  utsunomiya: { name: '宇都宮支店（栃木県）',   pref: '栃木県',  bounds: [[36.20, 139.30], [37.15, 140.30]] },
+  takasaki:   { name: '高崎支店（群馬県）',     pref: '群馬県',  bounds: [[36.00, 138.40], [37.05, 139.70]] },
+  kofu:       { name: '甲府支店（山梨県）',     pref: '山梨県',  bounds: [[35.15, 138.20], [35.95, 139.15]] },
+  nagano:     { name: '長野支店（長野県）※社内構築済モデル', pref: '長野県', bounds: [[35.20, 137.30], [37.05, 138.75]] }
 };
 
-const OFFICES = [
-  { name: '東京国道事務所',     area: '東京都区部の直轄国道（1・4・6・14・15・17・20・246号 等）', lat: 35.6938, lng: 139.7530 },
-  { name: '相武国道事務所',     area: '東京都多摩地域の直轄国道（16・20号 等）',                   lat: 35.6660, lng: 139.3160 },
-  { name: '大宮国道事務所',     area: '埼玉県内の直轄国道（16・17号 等）',                         lat: 35.9500, 'lng': 139.6200 },
-  { name: '北首都国道事務所',   area: '埼玉県東部の直轄国道（4号 等）',                            lat: 35.9750, lng: 139.7520 },
-  { name: '千葉国道事務所',     area: '千葉県内の直轄国道（6・14・16・51号 等）',                  lat: 35.6070, lng: 140.1100 },
-  { name: '横浜国道事務所',     area: '神奈川県内の直轄国道（1・15・16・246号 等）',               lat: 35.4600, lng: 139.6300 },
-  { name: '川崎国道事務所',     area: '川崎市域ほかの直轄国道（15・246号 等）',                    lat: 35.5710, lng: 139.6530 },
-  { name: '常総国道事務所',     area: '茨城県南部の直轄国道（6号 等）',                            lat: 36.0830, lng: 140.1120 },
-  { name: '宇都宮国道事務所',   area: '栃木県内の直轄国道（4・50号 等）',                          lat: 36.5550, lng: 139.8990 },
-  { name: '高崎河川国道事務所', area: '群馬県内の直轄国道（17・18号 等）',                         lat: 36.3220, lng: 139.0100 },
-  { name: '長野国道事務所',     area: '長野県内の直轄国道（18・19・20号 等）',                     lat: 36.6480, lng: 138.1950 },
-  { name: '甲府河川国道事務所', area: '山梨県内の直轄国道（20・52号 等）',                         lat: 35.6620, lng: 138.5680 }
+// ============================================================
+// サンプルデータ（区域・線形・位置は概略のデモ用）
+// prefs: どの支店（都県）で表示するか
+// ============================================================
+
+// --- 市町村界（概形ポリゴン） ---
+const MUNI = [
+  { name: '長野市（概形）',   prefs: ['長野県'], coords: [[36.75,138.05],[36.78,138.25],[36.65,138.35],[36.55,138.28],[36.55,138.10],[36.62,138.02]] },
+  { name: '上田市（概形）',   prefs: ['長野県'], coords: [[36.48,138.15],[36.50,138.35],[36.38,138.38],[36.32,138.22],[36.40,138.12]] },
+  { name: 'さいたま市（概形）', prefs: ['埼玉県'], coords: [[35.98,139.55],[36.00,139.70],[35.90,139.72],[35.83,139.62],[35.90,139.55]] }
 ];
 
-// ============================================================
-// サンプルデータ：路線（区間・線形は概略のデモ用）
-// ============================================================
-const ROADS = [
-  { name: '国道17号', cat: 'chokkatsu', office: '東京国道事務所 / 大宮国道事務所 / 高崎河川国道事務所',
-    section: '東京都中央区（日本橋）〜 群馬県高崎市',
-    coords: [[35.684,139.774],[35.733,139.739],[35.815,139.678],[35.906,139.623],[35.977,139.593],[36.066,139.522],[36.147,139.389],[36.243,139.190],[36.322,139.003]] },
-  { name: '国道16号', cat: 'chokkatsu', office: '横浜国道事務所 / 相武国道事務所 / 大宮国道事務所 / 千葉国道事務所',
-    section: '横浜市 〜 相模原 〜 八王子 〜 川越 〜 春日部 〜 柏 〜 千葉市（環状）',
-    coords: [[35.466,139.622],[35.571,139.373],[35.666,139.316],[35.836,139.391],[35.925,139.486],[35.960,139.650],[35.975,139.752],[35.868,139.976],[35.607,140.106]] },
-  { name: '国道1号', cat: 'chokkatsu', office: '東京国道事務所 / 横浜国道事務所',
-    section: '東京都中央区（日本橋）〜 神奈川県箱根町',
-    coords: [[35.684,139.774],[35.620,139.740],[35.466,139.622],[35.339,139.490],[35.256,139.160],[35.233,139.030]] },
-  { name: '国道4号', cat: 'chokkatsu', office: '東京国道事務所 / 北首都国道事務所 / 宇都宮国道事務所',
-    section: '東京都中央区（日本橋）〜 栃木県宇都宮市',
-    coords: [[35.684,139.774],[35.891,139.790],[35.975,139.752],[36.190,139.700],[36.310,139.800],[36.555,139.883]] },
-  { name: '国道6号', cat: 'chokkatsu', office: '東京国道事務所 / 常総国道事務所',
-    section: '東京都中央区（日本橋）〜 茨城県水戸市',
-    coords: [[35.684,139.774],[35.790,139.900],[35.860,139.970],[35.900,140.050],[36.070,140.200],[36.360,140.470]] },
-  { name: '国道20号', cat: 'chokkatsu', office: '東京国道事務所 / 相武国道事務所 / 甲府河川国道事務所 / 長野国道事務所',
-    section: '東京都中央区（日本橋）〜 長野県諏訪市',
-    coords: [[35.684,139.774],[35.690,139.700],[35.666,139.316],[35.610,138.940],[35.662,138.568],[36.040,138.110]] },
-  { name: '国道18号', cat: 'chokkatsu', office: '高崎河川国道事務所 / 長野国道事務所',
-    section: '群馬県高崎市 〜 長野県長野市',
-    coords: [[36.322,139.003],[36.330,138.900],[36.342,138.600],[36.400,138.250],[36.648,138.195]] },
-  { name: '主要地方道（サンプル）', cat: 'kendo', office: '埼玉県 さいたま県土整備事務所',
-    section: 'さいたま市 〜 川口市（サンプル区間）',
-    coords: [[35.906,139.623],[35.860,139.680],[35.800,139.720]] },
-  { name: '市道（サンプル）', cat: 'shido', office: 'さいたま市 建設局 道路管理課',
-    section: 'さいたま市内（サンプル区間）',
-    coords: [[35.906,139.623],[35.920,139.590],[35.935,139.560]] }
+// --- DID区域（2020年・概形） ---
+const DID = [
+  { name: '長野市DID（概形）',   prefs: ['長野県'], coords: [[36.66,138.16],[36.67,138.22],[36.63,138.23],[36.62,138.17]] },
+  { name: 'さいたま市DID（概形）', prefs: ['埼玉県'], coords: [[35.93,139.60],[35.94,139.66],[35.88,139.67],[35.87,139.61]] },
+  { name: '甲府市DID（概形）',   prefs: ['山梨県'], coords: [[35.68,138.54],[35.69,138.59],[35.65,138.60],[35.64,138.55]] }
 ];
 
-// 許認可窓口の説明（区分別）
+// --- 主要道路（国道・県道・市道） ---
 const PERMITS = {
-  chokkatsu: [
+  kokudo: [
     ['道路占用許可（道路法32条）', '管轄の国道事務所・出張所'],
     ['道路工事施工承認（道路法24条）', '管轄の国道事務所・出張所'],
     ['特殊車両通行許可', '道路管理者（オンライン申請可）']
   ],
   kendo: [
-    ['道路占用許可（道路法32条）', '都道府県の県土整備（土木）事務所'],
-    ['道路工事施工承認（道路法24条）', '都道府県の県土整備（土木）事務所'],
+    ['道路占用許可（道路法32条）', '都県の建設（土木）事務所'],
+    ['道路工事施工承認（道路法24条）', '都県の建設（土木）事務所'],
     ['特殊車両通行許可', '道路管理者（オンライン申請可）']
   ],
   shido: [
@@ -243,62 +224,245 @@ const PERMITS = {
   ]
 };
 
-// ============================================================
-// レイヤ生成
-// ============================================================
-const roadGroups = { chokkatsu: L.layerGroup(), kendo: L.layerGroup(), shido: L.layerGroup() };
-const officeGroup = L.layerGroup();
+const ROADS = [
+  { name: '国道17号', cat: 'kokudo', prefs: ['東京都','埼玉県','群馬県'],
+    office: '東京国道事務所 / 大宮国道事務所 / 高崎河川国道事務所',
+    section: '東京都中央区（日本橋）〜 群馬県高崎市',
+    coords: [[35.684,139.774],[35.733,139.739],[35.815,139.678],[35.906,139.623],[35.977,139.593],[36.066,139.522],[36.147,139.389],[36.243,139.190],[36.322,139.003]] },
+  { name: '国道16号', cat: 'kokudo', prefs: ['神奈川県','東京都','埼玉県','千葉県'],
+    office: '横浜国道事務所 / 相武国道事務所 / 大宮国道事務所 / 千葉国道事務所',
+    section: '横浜 〜 相模原 〜 八王子 〜 川越 〜 春日部 〜 柏 〜 千葉（環状）',
+    coords: [[35.466,139.622],[35.571,139.373],[35.666,139.316],[35.836,139.391],[35.925,139.486],[35.960,139.650],[35.975,139.752],[35.868,139.976],[35.607,140.106]] },
+  { name: '国道1号', cat: 'kokudo', prefs: ['東京都','神奈川県'],
+    office: '東京国道事務所 / 横浜国道事務所',
+    section: '東京都中央区（日本橋）〜 神奈川県箱根町',
+    coords: [[35.684,139.774],[35.620,139.740],[35.466,139.622],[35.339,139.490],[35.256,139.160],[35.233,139.030]] },
+  { name: '国道4号', cat: 'kokudo', prefs: ['東京都','埼玉県','茨城県','栃木県'],
+    office: '東京国道事務所 / 北首都国道事務所 / 宇都宮国道事務所',
+    section: '東京都中央区（日本橋）〜 栃木県宇都宮市',
+    coords: [[35.684,139.774],[35.891,139.790],[35.975,139.752],[36.190,139.700],[36.310,139.800],[36.555,139.883]] },
+  { name: '国道6号', cat: 'kokudo', prefs: ['東京都','千葉県','茨城県'],
+    office: '東京国道事務所 / 常総国道事務所',
+    section: '東京都中央区（日本橋）〜 茨城県水戸市',
+    coords: [[35.684,139.774],[35.790,139.900],[35.860,139.970],[35.900,140.050],[36.070,140.200],[36.360,140.470]] },
+  { name: '国道20号', cat: 'kokudo', prefs: ['東京都','山梨県','長野県'],
+    office: '東京国道事務所 / 相武国道事務所 / 甲府河川国道事務所 / 長野国道事務所',
+    section: '東京都中央区（日本橋）〜 長野県諏訪市',
+    coords: [[35.684,139.774],[35.690,139.700],[35.666,139.316],[35.610,138.940],[35.662,138.568],[36.040,138.110]] },
+  { name: '国道18号', cat: 'kokudo', prefs: ['群馬県','長野県'],
+    office: '高崎河川国道事務所 / 長野国道事務所',
+    section: '群馬県高崎市 〜 長野県長野市',
+    coords: [[36.322,139.003],[36.330,138.900],[36.342,138.600],[36.400,138.250],[36.648,138.195]] },
+  { name: '国道19号', cat: 'kokudo', prefs: ['長野県'],
+    office: '長野国道事務所',
+    section: '長野県松本市 〜 長野市',
+    coords: [[36.238,137.972],[36.400,137.990],[36.520,138.060],[36.648,138.195]] },
+  { name: '国道50号', cat: 'kokudo', prefs: ['群馬県','栃木県','茨城県'],
+    office: '高崎河川国道事務所 / 宇都宮国道事務所 / 常総国道事務所',
+    section: '群馬県前橋市 〜 茨城県水戸市',
+    coords: [[36.389,139.063],[36.400,139.330],[36.310,139.580],[36.310,139.800],[36.330,140.100],[36.360,140.470]] },
+  { name: '主要地方道（サンプル）', cat: 'kendo', prefs: ['埼玉県'],
+    office: '埼玉県 さいたま県土整備事務所',
+    section: 'さいたま市 〜 川口市（サンプル区間）',
+    coords: [[35.906,139.623],[35.860,139.680],[35.800,139.720]] },
+  { name: '県道（サンプル）', cat: 'kendo', prefs: ['長野県'],
+    office: '長野県 長野建設事務所',
+    section: '長野市内（サンプル区間）',
+    coords: [[36.648,138.195],[36.610,138.240],[36.570,138.270]] },
+  { name: '市道（サンプル）', cat: 'shido', prefs: ['埼玉県'],
+    office: 'さいたま市 建設局 道路管理課',
+    section: 'さいたま市内（サンプル区間）',
+    coords: [[35.906,139.623],[35.920,139.590],[35.935,139.560]] },
+  { name: '市道（サンプル）', cat: 'shido', prefs: ['長野県'],
+    office: '長野市 建設部 道路課',
+    section: '長野市内（サンプル区間）',
+    coords: [[36.648,138.195],[36.660,138.160],[36.672,138.140]] }
+];
 
-function roadPopupHtml(r) {
-  const c = CAT[r.cat];
-  const rows = PERMITS[r.cat].map(p => `<tr><th>${p[0]}</th><td>${p[1]}</td></tr>`).join('');
-  return `
-    <div class="popup-title">${r.name}</div>
-    <div class="popup-sub"><span class="badge" style="background:${c.color}">${c.label}</span></div>
-    <table class="popup-table">
-      <tr><th>区間</th><td>${r.section}</td></tr>
-      <tr><th>道路管理者・窓口</th><td>${r.office}</td></tr>
-      ${rows}
-    </table>
-    <div style="margin-top:6px;color:#d93025;font-size:11px;">※ サンプルデータ（線形・区間は概略）</div>`;
+// --- 高速道路 ---
+const HIGHWAYS = [
+  { name: '関越自動車道', prefs: ['東京都','埼玉県','群馬県'], operator: 'NEXCO東日本',
+    section: '練馬IC 〜 渋川伊香保IC（サンプル区間）',
+    coords: [[35.750,139.650],[35.850,139.560],[35.920,139.440],[36.060,139.380],[36.240,139.120],[36.322,139.010],[36.480,139.000]] },
+  { name: '上信越自動車道', prefs: ['群馬県','長野県'], operator: 'NEXCO東日本',
+    section: '藤岡JCT 〜 長野IC（サンプル区間）',
+    coords: [[36.240,139.070],[36.290,138.900],[36.340,138.630],[36.400,138.250],[36.560,138.190],[36.600,138.100]] },
+  { name: '中央自動車道', prefs: ['東京都','山梨県','長野県'], operator: 'NEXCO中日本',
+    section: '高井戸IC 〜 岡谷JCT（サンプル区間）',
+    coords: [[35.680,139.620],[35.650,139.330],[35.610,138.940],[35.660,138.570],[35.900,138.320],[36.030,138.090]] },
+  { name: '東北自動車道', prefs: ['埼玉県','栃木県'], operator: 'NEXCO東日本',
+    section: '川口JCT 〜 宇都宮IC（サンプル区間）',
+    coords: [[35.830,139.720],[35.950,139.700],[36.060,139.670],[36.310,139.580],[36.550,139.850]] },
+  { name: '常磐自動車道', prefs: ['埼玉県','千葉県','茨城県'], operator: 'NEXCO東日本',
+    section: '三郷JCT 〜 水戸IC（サンプル区間）',
+    coords: [[35.830,139.870],[35.900,139.930],[36.090,140.180],[36.350,140.400]] }
+];
+
+// --- 公共施設：警察署（位置は概略） ---
+const POLICE = [
+  { name: '長野中央警察署',   prefs: ['長野県'],  lat: 36.650, lng: 138.190 },
+  { name: '松本警察署',       prefs: ['長野県'],  lat: 36.235, lng: 137.970 },
+  { name: '大宮警察署',       prefs: ['埼玉県'],  lat: 35.910, lng: 139.630 },
+  { name: '高崎警察署',       prefs: ['群馬県'],  lat: 36.325, lng: 139.010 },
+  { name: '甲府警察署',       prefs: ['山梨県'],  lat: 35.665, lng: 138.575 },
+  { name: '水戸警察署',       prefs: ['茨城県'],  lat: 36.370, lng: 140.470 },
+  { name: '宇都宮中央警察署', prefs: ['栃木県'],  lat: 36.560, lng: 139.880 },
+  { name: '千葉中央警察署',   prefs: ['千葉県'],  lat: 35.610, lng: 140.120 },
+  { name: '加賀町警察署',     prefs: ['神奈川県'], lat: 35.445, lng: 139.645 },
+  { name: '丸の内警察署',     prefs: ['東京都'],  lat: 35.680, lng: 139.765 }
+];
+
+// --- 公共施設：道の駅（位置は概略） ---
+const MICHINOEKI = [
+  { name: '道の駅 川場田園プラザ', prefs: ['群馬県'], lat: 36.680, lng: 139.120 },
+  { name: '道の駅 もてぎ',         prefs: ['栃木県'], lat: 36.530, lng: 140.190 },
+  { name: '道の駅 しもつま',       prefs: ['茨城県'], lat: 36.180, lng: 139.970 },
+  { name: '道の駅 甘楽',           prefs: ['群馬県'], lat: 36.240, lng: 138.920 },
+  { name: '道の駅 信州新町',       prefs: ['長野県'], lat: 36.560, lng: 138.000 },
+  { name: '道の駅 とみうら',       prefs: ['千葉県'], lat: 35.040, lng: 139.840 }
+];
+
+// --- 管轄情報：国道事務所（位置は概略） ---
+const OFFICES = [
+  { name: '東京国道事務所',     prefs: ['東京都'],  area: '東京都区部の直轄国道（1・4・6・14・15・17・20・246号 等）', lat: 35.6938, lng: 139.7530 },
+  { name: '相武国道事務所',     prefs: ['東京都'],  area: '東京都多摩地域の直轄国道（16・20号 等）',   lat: 35.6660, lng: 139.3160 },
+  { name: '大宮国道事務所',     prefs: ['埼玉県'],  area: '埼玉県内の直轄国道（16・17号 等）',         lat: 35.9500, lng: 139.6200 },
+  { name: '北首都国道事務所',   prefs: ['埼玉県'],  area: '埼玉県東部の直轄国道（4号 等）',            lat: 35.9750, lng: 139.7520 },
+  { name: '千葉国道事務所',     prefs: ['千葉県'],  area: '千葉県内の直轄国道（6・14・16・51号 等）',  lat: 35.6070, lng: 140.1100 },
+  { name: '横浜国道事務所',     prefs: ['神奈川県'], area: '神奈川県内の直轄国道（1・15・16・246号 等）', lat: 35.4600, lng: 139.6300 },
+  { name: '川崎国道事務所',     prefs: ['神奈川県'], area: '川崎市域ほかの直轄国道（15・246号 等）',    lat: 35.5710, lng: 139.6530 },
+  { name: '常総国道事務所',     prefs: ['茨城県'],  area: '茨城県南部の直轄国道（6号 等）',            lat: 36.0830, lng: 140.1120 },
+  { name: '宇都宮国道事務所',   prefs: ['栃木県'],  area: '栃木県内の直轄国道（4・50号 等）',          lat: 36.5550, lng: 139.8990 },
+  { name: '高崎河川国道事務所', prefs: ['群馬県'],  area: '群馬県内の直轄国道（17・18号 等）',         lat: 36.3220, lng: 139.0100 },
+  { name: '長野国道事務所',     prefs: ['長野県'],  area: '長野県内の直轄国道（18・19・20号 等）',     lat: 36.6480, lng: 138.1950 },
+  { name: '甲府河川国道事務所', prefs: ['山梨県'],  area: '山梨県内の直轄国道（20・52号 等）',         lat: 35.6620, lng: 138.5680 }
+];
+
+// --- 管轄情報：旧国道18号（旧道・概略） ---
+const KYUDO = [
+  { name: '旧国道18号（旧道・概略）', prefs: ['群馬県','長野県'],
+    section: '高崎 〜 碓氷峠 〜 軽井沢（サンプル区間）',
+    coords: [[36.322,139.000],[36.330,138.900],[36.335,138.810],[36.340,138.720],[36.350,138.680],[36.342,138.630]] }
+];
+
+// ============================================================
+// レイヤ生成（支店フィルタ対応）
+// ============================================================
+const groups = {};
+['muni','did','kokudo','kendo','shido','highway','police','michinoeki','kankatsu','kyudo']
+  .forEach(k => { groups[k] = L.layerGroup().addTo(map); });
+
+const ROAD_STYLE = {
+  kokudo: { color: '#1a73e8', weight: 5, label: '国道（直轄）' },
+  kendo:  { color: '#188038', weight: 4, label: '県道' },
+  shido:  { color: '#f9ab00', weight: 4, label: '市道' }
+};
+
+let currentBranch = 'all';
+
+function visible(prefs) {
+  if (currentBranch === 'all') return true;
+  return prefs.includes(BRANCHES[currentBranch].pref);
 }
 
-ROADS.forEach(r => {
-  const c = CAT[r.cat];
-  // 白フチ + 本線の2重描画で見やすく
-  L.polyline(r.coords, { color: '#ffffff', weight: c.weight + 4, opacity: 0.9 }).addTo(roadGroups[r.cat]);
-  const line = L.polyline(r.coords, { color: c.color, weight: c.weight, opacity: 0.95 });
-  line.bindPopup(roadPopupHtml(r), { maxWidth: 320 });
-  line.on('mouseover', () => line.setStyle({ weight: c.weight + 3 }));
-  line.on('mouseout',  () => line.setStyle({ weight: c.weight }));
-  line.addTo(roadGroups[r.cat]);
-});
+function tbl(rows) {
+  return '<table class="popup-table">' + rows.map(r => `<tr><th>${r[0]}</th><td>${r[1]}</td></tr>`).join('') + '</table>';
+}
+const SAMPLE = '<div class="sample-note">※ サンプルデータ（形状・位置は概略）</div>';
 
-OFFICES.forEach(o => {
-  const m = L.circleMarker([o.lat, o.lng], {
-    radius: 7, color: '#fff', weight: 2, fillColor: '#1a73e8', fillOpacity: 1
+function rebuildLayers() {
+  Object.values(groups).forEach(g => g.clearLayers());
+
+  MUNI.filter(m => visible(m.prefs)).forEach(m => {
+    L.polygon(m.coords, { color: '#757575', weight: 2, dashArray: '4 3', fillColor: '#9e9e9e', fillOpacity: 0.08 })
+      .bindPopup(`<div class="popup-title">${m.name}</div><div class="popup-sub">市町村界</div>${SAMPLE}`)
+      .addTo(groups.muni);
   });
-  m.bindPopup(`
-    <div class="popup-title">${o.name}</div>
-    <div class="popup-sub"><span class="badge" style="background:#1a73e8">国土交通省 関東地方整備局</span></div>
-    <table class="popup-table">
-      <tr><th>主な管轄</th><td>${o.area}</td></tr>
-      <tr><th>窓口業務</th><td>道路占用許可・工事施工承認 等の申請受付</td></tr>
-      <tr><th>連絡先</th><td>各事務所の公式サイトをご確認ください</td></tr>
-    </table>
-    <div style="margin-top:6px;color:#d93025;font-size:11px;">※ サンプルデータ（位置は概略）</div>`, { maxWidth: 320 });
-  m.bindTooltip(o.name, { direction: 'top', offset: [0, -6] });
-  m.addTo(officeGroup);
-});
 
-Object.values(roadGroups).forEach(g => g.addTo(map));
-officeGroup.addTo(map);
+  DID.filter(d => visible(d.prefs)).forEach(d => {
+    L.polygon(d.coords, { color: '#e91e63', weight: 1, fillColor: '#e91e63', fillOpacity: 0.18 })
+      .bindPopup(`<div class="popup-title">${d.name}</div><div class="popup-sub">DID区域（2020年 人口集中地区）</div>${SAMPLE}`)
+      .addTo(groups.did);
+  });
+
+  ROADS.filter(r => visible(r.prefs)).forEach(r => {
+    const s = ROAD_STYLE[r.cat];
+    L.polyline(r.coords, { color: '#ffffff', weight: s.weight + 4, opacity: 0.9 }).addTo(groups[r.cat]);
+    const line = L.polyline(r.coords, { color: s.color, weight: s.weight, opacity: 0.95 });
+    const rows = [['区間', r.section], ['道路管理者・窓口', r.office], ...PERMITS[r.cat]];
+    line.bindPopup(`<div class="popup-title">${r.name}</div>
+      <div class="popup-sub"><span class="badge" style="background:${s.color}">${s.label}</span></div>${tbl(rows)}${SAMPLE}`, { maxWidth: 320 });
+    line.on('mouseover', () => line.setStyle({ weight: s.weight + 3 }));
+    line.on('mouseout',  () => line.setStyle({ weight: s.weight }));
+    line.addTo(groups[r.cat]);
+  });
+
+  HIGHWAYS.filter(h => visible(h.prefs)).forEach(h => {
+    L.polyline(h.coords, { color: '#ffffff', weight: 9, opacity: 0.9 }).addTo(groups.highway);
+    L.polyline(h.coords, { color: '#7b1fa2', weight: 5, opacity: 0.9 })
+      .bindPopup(`<div class="popup-title">${h.name}</div>
+        <div class="popup-sub"><span class="badge" style="background:#7b1fa2">高速道路</span></div>
+        ${tbl([['区間', h.section], ['管理者', h.operator]])}${SAMPLE}`, { maxWidth: 320 })
+      .addTo(groups.highway);
+  });
+
+  POLICE.filter(p => visible(p.prefs)).forEach(p => {
+    L.circleMarker([p.lat, p.lng], { radius: 6, color: '#fff', weight: 2, fillColor: '#3949ab', fillOpacity: 1 })
+      .bindPopup(`<div class="popup-title">${p.name}</div><div class="popup-sub">公共施設：警察署</div>${SAMPLE}`)
+      .bindTooltip(p.name, { direction: 'top', offset: [0, -6] })
+      .addTo(groups.police);
+  });
+
+  MICHINOEKI.filter(m => visible(m.prefs)).forEach(m => {
+    L.circleMarker([m.lat, m.lng], { radius: 6, color: '#fff', weight: 2, fillColor: '#00897b', fillOpacity: 1 })
+      .bindPopup(`<div class="popup-title">${m.name}</div><div class="popup-sub">公共施設：道の駅</div>${SAMPLE}`)
+      .bindTooltip(m.name, { direction: 'top', offset: [0, -6] })
+      .addTo(groups.michinoeki);
+  });
+
+  OFFICES.filter(o => visible(o.prefs)).forEach(o => {
+    L.circleMarker([o.lat, o.lng], { radius: 7, color: '#fff', weight: 2, fillColor: '#1a73e8', fillOpacity: 1 })
+      .bindPopup(`<div class="popup-title">${o.name}</div>
+        <div class="popup-sub"><span class="badge" style="background:#1a73e8">国土交通省 関東地方整備局</span></div>
+        ${tbl([['主な管轄', o.area], ['窓口業務', '道路占用許可・工事施工承認 等の申請受付']])}${SAMPLE}`, { maxWidth: 320 })
+      .bindTooltip(o.name, { direction: 'top', offset: [0, -6] })
+      .addTo(groups.kankatsu);
+  });
+
+  KYUDO.filter(k => visible(k.prefs)).forEach(k => {
+    L.polyline(k.coords, { color: '#616161', weight: 4, dashArray: '8 6', opacity: 0.9 })
+      .bindPopup(`<div class="popup-title">${k.name}</div>
+        <div class="popup-sub"><span class="badge" style="background:#616161">管轄情報：旧道</span></div>
+        ${tbl([['区間', k.section]])}${SAMPLE}`, { maxWidth: 320 })
+      .addTo(groups.kyudo);
+  });
+}
+rebuildLayers();
+
+// ============================================================
+// 支店切替
+// ============================================================
+const branchSelect = document.getElementById('branchSelect');
+Object.entries(BRANCHES).forEach(([key, b]) => {
+  const opt = document.createElement('option');
+  opt.value = key;
+  opt.textContent = b.name;
+  branchSelect.appendChild(opt);
+});
+branchSelect.addEventListener('change', () => {
+  currentBranch = branchSelect.value;
+  rebuildLayers();
+  if (currentBranch === 'all') {
+    map.fitBounds([[34.9, 137.3], [37.2, 140.9]]);
+  } else {
+    map.fitBounds(BRANCHES[currentBranch].bounds);
+  }
+});
 
 // レイヤON/OFF
 document.querySelectorAll('input[data-layer]').forEach(cb => {
   cb.addEventListener('change', () => {
-    const g = cb.dataset.layer === 'offices' ? officeGroup : roadGroups[cb.dataset.layer];
-    cb.checked ? map.addLayer(g) : map.removeLayer(g);
+    cb.checked ? map.addLayer(groups[cb.dataset.layer]) : map.removeLayer(groups[cb.dataset.layer]);
   });
 });
 
@@ -403,6 +567,65 @@ measureBtn.addEventListener('click', () => {
 });
 
 // ============================================================
+// KML書き出し（Google Earth互換 — 実物と同じ納品形式）
+// ============================================================
+function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+function kmlCoords(coords) { return coords.map(c => `${c[1]},${c[0]},0`).join(' '); }
+
+function buildKml() {
+  const branchName = currentBranch === 'all' ? '関東甲信 全支店' : BRANCHES[currentBranch].name;
+  const parts = [];
+  parts.push(`<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2"><Document>
+<name>${esc('業務支援マップ（' + branchName + '）サンプル')}</name>
+<Style id="kokudo"><LineStyle><color>ffe8731a</color><width>4</width></LineStyle></Style>
+<Style id="kendo"><LineStyle><color>ff388018</color><width>3</width></LineStyle></Style>
+<Style id="shido"><LineStyle><color>ff00abf9</color><width>3</width></LineStyle></Style>
+<Style id="highway"><LineStyle><color>ffa21f7b</color><width>4</width></LineStyle></Style>
+<Style id="kyudo"><LineStyle><color>ff616161</color><width>3</width></LineStyle></Style>
+<Style id="muni"><LineStyle><color>ff757575</color><width>2</width></LineStyle><PolyStyle><color>1a9e9e9e</color></PolyStyle></Style>
+<Style id="did"><LineStyle><color>ff6339e9</color><width>1</width></LineStyle><PolyStyle><color>336339e9</color></PolyStyle></Style>`);
+
+  function folder(name, items) {
+    if (!items.length) return '';
+    return `<Folder><name>${esc(name)}</name>${items.join('')}</Folder>`;
+  }
+  function lineMark(name, desc, style, coords) {
+    return `<Placemark><name>${esc(name)}</name><description>${esc(desc)}</description><styleUrl>#${style}</styleUrl><LineString><tessellate>1</tessellate><coordinates>${kmlCoords(coords)}</coordinates></LineString></Placemark>`;
+  }
+  function polyMark(name, desc, style, coords) {
+    const ring = kmlCoords(coords.concat([coords[0]]));
+    return `<Placemark><name>${esc(name)}</name><description>${esc(desc)}</description><styleUrl>#${style}</styleUrl><Polygon><outerBoundaryIs><LinearRing><coordinates>${ring}</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>`;
+  }
+  function pointMark(name, desc, lat, lng) {
+    return `<Placemark><name>${esc(name)}</name><description>${esc(desc)}</description><Point><coordinates>${lng},${lat},0</coordinates></Point></Placemark>`;
+  }
+
+  parts.push(folder('市町村界', MUNI.filter(m => visible(m.prefs)).map(m => polyMark(m.name, 'サンプル（概形）', 'muni', m.coords))));
+  parts.push(folder('DID区域（2020年）', DID.filter(d => visible(d.prefs)).map(d => polyMark(d.name, 'サンプル（概形）', 'did', d.coords))));
+  parts.push(folder('主要道路（国・県・市道）', ROADS.filter(r => visible(r.prefs)).map(r =>
+    lineMark(r.name, `区間: ${r.section} / 管理者・窓口: ${r.office}（サンプル）`, r.cat, r.coords))));
+  parts.push(folder('高速道路', HIGHWAYS.filter(h => visible(h.prefs)).map(h =>
+    lineMark(h.name, `区間: ${h.section} / 管理者: ${h.operator}（サンプル）`, 'highway', h.coords))));
+  parts.push(folder('公共施設（警察署）', POLICE.filter(p => visible(p.prefs)).map(p => pointMark(p.name, '警察署（サンプル・位置概略）', p.lat, p.lng))));
+  parts.push(folder('公共施設（道の駅）', MICHINOEKI.filter(m => visible(m.prefs)).map(m => pointMark(m.name, '道の駅（サンプル・位置概略）', m.lat, m.lng))));
+  parts.push(folder('管轄情報（国道事務所）', OFFICES.filter(o => visible(o.prefs)).map(o => pointMark(o.name, `主な管轄: ${o.area}（サンプル・位置概略）`, o.lat, o.lng))));
+  parts.push(folder('管轄情報（旧国道18号）', KYUDO.filter(k => visible(k.prefs)).map(k => lineMark(k.name, `区間: ${k.section}（サンプル）`, 'kyudo', k.coords))));
+
+  parts.push('</Document></kml>');
+  return parts.join('\n');
+}
+
+document.getElementById('kmlBtn').addEventListener('click', () => {
+  const blob = new Blob([buildKml()], { type: 'application/vnd.google-earth.kml+xml' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = '業務支援マップ_サンプル.kml';
+  a.click();
+  URL.revokeObjectURL(a.href);
+});
+
+// ============================================================
 // GeoJSON読込（実データの重ね合わせ用）
 // ============================================================
 const importFile = document.getElementById('importFile');
@@ -419,7 +642,7 @@ importFile.addEventListener('change', () => {
         pointToLayer: (f, latlng) => L.circleMarker(latlng, { radius: 6, color: '#fff', weight: 2, fillColor: '#9334e6', fillOpacity: 1 }),
         onEachFeature: (f, l) => {
           const props = f.properties || {};
-          const rows = Object.entries(props).map(([k, v]) => `<tr><th>${k}</th><td>${v}</td></tr>`).join('');
+          const rows = Object.entries(props).map(([k, v]) => `<tr><th>${esc(k)}</th><td>${esc(v)}</td></tr>`).join('');
           l.bindPopup(`<table class="popup-table">${rows || '<tr><td>属性なし</td></tr>'}</table>`, { maxWidth: 320 });
         }
       }).addTo(map);

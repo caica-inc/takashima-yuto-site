@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document>
+<name>業務支援マップ（長野支店）サンプル</name>
+<description>道路許認可支援業務用GISマップのAI再現サンプル。形状・位置は概略のデモデータです。実運用時は国土数値情報・道路台帳等の実データに差し替えてください。</description>
+<Style id="kokudo"><LineStyle><color>ffe8731a</color><width>4</width></LineStyle></Style>
+<Style id="kendo"><LineStyle><color>ff388018</color><width>3</width></LineStyle></Style>
+<Style id="shido"><LineStyle><color>ff00abf9</color><width>3</width></LineStyle></Style>
+<Style id="highway"><LineStyle><color>ffa21f7b</color><width>4</width></LineStyle></Style>
+<Style id="kyudo"><LineStyle><color>ff616161</color><width>3</width></LineStyle></Style>
+<Style id="muni"><LineStyle><color>ff757575</color><width>2</width></LineStyle><PolyStyle><color>1a9e9e9e</color></PolyStyle></Style>
+<Style id="did"><LineStyle><color>ff6339e9</color><width>1</width></LineStyle><PolyStyle><color>336339e9</color></PolyStyle></Style>
+
+<Folder><name>市町村界</name>
+<Placemark><name>長野市（概形）</name><description>サンプル（概形）</description><styleUrl>#muni</styleUrl>
+<Polygon><outerBoundaryIs><LinearRing><coordinates>138.05,36.75,0 138.25,36.78,0 138.35,36.65,0 138.28,36.55,0 138.10,36.55,0 138.02,36.62,0 138.05,36.75,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
+<Placemark><name>上田市（概形）</name><description>サンプル（概形）</description><styleUrl>#muni</styleUrl>
+<Polygon><outerBoundaryIs><LinearRing><coordinates>138.15,36.48,0 138.35,36.50,0 138.38,36.38,0 138.22,36.32,0 138.12,36.40,0 138.15,36.48,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
+</Folder>
+
+<Folder><name>DID区域（2020年）</name>
+<Placemark><name>長野市DID（概形）</name><description>人口集中地区・サンプル（概形）</description><styleUrl>#did</styleUrl>
+<Polygon><outerBoundaryIs><LinearRing><coordinates>138.16,36.66,0 138.22,36.67,0 138.23,36.63,0 138.17,36.62,0 138.16,36.66,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
+</Folder>
+
+<Folder><name>主要道路（国・県・市道）</name>
+<Placemark><name>国道18号</name><description>区間: 群馬県高崎市〜長野県長野市 / 管理者・窓口: 高崎河川国道事務所・長野国道事務所（サンプル）</description><styleUrl>#kokudo</styleUrl>
+<LineString><tessellate>1</tessellate><coordinates>139.003,36.322,0 138.900,36.330,0 138.600,36.342,0 138.250,36.400,0 138.195,36.648,0</coordinates></LineString></Placemark>
+<Placemark><name>国道19号</name><description>区間: 松本市〜長野市 / 管理者・窓口: 長野国道事務所（サンプル）</description><styleUrl>#kokudo</styleUrl>
+<LineString><tessellate>1</tessellate><coordinates>137.972,36.238,0 137.990,36.400,0 138.060,36.520,0 138.195,36.648,0</coordinates></LineString></Placemark>
+<Placemark><name>県道（サンプル）</name><description>区間: 長野市内（サンプル区間） / 管理者・窓口: 長野県 長野建設事務所</description><styleUrl>#kendo</styleUrl>
+<LineString><tessellate>1</tessellate><coordinates>138.195,36.648,0 138.240,36.610,0 138.270,36.570,0</coordinates></LineString></Placemark>
+<Placemark><name>市道（サンプル）</name><description>区間: 長野市内（サンプル区間） / 管理者・窓口: 長野市 建設部 道路課</description><styleUrl>#shido</styleUrl>
+<LineString><tessellate>1</tessellate><coordinates>138.195,36.648,0 138.160,36.660,0 138.140,36.672,0</coordinates></LineString></Placemark>
+</Folder>
+
+<Folder><name>高速道路</name>
+<Placemark><name>上信越自動車道</name><description>区間: 藤岡JCT〜長野IC（サンプル区間） / 管理者: NEXCO東日本</description><styleUrl>#highway</styleUrl>
+<LineString><tessellate>1</tessellate><coordinates>139.070,36.240,0 138.900,36.290,0 138.630,36.340,0 138.250,36.400,0 138.190,36.560,0 138.100,36.600,0</coordinates></LineString></Placemark>
+</Folder>
+
+<Folder><name>公共施設（警察署）</name>
+<Placemark><name>長野中央警察署</name><description>警察署（サンプル・位置概略）</description><Point><coordinates>138.190,36.650,0</coordinates></Point></Placemark>
+<Placemark><name>松本警察署</name><description>警察署（サンプル・位置概略）</description><Point><coordinates>137.970,36.235,0</coordinates></Point></Placemark>
+</Folder>
+
+<Folder><name>公共施設（道の駅）</name>
+<Placemark><name>道の駅 信州新町</name><description>道の駅（サンプル・位置概略）</description><Point><coordinates>138.000,36.560,0</coordinates></Point></Placemark>
+</Folder>
+
+<Folder><name>管轄情報</name>
+<Placemark><name>長野国道事務所</name><description>主な管轄: 長野県内の直轄国道（18・19・20号 等）。道路占用許可・工事施工承認等の申請窓口（サンプル・位置概略）</description><Point><coordinates>138.195,36.648,0</coordinates></Point></Placemark>
+<Placemark><name>旧国道18号（旧道・概略）</name><description>区間: 高崎〜碓氷峠〜軽井沢（サンプル区間）</description><styleUrl>#kyudo</styleUrl>
+<LineString><tessellate>1</tessellate><coordinates>139.000,36.322,0 138.900,36.330,0 138.810,36.335,0 138.720,36.340,0 138.680,36.350,0 138.630,36.342,0</coordinates></LineString></Placemark>
+</Folder>
+
+</Document>
+</kml>
