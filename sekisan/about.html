@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>KCM積算ツール｜積算業務支援</title>
+<style>
+  :root {
+    --blue: #045292; --blue-d: #03406f; --lime: #b6d55e; --marker: #e3ea61;
+    --lblue: #9cd9f0; --pale: #d9e9f8; --ink: #1c2430; --sub: #5a6472;
+    --line: #d8dde4; --light: #f5f8fa;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: "Hiragino Sans", "Noto Sans JP", "Meiryo UI", Meiryo, sans-serif; color: var(--ink); background: #fff; line-height: 1.8; }
+  .stripe { height: 14px; background: repeating-linear-gradient(60deg, var(--lime) 0 7px, #fff 7px 16px); }
+  header { display: flex; align-items: center; justify-content: space-between; padding: 14px 5vw; border-bottom: 1px solid var(--line); }
+  header img { height: 44px; }
+  header a.btn { font-size: 14px; }
+  .en { font-family: Arial, sans-serif; font-weight: bold; letter-spacing: .25em; color: var(--blue); font-size: 13px; }
+  .marker { background: linear-gradient(transparent 55%, var(--marker) 55%, var(--marker) 92%, transparent 92%); }
+  .btn { display: inline-block; background: var(--blue); color: #fff; text-decoration: none; padding: 12px 26px; border-radius: 10px; font-weight: 700; }
+  .btn:hover { background: var(--blue-d); }
+  .btn.ghost { background: #fff; color: var(--blue); border: 2px solid var(--blue); }
+  section { padding: 64px 5vw; }
+  .inner { max-width: 1080px; margin: 0 auto; }
+  h2.head { font-size: 28px; margin: 6px 0 28px; }
+  /* hero */
+  .hero { display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; align-items: center; padding: 72px 5vw 56px; }
+  .hero h1 { font-size: clamp(30px, 4.2vw, 46px); line-height: 1.45; margin: 10px 0 18px; }
+  .hero p.lead { color: var(--sub); font-size: 16px; margin: 0 0 26px; }
+  .hero .cta { display: flex; gap: 14px; flex-wrap: wrap; }
+  /* 画面モック */
+  .mock { border: 1px solid var(--line); border-radius: 14px; box-shadow: 0 14px 40px rgba(4,82,146,.14); overflow: hidden; background: #fff; }
+  .mock .bar { background: var(--light); border-bottom: 1px solid var(--line); padding: 8px 14px; display: flex; gap: 6px; }
+  .mock .bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
+  .mock .body { padding: 16px; font-size: 11px; }
+  .mock .badge { display: inline-block; background: #c0392b; color: #fff; border-radius: 99px; padding: 1px 10px; font-size: 10px; }
+  .mock table { border-collapse: collapse; width: 100%; margin-top: 10px; }
+  .mock th { background: #eef1f5; font-size: 10px; padding: 4px; border: 1px solid var(--line); }
+  .mock td { border: 1px solid #e6eaef; padding: 4px 6px; }
+  .mock tr.sec td { background: #f0f3f7; font-weight: 700; }
+  .mock td.orange { background: #f4b084; }
+  .mock td.blue { background: #eaf2fb; }
+  .mock td.sel { color: var(--blue); }
+  /* cards */
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 18px; }
+  .card { background: var(--light); border-radius: 14px; padding: 22px; }
+  .chip { display: inline-flex; align-items: center; justify-content: center; min-width: 40px; height: 32px; border-radius: 8px; background: var(--lblue); color: var(--blue); font-family: Arial; font-weight: bold; margin-bottom: 10px; }
+  .card h3 { margin: 0 0 8px; font-size: 17px; color: var(--blue); }
+  .card p { margin: 0; font-size: 13.5px; color: var(--ink); }
+  /* flow */
+  .flow { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; counter-reset: fl; }
+  .flow div { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 20px; position: relative; }
+  .flow div b { display: block; color: var(--blue); margin-bottom: 6px; font-size: 16px; }
+  .flow div small { color: var(--sub); }
+  .flow div::before { counter-increment: fl; content: "STEP " counter(fl); font-family: Arial; font-weight: bold; letter-spacing: .15em; color: var(--lime); font-size: 12px; }
+  /* 帳票 */
+  .reports { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+  .reports div { border-left: 6px solid var(--lime); background: var(--light); border-radius: 0 12px 12px 0; padding: 14px 16px; font-size: 13.5px; }
+  .reports div b { color: var(--blue); display: block; margin-bottom: 4px; font-size: 15px; }
+  .gray { background: var(--light); }
+  .sec-note { color: var(--sub); font-size: 13px; }
+  footer { padding: 26px 5vw; text-align: center; color: var(--sub); font-size: 13px; }
+  @media (max-width: 860px) { .hero { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header>
+  <img src="brand/logo.svg" alt="KCM積算ツール">
+  <a class="btn" href="index.html">ツールを開く</a>
+</header>
+
+<div class="hero inner" style="max-width:1150px">
+  <div>
+    <span class="en">SEKISAN SUPPORT TOOL</span>
+    <h1>積算の帳票づくりを、<br><span class="marker">読み込むだけ</span>に。</h1>
+    <p class="lead">新土木工事積算システムの「入力データリスト」をブラウザに読み込むだけで、設計積算条件リスト・数量総括表などの帳票を自動作成。Acrobat・DocuWorks・Excelマクロはもう必要ありません。</p>
+    <div class="cta">
+      <a class="btn" href="index.html">ツールを開く</a>
+      <a class="btn ghost" href="docs/KCM積算ツール_操作マニュアル.pptx">マニュアルを見る</a>
+    </div>
+  </div>
+  <div class="mock" aria-hidden="true">
+    <div class="bar"><i></i><i></i><i></i></div>
+    <div class="body">
+      <b>設計積算条件リストの確認・入力</b> <span class="badge">残 3 件</span>
+      <table>
+        <tr><th>種別</th><th>夜間○</th><th>単位</th><th>数量</th><th>内容</th><th>根拠又は理由</th></tr>
+        <tr class="sec"><td>道路改良</td><td></td><td>式</td><td>1</td><td></td><td></td></tr>
+        <tr><td><b>掘削</b></td><td></td><td>m3</td><td>1,000</td><td class="sel">歩掛かりの選定 ▾</td><td class="sel">積算基準書(赤本)どおり ▾</td></tr>
+        <tr><td class="orange">ﾌﾟﾚｷｬｽﾄU型側溝</td><td class="orange">○ ▾</td><td>m</td><td>317</td><td class="sel">歩掛かりの選定 ▾</td><td class="sel">積算基準書(赤本)どおり ▾</td></tr>
+        <tr><td>　掘削 ダミー</td><td></td><td>m3</td><td>1</td><td class="sel">歩掛かりの選定 ▾</td><td class="blue">独自歩掛 ▾</td></tr>
+        <tr><td>　　軽油</td><td></td><td>%</td><td>19.56</td><td class="sel">材料単価 ▾</td><td></td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="stripe"></div>
+
+<section>
+  <div class="inner">
+    <span class="en">PROBLEM</span>
+    <h2 class="head">こんな<span class="marker">お困りごと</span>ありませんか</h2>
+    <div class="cards">
+      <div class="card"><span class="chip">1</span><h3>変換が不安定</h3><p>AcrobatのバージョンやDocuWorks経由の変換でレイアウトが崩れ、Excelツールが動かない。</p></div>
+      <div class="card"><span class="chip">2</span><h3>マクロの配布が大変</h3><p>Excelマクロはセキュリティ警告や更新配布の管理が必要で、支店展開のハードルに。</p></div>
+      <div class="card"><span class="chip">3</span><h3>確認作業が目視頼み</h3><p>色付きセルを目で探して手入力。確認漏れ・入力漏れに気づきにくい。</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="gray">
+  <div class="inner">
+    <span class="en">FEATURES</span>
+    <h2 class="head">KCM積算ツールの<span class="marker">4つの特長</span></h2>
+    <div class="cards">
+      <div class="card"><span class="chip">A</span><h3>PDFを直接読み込み</h3><p>「鏡なし・STまで」で印刷したPDFをドラッグ＆ドロップするだけ。変換ソフトは不要です。</p></div>
+      <div class="card"><span class="chip">B</span><h3>残件を自動カウント</h3><p>市場単価の夜間確認・独自歩掛の入力などの要対応箇所を数えて表示。0件になれば完了です。</p></div>
+      <div class="card"><span class="chip">C</span><h3>途中保存・引き継ぎ</h3><p>入力は自動保存。作業ファイル(.json)で別PC・別担当者への引き継ぎもできます。</p></div>
+      <div class="card"><span class="chip">D</span><h3>納品物はExcel</h3><p>最終帳票は従来どおりのExcel様式(旧Ver2.2.2踏襲)。既存の照査・提出フローにそのまま載ります。</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="inner">
+    <span class="en">HOW IT WORKS</span>
+    <h2 class="head">使い方は<span class="marker">3ステップ</span></h2>
+    <div class="flow">
+      <div><b>読み込む</b><small>新土積システムから印刷した入力データリスト(PDF)をドラッグ＆ドロップ</small></div>
+      <div><b>確認・入力する</b><small>色付き箇所をプルダウンとセル入力で確認。残件数が0になれば完了</small></div>
+      <div><b>Excelを出力する</b><small>4帳票入りのExcelを一括ダウンロード。画面の入力内容も反映済み</small></div>
+    </div>
+  </div>
+</section>
+
+<section class="gray">
+  <div class="inner">
+    <span class="en">REPORTS</span>
+    <h2 class="head">出力される帳票</h2>
+    <div class="reports">
+      <div><b>設計積算条件リスト</b>内容・根拠を自動入力。色分け・プルダウン付き</div>
+      <div><b>数量総括表</b>工事区分〜細別の階層と規格・数量を自動転記</div>
+      <div><b>交通誘導員集計</b>交通誘導警備員の計上箇所を一覧化</div>
+      <div><b>チェック結果</b>単位・単位数量の不一致などを自動検出</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="inner">
+    <span class="en">SECURITY</span>
+    <h2 class="head">データは<span class="marker">端末の中だけ</span>で処理</h2>
+    <p>読み込んだ積算データはブラウザ内でのみ処理され、外部のサーバーには一切送信されません。インストール不要・オフライン動作可。社内サーバーやSharePointに置くだけで全支店から利用できます。</p>
+    <p class="sec-note">動作環境: Microsoft Edge / Google Chrome（最新版推奨）</p>
+    <div class="cta" style="margin-top:20px">
+      <a class="btn" href="index.html">ツールを開く</a>
+    </div>
+  </div>
+</section>
+
+<div class="stripe"></div>
+<footer>KCM積算ツール（β）｜関東建設マネジメント株式会社 × 株式会社カイカ</footer>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 140" width="560" height="140">
+  <!-- KCM積算ツール ロゴ(横組み) : KCMブルー #045292 / ライム #B6D55E / マーカー #E3EA61 -->
+  <defs>
+    <clipPath id="tile"><rect x="10" y="10" width="120" height="120" rx="26"/></clipPath>
+  </defs>
+  <!-- シンボル: 帳票グリッド+マーカー -->
+  <rect x="10" y="10" width="120" height="120" rx="26" fill="#045292"/>
+  <g clip-path="url(#tile)">
+    <rect x="10" y="106" width="120" height="24" fill="#B6D55E"/>
+  </g>
+  <g stroke="#FFFFFF" stroke-width="7" stroke-linecap="round">
+    <line x1="34" y1="44" x2="106" y2="44"/>
+    <line x1="34" y1="68" x2="88" y2="68"/>
+    <line x1="34" y1="92" x2="98" y2="92"/>
+  </g>
+  <rect x="28" y="58" width="50" height="20" rx="4" fill="#E3EA61" opacity="0.9"/>
+  <line x1="34" y1="68" x2="88" y2="68" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round"/>
+  <!-- ワードマーク -->
+  <text x="158" y="76" font-family="'Meiryo UI', Meiryo, sans-serif" font-size="52" font-weight="bold" fill="#1C2430">KCM<tspan fill="#045292">積算ツール</tspan></text>
+  <text x="161" y="112" font-family="Arial, sans-serif" font-size="17" letter-spacing="6" font-weight="bold" fill="#5A6472">SEKISAN SUPPORT TOOL</text>
+</svg>

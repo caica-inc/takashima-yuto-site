@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>KCM積算ツール パンフレット</title>
+<style>
+  :root {
+    --blue: #045292; --blue-d: #03406f; --lime: #b6d55e; --marker: #e3ea61;
+    --lblue: #9cd9f0; --pale: #d9e9f8; --ink: #1c2430; --sub: #5a6472;
+    --line: #d8dde4; --light: #f5f8fa;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  @page { size: A4; margin: 0; }
+  body { font-family: "Noto Sans JP", "Hiragino Sans", "Meiryo UI", Meiryo, sans-serif; color: var(--ink); }
+  .page { width: 210mm; height: 296mm; padding: 14mm 16mm 0; position: relative; overflow: hidden; page-break-after: always; background: #fff; }
+  .stripe { position: absolute; left: 0; right: 0; bottom: 0; height: 6mm; background: repeating-linear-gradient(60deg, var(--lime) 0 2.2mm, #fff 2.2mm 5mm); }
+  .en { font-family: Arial, sans-serif; font-weight: bold; letter-spacing: .28em; color: var(--blue); font-size: 9pt; }
+  .marker { background: linear-gradient(transparent 55%, var(--marker) 55%, var(--marker) 92%, transparent 92%); }
+  /* ---- 表面 ---- */
+  .logo { height: 15mm; margin-bottom: 12mm; }
+  h1 { font-size: 26pt; line-height: 1.5; margin: 3mm 0 6mm; }
+  .lead { color: var(--sub); font-size: 10.5pt; line-height: 1.9; margin-bottom: 8mm; }
+  .flowbox { display: flex; gap: 4mm; margin: 6mm 0 8mm; }
+  .flowbox div { flex: 1; border: 1px solid var(--line); border-radius: 4mm; padding: 5mm; }
+  .flowbox div i { font-style: normal; font-family: Arial; font-weight: bold; letter-spacing: .15em; color: var(--lime); font-size: 8pt; }
+  .flowbox div b { display: block; color: var(--blue); font-size: 12pt; margin: 1mm 0; }
+  .flowbox div small { color: var(--sub); font-size: 8.5pt; line-height: 1.6; display: block; }
+  .before-after { background: var(--light); border-radius: 4mm; padding: 6mm 7mm; font-size: 9.5pt; margin-bottom: 8mm; }
+  .before-after .row { display: flex; align-items: center; gap: 3mm; margin: 2mm 0; }
+  .before-after .tag { flex: 0 0 16mm; text-align: center; border-radius: 2mm; font-weight: bold; padding: 1mm 0; font-size: 8.5pt; }
+  .t-old { background: #e6d3cd; color: #7c3a2d; }
+  .t-new { background: var(--blue); color: #fff; }
+  .arrow { color: var(--sub); }
+  .problem { display: flex; gap: 4mm; }
+  .problem div { flex: 1; background: var(--light); border-radius: 4mm; padding: 5mm; font-size: 9pt; }
+  .problem div b { color: var(--blue); display: block; font-size: 11pt; margin-bottom: 1.5mm; }
+  .chip { display: inline-flex; align-items: center; justify-content: center; width: 9mm; height: 7mm; border-radius: 2mm; background: var(--lblue); color: var(--blue); font-family: Arial; font-weight: bold; font-size: 10pt; margin-bottom: 2mm; }
+  h2.head { font-size: 17pt; margin: 2mm 0 5mm; }
+  .secttl { margin-top: 8mm; }
+  /* ---- 裏面 ---- */
+  .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
+  .card { background: var(--light); border-radius: 4mm; padding: 5mm; font-size: 9.5pt; }
+  .card b { color: var(--blue); display: block; font-size: 11.5pt; margin-bottom: 1.5mm; }
+  .reports div { border-left: 2.2mm solid var(--lime); background: var(--light); border-radius: 0 3mm 3mm 0; padding: 3.5mm 5mm; font-size: 9.5pt; margin-bottom: 3mm; }
+  .reports b { color: var(--blue); }
+  .note { background: #eef6fd; border-radius: 3mm; padding: 4mm 5mm; font-size: 9.5pt; margin-top: 5mm; }
+  .note b { color: var(--blue); }
+  .contact { position: absolute; left: 16mm; right: 16mm; bottom: 12mm; display: flex; justify-content: space-between; align-items: flex-end; }
+  .contact .co { font-size: 9pt; color: var(--sub); line-height: 1.7; }
+  .contact .co b { color: var(--ink); font-size: 10.5pt; }
+</style>
+</head>
+<body>
+
+<!-- ===== 表面 ===== -->
+<div class="page">
+  <img class="logo" src="../brand/logo.svg" alt="KCM積算ツール">
+  <span class="en">SEKISAN SUPPORT TOOL</span>
+  <h1>積算の帳票づくりを、<br><span class="marker">読み込むだけ</span>に。</h1>
+  <p class="lead">新土木工事積算システムの「入力データリスト」をブラウザに読み込むだけで、設計積算条件リスト・数量総括表などの帳票を自動作成。Acrobat・DocuWorks・Excelマクロは必要ありません。インストール不要、データは端末内だけで処理されます。</p>
+
+  <span class="en">BEFORE / AFTER</span>
+  <div class="before-after">
+    <div class="row"><span class="tag t-old">従来</span><span>PDF印刷 <span class="arrow">▶</span> Acrobat 11でExcel変換 <span class="arrow">▶</span> 編集マクロ <span class="arrow">▶</span> 帳票マクロ <span class="arrow">▶</span> 目視確認・手入力</span></div>
+    <div class="row"><span class="tag t-new">本ツール</span><span>PDF印刷 <span class="arrow">▶</span> <b>ブラウザに読み込む</b> <span class="arrow">▶</span> 画面で確認・入力(残件表示) <span class="arrow">▶</span> <b>Excel一括出力</b></span></div>
+  </div>
+
+  <span class="en">HOW IT WORKS</span>
+  <h2 class="head">使い方は<span class="marker">3ステップ</span></h2>
+  <div class="flowbox">
+    <div><i>STEP 1</i><b>読み込む</b><small>新土積システムから「鏡なし・STまで」で印刷したPDFをドラッグ＆ドロップ</small></div>
+    <div><i>STEP 2</i><b>確認・入力する</b><small>色付き箇所をプルダウンで確認・入力。要対応の残件数を自動表示、0件で完了</small></div>
+    <div><i>STEP 3</i><b>Excelを出力する</b><small>4帳票入りのExcelを一括ダウンロード。画面での入力も反映済み</small></div>
+  </div>
+
+  <span class="en">PROBLEM</span>
+  <h2 class="head">こんなお困りごとを解決します</h2>
+  <div class="problem">
+    <div><span class="chip">1</span><b>変換が不安定</b>Acrobatのバージョン差やDocuWorks変換でレイアウトが崩れ、ツールが動かない</div>
+    <div><span class="chip">2</span><b>マクロ配布が大変</b>セキュリティ警告や更新配布の管理が全支店展開のハードルに</div>
+    <div><span class="chip">3</span><b>確認が目視頼み</b>色付きセルを目で探して手入力。確認漏れに気づきにくい</div>
+  </div>
+  <div class="stripe"></div>
+</div>
+
+<!-- ===== 裏面 ===== -->
+<div class="page">
+  <span class="en">FEATURES</span>
+  <h2 class="head">4つの特長</h2>
+  <div class="g2">
+    <div class="card"><span class="chip">A</span><b>PDFを直接読み込み</b>変換ソフト不要。Acrobat変換済みExcelやテキスト貼り付けにも対応(従来フロー互換)</div>
+    <div class="card"><span class="chip">B</span><b>残件を自動カウント</b>市場単価の夜間確認・独自歩掛の入力・単位不一致などを数えて一覧表示。クリックで該当行へ</div>
+    <div class="card"><span class="chip">C</span><b>途中保存・引き継ぎ</b>入力は自動保存。作業ファイル(.json)で別PC・別担当者への引き継ぎも可能</div>
+    <div class="card"><span class="chip">D</span><b>納品物はExcel</b>旧システム(Ver2.2.2)の様式・色分け・プルダウンを踏襲。既存の照査・提出フローにそのまま載る</div>
+  </div>
+
+  <span class="en secttl" style="display:block; margin-top:8mm">REPORTS</span>
+  <h2 class="head">出力される帳票</h2>
+  <div class="reports">
+    <div><b>① 設計積算条件リスト</b>　内容・根拠又は理由を自動入力。夜間○は一括割増率50%で自動判定</div>
+    <div><b>② 数量総括表</b>　工事区分〜細別の階層と規格・数量を自動転記。変更工事の列構成にも対応</div>
+    <div><b>③ 交通誘導員集計</b>　交通誘導警備員の計上箇所を工種別に一覧化</div>
+    <div><b>④ チェック結果</b>　単位・単位数量の不一致などの自動チェック一覧。照査記録にも</div>
+  </div>
+
+  <span class="en secttl" style="display:block; margin-top:8mm">SECURITY</span>
+  <h2 class="head">データは<span class="marker">端末の中だけ</span>で処理</h2>
+  <div class="g2">
+    <div class="card"><b>外部送信なし</b>積算データはブラウザ内でのみ処理。外部サーバーへは一切送信されません</div>
+    <div class="card"><b>置くだけで展開</b>社内サーバーやSharePointに配置するだけで全支店から利用可。オフライン動作可</div>
+  </div>
+  <div class="note"><b>動作環境</b>　Microsoft Edge / Google Chrome（最新版推奨）。インストール不要。</div>
+
+  <div class="contact">
+    <div class="co"><b>関東建設マネジメント株式会社</b><br>企画部　積算ツール担当</div>
+    <div class="co" style="text-align:right"><b>開発・お問い合わせ：株式会社カイカ</b><br>KCM積算ツール（β）　2026年9月</div>
+  </div>
+  <div class="stripe"></div>
+</div>
+</body>
+</html>
