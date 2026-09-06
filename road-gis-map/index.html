@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>道路許認可支援GISマップ（プロトタイプ）</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+  :root {
+    --blue: #1a73e8;
+    --green: #188038;
+    --orange: #f9ab00;
+    --gray: #5f6368;
+    --panel-bg: #ffffff;
+    --border: #dadce0;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, system-ui, sans-serif; }
+  #map { position: absolute; inset: 0; }
+
+  /* ---- 検索ボックス（Googleマップ風） ---- */
+  #searchBox {
+    position: absolute; top: 12px; left: 12px; z-index: 1000;
+    width: 360px; max-width: calc(100vw - 24px);
+    background: var(--panel-bg); border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.25);
+    display: flex; align-items: center; padding: 4px 8px;
+  }
+  #searchBox input {
+    flex: 1; border: none; outline: none; font-size: 15px; padding: 8px;
+    background: transparent;
+  }
+  #searchBox button {
+    border: none; background: none; cursor: pointer; font-size: 16px;
+    color: var(--gray); padding: 6px 8px;
+  }
+  #searchResults {
+    position: absolute; top: 58px; left: 12px; z-index: 1000;
+    width: 360px; max-width: calc(100vw - 24px);
+    background: var(--panel-bg); border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.25); overflow: hidden;
+  }
+  #searchResults div { padding: 10px 14px; font-size: 13px; cursor: pointer; border-top: 1px solid #f1f3f4; }
+  #searchResults div:hover { background: #f8f9fa; }
+
+  /* ---- サイドパネル ---- */
+  #panel {
+    position: absolute; top: 12px; right: 12px; z-index: 1000;
+    width: 300px; max-width: calc(100vw - 24px);
+    max-height: calc(100% - 24px);
+    background: var(--panel-bg); border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.25);
+    display: flex; flex-direction: column; overflow: hidden;
+  }
+  #panel header {
+    padding: 12px 16px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  #panel header h1 { font-size: 15px; margin: 0; }
+  #panel header small { display: block; color: var(--gray); font-size: 11px; font-weight: normal; margin-top: 2px; }
+  #panelBody { overflow-y: auto; padding: 8px 16px 16px; }
+  #panelToggle { border: none; background: none; cursor: pointer; font-size: 14px; color: var(--gray); }
+  .section-title { font-size: 12px; color: var(--gray); margin: 14px 0 6px; font-weight: bold; }
+  .layer-row { display: flex; align-items: center; gap: 8px; padding: 5px 0; font-size: 13px; cursor: pointer; }
+  .layer-row .swatch { width: 22px; height: 5px; border-radius: 3px; flex-shrink: 0; }
+  .layer-row .dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; border: 2px solid #fff; box-shadow: 0 0 2px rgba(0,0,0,.5); }
+  .basemap-row { display: flex; gap: 6px; flex-wrap: wrap; }
+  .basemap-row button {
+    flex: 1; min-width: 60px; font-size: 12px; padding: 6px 4px; cursor: pointer;
+    border: 1px solid var(--border); background: #fff; border-radius: 6px;
+  }
+  .basemap-row button.active { background: #e8f0fe; border-color: var(--blue); color: var(--blue); font-weight: bold; }
+  .tool-row { display: flex; gap: 6px; margin-top: 4px; }
+  .tool-row button {
+    flex: 1; font-size: 12px; padding: 7px 4px; cursor: pointer;
+    border: 1px solid var(--border); background: #fff; border-radius: 6px;
+  }
+  .tool-row button.active { background: #fce8e6; border-color: #d93025; color: #d93025; }
+  #note {
+    margin-top: 14px; font-size: 11px; color: var(--gray);
+    background: #fef7e0; border: 1px solid #f9e5a8; border-radius: 6px; padding: 8px 10px; line-height: 1.6;
+  }
+  #measureInfo {
+    display: none; position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
+    z-index: 1000; background: #202124; color: #fff; font-size: 13px;
+    padding: 8px 16px; border-radius: 20px; box-shadow: 0 2px 8px rgba(0,0,0,.3);
+  }
+
+  /* ---- ポップアップ ---- */
+  .leaflet-popup-content { font-size: 13px; line-height: 1.6; margin: 12px 16px; }
+  .popup-title { font-size: 15px; font-weight: bold; margin-bottom: 2px; }
+  .popup-sub { color: var(--gray); font-size: 12px; margin-bottom: 8px; }
+  .popup-table { border-collapse: collapse; width: 100%; }
+  .popup-table th, .popup-table td { text-align: left; padding: 3px 6px 3px 0; vertical-align: top; font-size: 12px; }
+  .popup-table th { color: var(--gray); white-space: nowrap; font-weight: normal; }
+  .badge { display: inline-block; font-size: 11px; padding: 1px 8px; border-radius: 10px; color: #fff; }
+
+  @media (max-width: 640px) {
+    #panel { top: auto; bottom: 12px; max-height: 45%; }
+  }
+</style>
+</head>
+<body>
+<div id="map"></div>
+
+<div id="searchBox">
+  <input id="searchInput" type="text" placeholder="住所・地名で検索（例：さいたま市北区）" autocomplete="off">
+  <button id="searchBtn" title="検索">&#128269;</button>
+</div>
+<div id="searchResults" hidden></div>
+
+<div id="panel">
+  <header>
+    <div>
+      <h1>道路許認可支援GISマップ</h1>
+      <small>関東甲信地域 業務支援マップ（AI再現プロトタイプ）</small>
+    </div>
+    <button id="panelToggle" title="開閉">▲</button>
+  </header>
+  <div id="panelBody">
+    <div class="section-title">道路レイヤ（管理者区分）</div>
+    <label class="layer-row"><input type="checkbox" data-layer="chokkatsu" checked><span class="swatch" style="background:var(--blue)"></span>直轄国道（国土交通省）</label>
+    <label class="layer-row"><input type="checkbox" data-layer="kendo" checked><span class="swatch" style="background:var(--green)"></span>都道府県道</label>
+    <label class="layer-row"><input type="checkbox" data-layer="shido" checked><span class="swatch" style="background:var(--orange)"></span>市町村道</label>
+
+    <div class="section-title">施設レイヤ</div>
+    <label class="layer-row"><input type="checkbox" data-layer="offices" checked><span class="dot" style="background:var(--blue)"></span>国道事務所・出張所（窓口）</label>
+
+    <div class="section-title">ベースマップ</div>
+    <div class="basemap-row">
+      <button data-base="std" class="active">標準</button>
+      <button data-base="pale">淡色</button>
+      <button data-base="photo">写真</button>
+      <button data-base="osm">OSM</button>
+    </div>
+
+    <div class="section-title">ツール</div>
+    <div class="tool-row">
+      <button id="measureBtn">距離計測</button>
+      <button id="importBtn">GeoJSON読込</button>
+      <button id="locateBtn">現在地</button>
+    </div>
+    <input type="file" id="importFile" accept=".geojson,.json" hidden>
+
+    <div id="note">
+      ⚠️ 表示中の路線・事務所データは<strong>デモ用サンプル</strong>です（位置・区間は概略）。実運用時は道路台帳・国土数値情報等の実データ（GeoJSON）に差し替えてください。「GeoJSON読込」から自前データを重ねられます。
+    </div>
+  </div>
+</div>
+
+<div id="measureInfo"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+// ============================================================
+// ベースマップ（国土地理院タイル・OSM）
+// ============================================================
+const baseLayers = {
+  std:   L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png',      { maxZoom: 18, attribution: '<a href="https://maps.gsi.go.jp/development/ichiran.html" target="_blank">国土地理院</a>' }),
+  pale:  L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png',     { maxZoom: 18, attribution: '<a href="https://maps.gsi.go.jp/development/ichiran.html" target="_blank">国土地理院</a>' }),
+  photo: L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg', { maxZoom: 18, attribution: '<a href="https://maps.gsi.go.jp/development/ichiran.html" target="_blank">国土地理院</a>' }),
+  osm:   L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',                { maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors' })
+};
+
+const map = L.map('map', { zoomControl: false, layers: [baseLayers.std] })
+  .setView([36.0, 139.5], 8); // 関東甲信全域
+L.control.zoom({ position: 'bottomright' }).addTo(map);
+L.control.scale({ imperial: false, position: 'bottomleft' }).addTo(map);
+
+// ============================================================
+// サンプルデータ：国道事務所（関東甲信・位置は概略）
+// ============================================================
+const CAT = {
+  chokkatsu: { label: '直轄国道', color: '#1a73e8', weight: 5 },
+  kendo:     { label: '都道府県道', color: '#188038', weight: 4 },
+  shido:     { label: '市町村道', color: '#f9ab00', weight: 4 }
+};
+
+const OFFICES = [
+  { name: '東京国道事務所',     area: '東京都区部の直轄国道（1・4・6・14・15・17・20・246号 等）', lat: 35.6938, lng: 139.7530 },
+  { name: '相武国道事務所',     area: '東京都多摩地域の直轄国道（16・20号 等）',                   lat: 35.6660, lng: 139.3160 },
+  { name: '大宮国道事務所',     area: '埼玉県内の直轄国道（16・17号 等）',                         lat: 35.9500, 'lng': 139.6200 },
+  { name: '北首都国道事務所',   area: '埼玉県東部の直轄国道（4号 等）',                            lat: 35.9750, lng: 139.7520 },
+  { name: '千葉国道事務所',     area: '千葉県内の直轄国道（6・14・16・51号 等）',                  lat: 35.6070, lng: 140.1100 },
+  { name: '横浜国道事務所',     area: '神奈川県内の直轄国道（1・15・16・246号 等）',               lat: 35.4600, lng: 139.6300 },
+  { name: '川崎国道事務所',     area: '川崎市域ほかの直轄国道（15・246号 等）',                    lat: 35.5710, lng: 139.6530 },
+  { name: '常総国道事務所',     area: '茨城県南部の直轄国道（6号 等）',                            lat: 36.0830, lng: 140.1120 },
+  { name: '宇都宮国道事務所',   area: '栃木県内の直轄国道（4・50号 等）',                          lat: 36.5550, lng: 139.8990 },
+  { name: '高崎河川国道事務所', area: '群馬県内の直轄国道（17・18号 等）',                         lat: 36.3220, lng: 139.0100 },
+  { name: '長野国道事務所',     area: '長野県内の直轄国道（18・19・20号 等）',                     lat: 36.6480, lng: 138.1950 },
+  { name: '甲府河川国道事務所', area: '山梨県内の直轄国道（20・52号 等）',                         lat: 35.6620, lng: 138.5680 }
+];
+
+// ============================================================
+// サンプルデータ：路線（区間・線形は概略のデモ用）
+// ============================================================
+const ROADS = [
+  { name: '国道17号', cat: 'chokkatsu', office: '東京国道事務所 / 大宮国道事務所 / 高崎河川国道事務所',
+    section: '東京都中央区（日本橋）〜 群馬県高崎市',
+    coords: [[35.684,139.774],[35.733,139.739],[35.815,139.678],[35.906,139.623],[35.977,139.593],[36.066,139.522],[36.147,139.389],[36.243,139.190],[36.322,139.003]] },
+  { name: '国道16号', cat: 'chokkatsu', office: '横浜国道事務所 / 相武国道事務所 / 大宮国道事務所 / 千葉国道事務所',
+    section: '横浜市 〜 相模原 〜 八王子 〜 川越 〜 春日部 〜 柏 〜 千葉市（環状）',
+    coords: [[35.466,139.622],[35.571,139.373],[35.666,139.316],[35.836,139.391],[35.925,139.486],[35.960,139.650],[35.975,139.752],[35.868,139.976],[35.607,140.106]] },
+  { name: '国道1号', cat: 'chokkatsu', office: '東京国道事務所 / 横浜国道事務所',
+    section: '東京都中央区（日本橋）〜 神奈川県箱根町',
+    coords: [[35.684,139.774],[35.620,139.740],[35.466,139.622],[35.339,139.490],[35.256,139.160],[35.233,139.030]] },
+  { name: '国道4号', cat: 'chokkatsu', office: '東京国道事務所 / 北首都国道事務所 / 宇都宮国道事務所',
+    section: '東京都中央区（日本橋）〜 栃木県宇都宮市',
+    coords: [[35.684,139.774],[35.891,139.790],[35.975,139.752],[36.190,139.700],[36.310,139.800],[36.555,139.883]] },
+  { name: '国道6号', cat: 'chokkatsu', office: '東京国道事務所 / 常総国道事務所',
+    section: '東京都中央区（日本橋）〜 茨城県水戸市',
+    coords: [[35.684,139.774],[35.790,139.900],[35.860,139.970],[35.900,140.050],[36.070,140.200],[36.360,140.470]] },
+  { name: '国道20号', cat: 'chokkatsu', office: '東京国道事務所 / 相武国道事務所 / 甲府河川国道事務所 / 長野国道事務所',
+    section: '東京都中央区（日本橋）〜 長野県諏訪市',
+    coords: [[35.684,139.774],[35.690,139.700],[35.666,139.316],[35.610,138.940],[35.662,138.568],[36.040,138.110]] },
+  { name: '国道18号', cat: 'chokkatsu', office: '高崎河川国道事務所 / 長野国道事務所',
+    section: '群馬県高崎市 〜 長野県長野市',
+    coords: [[36.322,139.003],[36.330,138.900],[36.342,138.600],[36.400,138.250],[36.648,138.195]] },
+  { name: '主要地方道（サンプル）', cat: 'kendo', office: '埼玉県 さいたま県土整備事務所',
+    section: 'さいたま市 〜 川口市（サンプル区間）',
+    coords: [[35.906,139.623],[35.860,139.680],[35.800,139.720]] },
+  { name: '市道（サンプル）', cat: 'shido', office: 'さいたま市 建設局 道路管理課',
+    section: 'さいたま市内（サンプル区間）',
+    coords: [[35.906,139.623],[35.920,139.590],[35.935,139.560]] }
+];
+
+// 許認可窓口の説明（区分別）
+const PERMITS = {
+  chokkatsu: [
+    ['道路占用許可（道路法32条）', '管轄の国道事務所・出張所'],
+    ['道路工事施工承認（道路法24条）', '管轄の国道事務所・出張所'],
+    ['特殊車両通行許可', '道路管理者（オンライン申請可）']
+  ],
+  kendo: [
+    ['道路占用許可（道路法32条）', '都道府県の県土整備（土木）事務所'],
+    ['道路工事施工承認（道路法24条）', '都道府県の県土整備（土木）事務所'],
+    ['特殊車両通行許可', '道路管理者（オンライン申請可）']
+  ],
+  shido: [
+    ['道路占用許可（道路法32条）', '市町村の道路管理担当課'],
+    ['道路工事施工承認（道路法24条）', '市町村の道路管理担当課'],
+    ['特殊車両通行許可', '道路管理者']
+  ]
+};
+
+// ============================================================
+// レイヤ生成
+// ============================================================
+const roadGroups = { chokkatsu: L.layerGroup(), kendo: L.layerGroup(), shido: L.layerGroup() };
+const officeGroup = L.layerGroup();
+
+function roadPopupHtml(r) {
+  const c = CAT[r.cat];
+  const rows = PERMITS[r.cat].map(p => `<tr><th>${p[0]}</th><td>${p[1]}</td></tr>`).join('');
+  return `
+    <div class="popup-title">${r.name}</div>
+    <div class="popup-sub"><span class="badge" style="background:${c.color}">${c.label}</span></div>
+    <table class="popup-table">
+      <tr><th>区間</th><td>${r.section}</td></tr>
+      <tr><th>道路管理者・窓口</th><td>${r.office}</td></tr>
+      ${rows}
+    </table>
+    <div style="margin-top:6px;color:#d93025;font-size:11px;">※ サンプルデータ（線形・区間は概略）</div>`;
+}
+
+ROADS.forEach(r => {
+  const c = CAT[r.cat];
+  // 白フチ + 本線の2重描画で見やすく
+  L.polyline(r.coords, { color: '#ffffff', weight: c.weight + 4, opacity: 0.9 }).addTo(roadGroups[r.cat]);
+  const line = L.polyline(r.coords, { color: c.color, weight: c.weight, opacity: 0.95 });
+  line.bindPopup(roadPopupHtml(r), { maxWidth: 320 });
+  line.on('mouseover', () => line.setStyle({ weight: c.weight + 3 }));
+  line.on('mouseout',  () => line.setStyle({ weight: c.weight }));
+  line.addTo(roadGroups[r.cat]);
+});
+
+OFFICES.forEach(o => {
+  const m = L.circleMarker([o.lat, o.lng], {
+    radius: 7, color: '#fff', weight: 2, fillColor: '#1a73e8', fillOpacity: 1
+  });
+  m.bindPopup(`
+    <div class="popup-title">${o.name}</div>
+    <div class="popup-sub"><span class="badge" style="background:#1a73e8">国土交通省 関東地方整備局</span></div>
+    <table class="popup-table">
+      <tr><th>主な管轄</th><td>${o.area}</td></tr>
+      <tr><th>窓口業務</th><td>道路占用許可・工事施工承認 等の申請受付</td></tr>
+      <tr><th>連絡先</th><td>各事務所の公式サイトをご確認ください</td></tr>
+    </table>
+    <div style="margin-top:6px;color:#d93025;font-size:11px;">※ サンプルデータ（位置は概略）</div>`, { maxWidth: 320 });
+  m.bindTooltip(o.name, { direction: 'top', offset: [0, -6] });
+  m.addTo(officeGroup);
+});
+
+Object.values(roadGroups).forEach(g => g.addTo(map));
+officeGroup.addTo(map);
+
+// レイヤON/OFF
+document.querySelectorAll('input[data-layer]').forEach(cb => {
+  cb.addEventListener('change', () => {
+    const g = cb.dataset.layer === 'offices' ? officeGroup : roadGroups[cb.dataset.layer];
+    cb.checked ? map.addLayer(g) : map.removeLayer(g);
+  });
+});
+
+// ベースマップ切替
+document.querySelectorAll('button[data-base]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('button[data-base]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    Object.values(baseLayers).forEach(l => map.removeLayer(l));
+    baseLayers[btn.dataset.base].addTo(map);
+  });
+});
+
+// パネル開閉
+const panelBody = document.getElementById('panelBody');
+document.getElementById('panelToggle').addEventListener('click', e => {
+  panelBody.hidden = !panelBody.hidden;
+  e.target.textContent = panelBody.hidden ? '▼' : '▲';
+});
+
+// ============================================================
+// 住所検索（国土地理院ジオコーディングAPI）
+// ============================================================
+const searchInput = document.getElementById('searchInput');
+const searchResults = document.getElementById('searchResults');
+let searchMarker = null;
+
+async function doSearch() {
+  const q = searchInput.value.trim();
+  if (!q) return;
+  searchResults.innerHTML = '<div>検索中…</div>';
+  searchResults.hidden = false;
+  try {
+    const res = await fetch('https://msearch.gsi.go.jp/address-search/AddressSearch?q=' + encodeURIComponent(q));
+    const data = await res.json();
+    if (!data.length) { searchResults.innerHTML = '<div>該当なし</div>'; return; }
+    searchResults.innerHTML = '';
+    data.slice(0, 8).forEach(f => {
+      const div = document.createElement('div');
+      div.textContent = f.properties.title;
+      div.addEventListener('click', () => {
+        const [lng, lat] = f.geometry.coordinates;
+        if (searchMarker) map.removeLayer(searchMarker);
+        searchMarker = L.marker([lat, lng]).addTo(map).bindPopup(f.properties.title).openPopup();
+        map.setView([lat, lng], 14);
+        searchResults.hidden = true;
+      });
+      searchResults.appendChild(div);
+    });
+  } catch (err) {
+    searchResults.innerHTML = '<div>検索に失敗しました（ネットワークをご確認ください）</div>';
+  }
+}
+document.getElementById('searchBtn').addEventListener('click', doSearch);
+searchInput.addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
+map.on('click', () => { searchResults.hidden = true; });
+
+// ============================================================
+// 距離計測
+// ============================================================
+const measureBtn = document.getElementById('measureBtn');
+const measureInfo = document.getElementById('measureInfo');
+let measuring = false, measurePts = [], measureLayer = L.layerGroup().addTo(map);
+
+function fmtKm(m) { return m >= 1000 ? (m / 1000).toFixed(2) + ' km' : Math.round(m) + ' m'; }
+
+function updateMeasure() {
+  measureLayer.clearLayers();
+  let total = 0;
+  measurePts.forEach((p, i) => {
+    L.circleMarker(p, { radius: 4, color: '#d93025', fillColor: '#fff', fillOpacity: 1, weight: 2 }).addTo(measureLayer);
+    if (i > 0) total += map.distance(measurePts[i - 1], p);
+  });
+  if (measurePts.length > 1) L.polyline(measurePts, { color: '#d93025', weight: 3, dashArray: '6 4' }).addTo(measureLayer);
+  measureInfo.textContent = measurePts.length < 2 ? '地図をクリックして計測（ダブルクリックで終了）' : '合計距離：' + fmtKm(total);
+}
+
+function stopMeasure() {
+  measuring = false;
+  measureBtn.classList.remove('active');
+  measureInfo.style.display = 'none';
+  map.getContainer().style.cursor = '';
+  map.off('click', onMeasureClick);
+  map.off('dblclick', stopMeasure);
+  map.doubleClickZoom.enable();
+}
+
+function onMeasureClick(e) { measurePts.push(e.latlng); updateMeasure(); }
+
+measureBtn.addEventListener('click', () => {
+  if (measuring) { stopMeasure(); return; }
+  measuring = true;
+  measurePts = [];
+  measureLayer.clearLayers();
+  measureBtn.classList.add('active');
+  measureInfo.style.display = 'block';
+  measureInfo.textContent = '地図をクリックして計測（ダブルクリックで終了）';
+  map.getContainer().style.cursor = 'crosshair';
+  map.doubleClickZoom.disable();
+  map.on('click', onMeasureClick);
+  map.on('dblclick', stopMeasure);
+});
+
+// ============================================================
+// GeoJSON読込（実データの重ね合わせ用）
+// ============================================================
+const importFile = document.getElementById('importFile');
+document.getElementById('importBtn').addEventListener('click', () => importFile.click());
+importFile.addEventListener('change', () => {
+  const file = importFile.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const gj = JSON.parse(reader.result);
+      const layer = L.geoJSON(gj, {
+        style: { color: '#9334e6', weight: 4 },
+        pointToLayer: (f, latlng) => L.circleMarker(latlng, { radius: 6, color: '#fff', weight: 2, fillColor: '#9334e6', fillOpacity: 1 }),
+        onEachFeature: (f, l) => {
+          const props = f.properties || {};
+          const rows = Object.entries(props).map(([k, v]) => `<tr><th>${k}</th><td>${v}</td></tr>`).join('');
+          l.bindPopup(`<table class="popup-table">${rows || '<tr><td>属性なし</td></tr>'}</table>`, { maxWidth: 320 });
+        }
+      }).addTo(map);
+      if (layer.getBounds().isValid()) map.fitBounds(layer.getBounds());
+    } catch (err) {
+      alert('GeoJSONの読み込みに失敗しました：' + err.message);
+    }
+    importFile.value = '';
+  };
+  reader.readAsText(file);
+});
+
+// ============================================================
+// 現在地
+// ============================================================
+document.getElementById('locateBtn').addEventListener('click', () => {
+  map.locate({ setView: true, maxZoom: 14 });
+});
+map.on('locationfound', e => {
+  L.circleMarker(e.latlng, { radius: 8, color: '#fff', weight: 2, fillColor: '#1a73e8', fillOpacity: 1 })
+    .addTo(map).bindPopup('現在地').openPopup();
+});
+map.on('locationerror', () => alert('現在地を取得できませんでした。'));
+</script>
+</body>
+</html>
