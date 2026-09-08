@@ -1,0 +1,42 @@
+country,date,vendor,description,amount,currency,amount_jpy_if_known,thread_id
+Taiwan,2025-08-01,AirAsia (Thai AirAsia),往復航空券 CTS-TPE (FD243他) 8/12-8/17 家族4名 予約QHNBRH 金額は添付Itinerary.pdf (Google Flights監視では大人2+小児2往復で約20.8万-31.5万円水準),unknown(PDF),JPY,,198648abfb0b009d
+Taiwan,2025-08-13,AirAsia (住信SBIデビット/カイカ法人),WWW.AIRASIA.COM 追加決済(手荷物等とみられる),376,JPY,376,1989f143529b8f95
+Taiwan,2025-08-13,Regent Taipei,宿泊8/13-14 1泊 Points&Cash(18000pt利用+現金USD139.40+ポイント購入25000pt) 確認84665234,139.40,USD,約20900(150円/USD想定),198a211a5e09dba5
+Taiwan,2025-08-13,Regent Taipei,宿泊予約 確認86486194 (8/12-17滞在の一部・金額は各確認メール/ホテル領収書要),unknown,,,198a2129d07fa464
+Taiwan,2025-08-14,Regent Taipei,宿泊予約 確認61501143・47288489 (滞在の一部),unknown,,,198a62c4f42e16eb
+Taiwan,2025-08-15,Regent Taipei,宿泊予約 確認48070823・61853644 (8/16-17分の確認87917126はキャンセル済),unknown,,,198abaa09aa1e406
+Taiwan,2025-08-14,Uber(台北),タクシー Q Taxi計程車隊 Amex•1003,113,TWD,約540,198a7c654dc21ccc
+Taiwan,2025-08-14,Uber(台北),タクシー 台北皇冠大車隊 Amex•1003,329,TWD,約1580,198a84d86fec4ba8
+Taiwan,2025-08-16,Uber(台北),タクシー 台北皇冠大車隊 Amex•1003,241,TWD,約1160,198b2979ba52529c
+Taiwan,2025-08-16,Uber(台北),タクシー 台北皇冠大車隊 Amex•1003,129,TWD,約620,198b2979ba52529c
+Taiwan,2025-08-16,Uber(台北),タクシー 大慶大車隊 Amex•1003,268,TWD,約1290,198b2979ba52529c
+Taiwan,2025-08-17,Uber(台北),桃園空港への送迎(泰山経由) Amex•1003,1936,TWD,約9290,198b4af5f3e3a50a
+USA,2025-10-06,ZIPAIR,航空券 NRT→LAX ZG024 10/8搭乗 4名(悠人/梓/碧/太凰) 予約A6Y3R5 金額は添付BookingReceipt_A6Y3R5.pdf,unknown(PDF),JPY,,199b907ef32d5d43
+USA,2025-10-08,ZIPAIR機内販売,Inflight Sales Receipt 20251008ZG024001021 (添付PDF),unknown(PDF),,,199c2b6886e86d05
+USA,2025-10-21,ZIPAIR,航空券 LAX→NRT ZG023 10/24搭乗 3名(梓/碧/太凰) 予約FWIZ21 金額は添付PDF (ZIPAIRポイント100pt併用),unknown(PDF),JPY,,19a092fc9bc3df93
+USA,2025-10-24,ZIPAIR機内販売,Inflight Sales Receipt 20251024ZG023001731 (添付PDF),unknown(PDF),,,19a17a1be174318f
+USA,2025-10-24,ZIPAIR機内販売,Inflight Sales Receipt 20251024ZG023002121 (添付PDF),unknown(PDF),,,19a198092cc32b3f
+USA,2025-10-23,ZIPAIR,航空券 LAX→NRT ZG023 10/30搭乗 悠人1名 予約XSKQES(添付PDF)→10/30キャンセル・払戻¥5136,unknown(PDF),JPY,,19a0fb030289079f
+USA,2025-10-30,ZIPAIR,予約XSKQESキャンセル払戻(クレジットカードへ返金),-5136,JPY,-5136,19a36149a8c33968
+USA,2025-10-24,InterContinental Los Angeles Downtown,宿泊予約 確認42863996 (10/24頃・金額は確認メール本文/IHG明細),unknown,,,19a168db49f60e0e
+USA,2025-10-26,Sheraton Grand Los Angeles,宿泊10/26-27 1泊 ポイント泊(35000pt) 現金負担は駐車場等のみ 確認85426110,0(35000pt),points,0,19a240e165d8b6dc
+USA,2025-10-28,AC Hotel Pasadena,宿泊10/28-29 1泊 ポイント泊(35000pt) 確認94131715,0(35000pt),points,0,19a330017596ea1c
+USA,2025-10-29,Kimpton Everly Hotel (Hollywood),宿泊予約 確認48856413 (10/29・金額は確認メール/IHG明細),unknown,,,19a3199c6257d86a
+USA,2025-10-29,JAL(特典航空券),AA1451+AA5524 LAX→PHL→YYZ 10/31 23000マイル+諸税 予約FMOTLT/航空券1312143997145 (米国滞在先: The Westin Pasadena),860,JPY,860,19a2ed3ca77b3dc6
+USA,2025-10-29,ANA(特典航空券),AC8556 YYZ→JFK 11/3 + NH159 JFK→HND 11/4 + NH4711 HND→CTS 11/5 27500マイル+諸税 予約FV6JQ6 (領収書PDF添付),35030,JPY,35030,19a315222046ad35
+Canada(参考:米国出張の帰路),2025-10-31,InterContinental Toronto Centre,宿泊予約 確認22652849(10/31)・49345292(11/2),unknown,,,19a3859f9c4fd3b9
+Canada(参考:米国出張の帰路),2025-11-01,Revery Toronto Downtown (Curio by Hilton),宿泊予約 11/2 確認3357296634,unknown,,,19a41245a76244e6
+Canada(参考),2025-10-31,カナダ政府(IRCC),eTA承認 J528309051 (悠人・申請料は通常CAD7・領収メールなし),7,CAD,約770,19a3a026045b0ab5
+USA,2025-11-03,米国CBP(ESTA),梓さんよりESTA-Status-Summary.html送付(ESTA申請の形跡・料金領収メールなし/通常USD21相当),unknown,USD,,19a4be9c2fb87d21
+USA,2026-03-11,Delta Air Lines,悠人: HND→DTW→MIA 3/12 / MIA→ATL→MSP→HND 3/18 予約GYMFFX 航空券0062412659763 Amex•1003,259800,JPY,259800,19cdbe48757e802c
+USA,2026-03-11,Delta Air Lines,太凰(TAO): 同旅程3/12-18 予約GYMFFX (領収メールあり・金額はメール本文参照),unknown,JPY,,19cdbe47c784ab1e
+USA,2026-03-11,Sheraton Miami Airport Hotel,宿泊3/12-18 ポイント泊(173000pt) 確認80092038 ※温水不具合でポイント返還交渉あり,0(173000pt),points,0,19cdd21c242b342e
+USA,2026-03-13,Element Miami International Airport,宿泊3/13-18 5泊 ポイント泊(127000pt)+駐車場USD27.82/日 確認90430282,0(127000pt),points,0,19ce78aff1f96d3d
+USA,2026-03-13,Miami Marlins(WBC),WBC観戦チケット Korea vs Dominican 3/13 2枚 Amex 確認MRLN-2404724-52760685,268.90,USD,約40300,19ce97c676fd6b2b
+USA,2026-03-13,Uber(マイアミ),ライド3件 ($8.94/$17.98/$20.98) Amex•1003,47.90,USD,約7190,19ce804d1fd89b9a
+USA,2026-03-15,Uber(マイアミ),ライド3件+キャンセル料 ($37.32/$23.98/$6.15)+Eats$14.80,82.25,USD,約12340,19ceffca7125870e
+USA,2026-03-16,Uber(マイアミ),ライド4件 ($13.90/$18.78/$11.64/$32.31),76.63,USD,約11490,19cf7519ace072c6
+USA,2026-03-17,Uber(マイアミ),ライド1件$11.68+Eats2件($15.84/$17.70),45.22,USD,約6780,19cfe334a33b9e90
+USA,2026-03-18,Uber(マイアミ),ライド2件 ($44.09/$12.25),56.34,USD,約8450,19cff362238e2def
+Other(参考:サウジ),2025-12-27,Uber(リヤド)ほか,12/25-29リヤド渡航(Riyadh Airport Marriott/InterCon/Ritz-Carlton予約・Uber SAR決済多数) 米台韓以外,,SAR,,19b64063189e9451
+Other(参考:ベトナム/インドネシア),2026-07-16,JAL国際線ほか,7/16 JL759搭乗・7/29 JL750帰国(ベトナム経由バリ) Grab VND/IDR決済(梓さんAmex•71011) Booking.comバリ villa 6637302888領収書あり 米台韓以外,,IDR/VND,,19f7604e07a57ea5

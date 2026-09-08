@@ -1,0 +1,77 @@
+date,vendor,category,description,amount,currency,thread_id
+2025-08-08,PayPal (PP.JP.MSDK.DCC),procurement_paypal,タカシマ企画デビット PayPal決済,3393,JPY,1988919699342feb
+2025-08-08,PayPal (PP.JP.MSDK.DCC),procurement_paypal,タカシマ企画デビット PayPal決済,26937,JPY,1988919699342feb
+2025-08-08,PayPal (PP.JP.MSDK.DCC),procurement_paypal,タカシマ企画デビット PayPal決済,40009,JPY,1988919699342feb
+2025-08-08,PAYPALWALLET,procurement_paypal,タカシマ企画デビット ¥20与信(同日返金済),20,JPY,1988919699342feb
+2025-08-08,PAYPALWALLET,refund,¥20与信の返金,-20,JPY,198891969c581162
+2025-08-13,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済,10576,JPY,198a2e0dfb5fef06
+2025-08-15,Meta (FACEBK *X385UWQLT2),meta_ads,タカシマ企画デビット Facebook/Instagram広告費,25504,JPY,198ad58076159ca8
+2025-08-18,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済,8854,JPY,198bd9a476996aff
+2025-08-18,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済(¥13000ちょうど=Cilel月額の可能性),13000,JPY,198bd9a476996aff
+2025-08-20,GVA CORPORATE,legal_gva,タカシマ企画デビット GVA(法人登記/法務サービス) カード確認,11,JPY,198c60fa66f02b61
+2025-08-20,GVA CORPORATE,legal_gva,タカシマ企画デビット GVA(法人登記/法務サービス) カード確認,11,JPY,198c60fa66f02b61
+2025-08-20,GVA CORPORATE,legal_gva,タカシマ企画デビット GVA(法人登記/法務サービス),118448,JPY,198c60fa66f02b61
+2025-08-20,GVA CORPORATE,legal_gva,タカシマ企画デビット GVA(法人登記/法務サービス),38808,JPY,198c60fa66f02b61
+2025-08-21,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済(同日返金),16779,JPY,198ca85577299367
+2025-08-21,PAYPAL*FAST TRADE,refund,FAST TRADE ¥16779の返金,-16779,JPY,198ca981d22b36d4
+2025-08-21,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済,13911,JPY,198ca85577299367
+2025-08-21,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済,9451,JPY,198ca85577299367
+2025-08-25,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済,19445,JPY,198dfb2747ba05d8
+2025-08-25,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済,19510,JPY,198dfb2747ba05d8
+2025-08-25,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済,84892,JPY,198dfb2747ba05d8
+2025-08-27,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済,16970,JPY,198eb97402bad39b
+2025-08-27,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済,17578,JPY,198eb97402bad39b
+2025-08-29,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済,28776,JPY,198f32ca0ea7709e
+2025-08-31,Meta (FACEBK *9SLHHYGKP2),meta_ads,タカシマ企画デビット Facebook/Instagram広告費,57207,JPY,198fdf8a7503984a
+2025-09-01,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済,5337,JPY,1990396e1d3ed591
+2025-09-03,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済,59972,JPY,1990d7d18a2ecb3d
+2025-09-03,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済,14490,JPY,1990d7d18a2ecb3d
+2025-09-04,Shopify,shopify,THE FAB CLUB 月額請求 Sep 4 2025,111.83,USD,19913859f3af4af5
+2025-09-05,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済(同日返金),11555,JPY,19919115190b4ce4
+2025-09-05,PAYPAL*FAST TRADE,refund,FAST TRADE ¥11555の返金,-11555,JPY,1991924143d371f5
+2025-09-05,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済,5314,JPY,19919115190b4ce4
+2025-09-05,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済(再決済),11555,JPY,19919115190b4ce4
+2025-09-09,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済,48169,JPY,1992bf2fb0a8e1ed
+2025-09-09,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済,37233,JPY,1992bf2fb0a8e1ed
+2025-09-11,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済,10488,JPY,19937c962a34c7de
+2025-09-16,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済,25337,JPY,1995057d711d4a46
+2025-09-17,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済,32313,JPY,19955a1ef28510d3
+2025-09-18,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済,8725,JPY,1995b2aa34bae565
+2025-09-19,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済,17529,JPY,1996071878afea6d
+2025-09-22,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済,37327,JPY,1996f1e45379cbd3
+2025-09-24,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済,21983,JPY,19978fc99109ab85
+2025-09-26,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済,10292,JPY,19983d01e6f59a5d
+2025-09-28,Meta (FACEBK *8YY6W2ZKP2),meta_ads,タカシマ企画デビット Facebook/Instagram広告費,50123,JPY,1998d694b684777d
+2025-09-29,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済,13525,JPY,199941607d071c1e
+2025-09-30,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済,12037,JPY,19998cba21a4302d
+2025-09-30,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済,17831,JPY,19998cba21a4302d
+2025-09-30,PAYPAL *LUUTHIQUYNHTHU,procurement_paypal,タカシマ企画デビット ベトナム系個人宛PayPal決済,11168,JPY,19998cba21a4302d
+2025-10-04,Shopify,shopify,THE FAB CLUB 月額請求 Oct 4 2025 ($131.62),131.62,USD,199ae08fcf6a6f1d
+2025-10-04,SHOPIFY* 426585154,shopify,タカシマ企画デビット引落(上記$131.62のJPY建て),19946,JPY,199adf99af415e39
+2025-10-10,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済,69905,JPY,199cc67f0f6ec64c
+2025-10-12,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済,25414,JPY,199d6f89c5e98f22
+2025-10-14,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済,30233,JPY,199e169b46368292
+2025-10-18,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済,22661,JPY,199f3090b49472c9
+2025-10-18,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済,3427,JPY,199f3090b49472c9
+2025-10-19,PAYPAL *SAILY US,other,タカシマ企画デビット Saily(eSIM)決済※FAB関連か要確認,5805,JPY,199fab22fe51d20e
+2025-10-21,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済,29886,JPY,19a04ffb32880a36
+2025-10-24,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済,4880,JPY,19a121b272d41209
+2025-10-24,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済,9591,JPY,19a121b272d41209
+2025-10-28,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済,6953,JPY,19a28096e10c3b90
+2025-10-28,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済,14259,JPY,19a28096e10c3b90
+2025-10-30,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済,14058,JPY,19a3284454f59cff
+2025-10-30,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済,10666,JPY,19a3284454f59cff
+2025-10-31,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済,17000,JPY,19a39cb2036f605f
+2025-10-31,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済,4631,JPY,19a39cb2036f605f
+2025-10-31,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済,1975,JPY,19a3c81bbb207f1c
+2025-11-02,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済,2244,JPY,19a435241e77d599
+2025-11-03,Shopify,shopify,THE FAB CLUB 月額請求 Nov 3 2025 ($128.56),128.56,USD,19a4880e3e8232c3
+2025-11-03,SHOPIFY* 439861567,shopify,タカシマ企画デビット引落(上記$128.56のJPY建て),20351,JPY,19a47d8779867f16
+2025-11-05,PAYPAL*FAST TRADE,procurement_paypal,タカシマ企画デビット FAST TRADE決済(期間内最後の仕入決済),103668,JPY,19a51d5ac3ad8b50
+2025-12-03,Shopify,shopify,THE FAB CLUB 月額請求 Dec 3 2025,133.47,USD,19ae31365bd5ce43
+2026-01-02,Shopify,shopify,THE FAB CLUB 月額請求 Jan 2 2026,114.74,USD,19b7d9682e6c63b9
+2026-02-01,Shopify,shopify,THE FAB CLUB 月額請求 Feb 1 2026,107.00,USD,19c180417873f0b3
+2026-06-02,Meta (FACEBK *XTET2S9KP2),meta_ads,タカシマ企画デビット Facebook/Instagram広告費(広告再開),16642,JPY,19e8640475882bf2
+2026-06-09,Meta (FACEBK *GTGS7T5KP2),meta_ads,タカシマ企画デビット Facebook/Instagram広告費,39330,JPY,19eab78c0a7677b9
+2026-07-02,Shopify,shopify,THE FAB CLUB Mar 3 2026サイクル分取引手数料(7/2にまとめて決済),0.78,USD,19f21885dad4da07
+2026-07-02,Shopify,shopify,THE FAB CLUB サブスク再開請求 Jul 2 2026(同日「支払いと決済が有効になりました」通知=ストア再開),33.00,USD,19f21980638f3a6e
