@@ -1,0 +1,52 @@
+date,type,source,description,amount,currency,thread_id
+2026-06-05,sales,楽天銀行(service@ac.rakuten-bank.co.jp),【楽天銀行】入金がありました（個人口座への入金通知。振込元・金額の記載なし。Shopify関連かは本文からは不明）,,JPY,19e97fcd2bc8133a
+2026-06-25,sales,楽天銀行(service@ac.rakuten-bank.co.jp),【楽天銀行】入金がありました（個人口座への入金通知。振込元・金額の記載なし。Shopify関連かは本文からは不明）,,JPY,19efa37b51398514
+2026-07-02,sales,Shopify(do-not-reply@shopify.com),（参考）THE FAB CLUB「支払いと決済が有効になりました」＝Shopifyペイメント有効化通知。売上入金の証跡ではないが決済受付開始時期を示す,,,19f2188846974865
+2026-07-07,purchase,オリジナルプリント.jp(info@originalprint.jp),注文2559392 Printstarヘビーウェイトタシャツ ブラック S3/M1/L10/XL3 計17点（Tシャツプリント発注・代行出荷。ブランド仕入の可能性が高い）,80599,JPY,19f3b5d5658c9709
+2026-07-14,purchase,オリジナルプリント.jp(info@originalprint.jp),注文2559392 商品発送のご連絡（上記注文の出荷通知）,,JPY,19f6067b5ffcdb59
+2025-08-08,purchase,ユニクロ(no-reply@ml.store.uniqlo.com),電子レシート 札幌澄川ミュンヘン大橋店（WミニT ¥1500・エアリズム等、同日2レシート）,,JPY,19888d1334c21425
+2025-09-02,purchase,ユニクロ(no-reply@ml.store.uniqlo.com),電子レシート 札幌二十四軒店（エアリズムシームレスショーツ等）,,JPY,199091f77d20527a
+2025-09-23,purchase,メルカリ,NEW ERA THESTAND別注 45DEG LA 9TWENTY キャップ,11000,JPY,1997433727a6f5b3
+2025-10-03,purchase,メルカリ,NEW ERA インディアンス キャップ 海外限定 MLB,10000,JPY,199aa0c760394713
+2025-11-05,purchase,ユニクロ(no-reply@ml.store.uniqlo.com),電子レシート 札幌二十四軒店（エアリズムシームレスボクサー ¥990等）,,JPY,19a5264183e1ed80
+2025-11-09,purchase,メルカリ,キッズFARFIELD ORIGINAL フリースジャケット,4500,JPY,19a67491640a9ab6
+2025-11-09,purchase,メルカリ,FARFIELD ORIGINAL バッグ,2200,JPY,19a67491640a9ab6
+2025-11-13,purchase,メルカリ,ビームス別注GREGORY ブラック バックパック,21000,JPY,19a7bd790c11b636
+2025-12-14,purchase,ZOZOTOWN(order@contact.zozo.jp),baron MLB マフラー ブルー（送料込¥2329）,2329,JPY,19b1bcebf14fc555
+2026-01-19,purchase,メルカリ,ドジャース ポーチ 刺繍ロゴ 大谷翔平,1799,JPY,19bd47c014db7b9e
+2026-01-19,purchase,メルカリ,ドジャース トレーナー 130,1480,JPY,19bd47c014db7b9e
+2026-01-19,purchase,メルカリ,キッズ ドジャース Tシャツ 青 130cm,699,JPY,19bd47c014db7b9e
+2026-01-20,purchase,メルカリ,bagjack ロンハーマン リュック,72000,JPY,19bd967afd3969c4
+2026-01-26,purchase,メルカリ,ロサンゼルスドジャース ニットキャップ キッズ,600,JPY,19bfa56f81c1572a
+2026-02-01,purchase,メルカリ,ドジャース ナップサック 大谷翔平 リュック,999,JPY,19c18747e605d554
+2026-02-01,purchase,メルカリ,ドジャース トレーナー 130,900,JPY,19c18747e605d554
+2026-02-08,purchase,メルカリ,MLBドジャース トレーナー 130cm アップリケ,1899,JPY,19c3c51cff61d158
+2026-02-08,purchase,メルカリ,MLBドジャース 裏起毛ロングパンツ 130cm,1899,JPY,19c3c51cff61d158
+2026-02-08,purchase,メルカリ,LA dodgers 9twenty ワールドシリーズ2024 キャップ,4980,JPY,19c3c51cff61d158
+2026-02-08,purchase,メルカリ,Home Game New Era LA Dodgers 9TWENTY キャップ,4999,JPY,19c3c51cff61d158
+2026-02-08,purchase,メルカリ,ニューエラ CORE CLASSIC 9TWENTY ドジャース 黒 キャップ,5980,JPY,19c3c51cff61d158
+2026-04-14,purchase,ユニクロ(no-reply@ml.store.uniqlo.com),電子レシート 札幌二十四軒店（Kカーゴジョガーパンツ ¥2490等）,,JPY,19d8b040c619932c
+2026-06-11,purchase,メルカリ,NEW ERA 9TWENTY ゴンザガ大学 八村塁 キャップ,2580,JPY,19eb73cfd81c7ef4
+2026-06-12,purchase,メルカリ,NEW ERA 9TWENTY MLB ブルワーズ キャップ,3600,JPY,19ebadef9d40ee91
+2026-06-17,purchase,メルカリ,New Era Yankees 9TWENTY キャップ コラボ,6800,JPY,19ed3ed04eeed5c8
+2026-06-17,purchase,メルカリ,ChicagoBulls NEWERA 9TWENTY キャップ,2980,JPY,19ed3ed04eeed5c8
+2026-06-18,purchase,メルカリ,ニューエラ 9TWENTY ワールドシリーズ2025 キャップ,3100,JPY,19edabf3997b000c
+2026-06-18,purchase,メルカリ,ニューエラ 9TWENTY フェニックスサンズ NBA キャップ,3480,JPY,19edabf3997b000c
+2026-06-23,purchase,メルカリ,ギャルソンオム キュプラストライプシャツ 製品染 L,25000,JPY,19ef3408549211ea
+2026-06-23,purchase,メルカリ,COMME des GARCONS HOMME ボーダーTシャツ,20000,JPY,19ef3408549211ea
+2026-06-23,purchase,メルカリ,COMME des GARCONS HOMME 綿麻デニムタックテーパードパンツ,25000,JPY,19ef3408549211ea
+2026-06-26,purchase,メルカリ,mame kurogouchi ワンピース,49800,JPY,19f0603627e280cf
+2026-06-27,purchase,メルカリ,mame kurogouchi Flower print dress,39000,JPY,19f0603627e280cf
+2026-06-27,purchase,メルカリ,mame kurogouchi 刺繍ブラウス,23999,JPY,19f0603627e280cf
+2026-06-27,purchase,メルカリ,プリーツプリーズ ハイネック長袖トップス 青,16900,JPY,19f0603627e280cf
+2026-06-27,purchase,メルカリ,Alexander McQueen ブラックカーディガン M,29800,JPY,19f0603627e280cf
+2026-06-28,purchase,メルカリ,PLEATS PLEASE PEANUTS ワンピース 赤,40100,JPY,19f0e153d2e8ec04
+2026-07-03,purchase,メルカリ,HARUNOBUMIRATA ネイビー ポンチョワンピース,30000,JPY,19f280c775c3c489
+2026-07-03,purchase,メルカリ,ヌキテパ コットンエスニックプリントドレス ロングワンピース,12999,JPY,19f280c775c3c489
+2026-07-07,purchase,メルカリ,Maison Margiela 足袋バレエ 3cmヒール,75100,JPY,19f3c7c5159cc342
+2026-07-08,purchase,メルカリShops(H3),エルメス HERMES デスタン ローファー レザー ブラック（金額はメール本文に記載なし）,,JPY,19f4185ea1223432
+2026-07-10,purchase,ZOZOTOWN(order@contact.zozo.jp),COMME des GARCONS HOMME COTTON BORDER TEE XL 黒白（注文359668969）,31900,JPY,19f4aacab5008476
+2026-07-21,purchase,ZOZOTOWN(order@contact.zozo.jp),COMME des GARCONS HOMME COTTON PLAIN BIG T-SHIRTS 白L（注文368507029・送料込）,28930,JPY,19f84de0491ecdc4
+2026-07-21,purchase,ZOZOTOWN(order@contact.zozo.jp),COMME des GARCONS HOMME COTTON PLAIN BIG T-SHIRTS 白L（注文368507398・送料込）,28930,JPY,19f84de0491ecdc4
+2026-07-24,purchase,ZOZOTOWN(order@contact.zozo.jp),COMME des GARCONS HOMME COTTON RAMDOM BORDER T-SHIRTS グレーL（注文369759865・送料込）,28930,JPY,19f920633aadb512
+2026-07-26,purchase,ZOZOTOWN(order@contact.zozo.jp),COMME des GARCONS HOMME COTTON PLAIN BIG T-SHIRTS 白L（注文371276968）,28600,JPY,19f9ca640bc3141e
