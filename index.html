@@ -5,6 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="color-scheme" content="light only">
 <meta name="theme-color" content="#FFFFFF">
+<script>
+// Prepare the opening before the first paint; the page stays readable without JavaScript.
+(function(){
+  var root=document.documentElement;
+  try{
+    var nav=performance.getEntriesByType('navigation')[0];
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches||location.hash||(nav&&nav.type==='back_forward'))return;
+    try{if(sessionStorage.getItem('takashima-motion')==='off')return;}catch(e){}
+    root.classList.add('intro-pending');
+    window.personalOpeningDeadline=setTimeout(function(){
+      root.classList.remove('intro-pending','motion-ready');
+    },4500);
+  }catch(e){root.classList.remove('intro-pending');}
+})();
+</script>
 <title>高嶌悠人</title>
 <meta name="description" content="高嶌悠人の個人サイト。株式会社カイカ代表取締役。壁打ち相手、相談役・顧問、社長補佐、経営企画として、経営や事業の相談を個人で受けています。北海道札幌市在住。就職活動に関する書籍を28冊監修・執筆。">
 <meta property="og:title" content="高嶌悠人">
@@ -45,16 +60,18 @@ br.sp{display:none}
 @media (max-width:860px){br.pc{display:none}br.sp{display:inline}}
 
 /* opening */
-#curtain{position:fixed;inset:0;background:var(--bg);z-index:200;display:flex;align-items:center;justify-content:center;transition:transform 1.5s cubic-bezier(.65,0,.35,1)}
+#curtain{position:fixed;inset:0;background:var(--bg);z-index:200;display:none;align-items:center;justify-content:center;transition:transform .76s cubic-bezier(.65,0,.35,1);pointer-events:none}
+.intro-pending #curtain{display:flex}
+.intro-pending :is(main,footer,.logo,.vnav,.menu-toggle){visibility:hidden}
 #curtain.up{transform:translateY(-100%)}
-#curtain svg{width:min(64vw,360px);height:auto}
-#curtain .mark path{fill:transparent;stroke:var(--text);stroke-width:1.2;vector-effect:non-scaling-stroke;stroke-dasharray:1;stroke-dashoffset:1;animation:draw 1.7s ease-in-out forwards,fill .8s ease 2.6s forwards}
-#curtain .mark path:nth-child(1){animation-delay:.2s,2.6s}
-#curtain .mark path:nth-child(2){animation-delay:.35s,2.6s}
-#curtain .mark path:nth-child(3){animation-delay:.5s,2.6s}
-#curtain .mark path:nth-child(4){animation-delay:.65s,2.6s}
+#curtain svg{width:min(64vw,360px);height:auto;animation:name-drift 3s linear both}
+#curtain .mark path{fill:transparent;stroke:var(--text);stroke-width:1.2;vector-effect:non-scaling-stroke;stroke-dasharray:1;stroke-dashoffset:1;animation:draw 1.25s ease-in-out forwards,fill .65s ease 1.05s forwards}
+#curtain .mark path:nth-child(2){animation-delay:.1s,1.15s}
+#curtain .mark path:nth-child(3){animation-delay:.2s,1.25s}
+#curtain .mark path:nth-child(4){animation-delay:.3s,1.35s}
 @keyframes draw{to{stroke-dashoffset:0}}
 @keyframes fill{to{fill:var(--text);stroke-width:0}}
+@keyframes name-drift{from{transform:translateY(5px) scale(.98)}to{transform:translateY(-5px) scale(1.015)}}
 
 /* fixed logo */
 .logo{position:fixed;top:20px;left:24px;z-index:120;display:inline-block;padding:14px 30px;border-radius:999px;background:rgba(255,255,255,.72);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(29,29,31,.08);font-family:var(--head);font-weight:900;font-size:29px;letter-spacing:.08em;line-height:1;transition:transform .4s var(--ease),opacity .4s}
@@ -69,11 +86,12 @@ br.sp{display:none}
 .vnav a:hover{color:var(--text)}
 .vnav a.cur{color:var(--text);font-weight:500}
 .vnav a.cur::before{height:100%}
+.menu-toggle{display:none}
 @media (max-height:700px){.vnav ul{gap:13px}}
 
 /* sections */
 main{background:var(--bg)}
-section{background:var(--bg);padding:120px 40px}
+section{background:var(--bg);padding:120px 40px;scroll-margin-top:92px}
 .wrap{width:100%;max-width:var(--w);margin:0 auto}
 .tint{background:var(--tint)}
 .dark{background:var(--dark);color:#fff}
@@ -83,8 +101,10 @@ section{background:var(--bg);padding:120px 40px}
 .note{font-size:13px;color:var(--sub)}
 .dark .note{color:rgba(255,255,255,.6)}
 .head{margin-bottom:56px}
-.rv{opacity:0;transform:translateY(20px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
-.rv.in{opacity:1;transform:none}
+.rv{opacity:1;transform:none}
+.motion-ready .motion-item{transition:opacity 1.25s var(--ease),transform 1.25s var(--ease);transition-delay:var(--reveal-delay,0ms)}
+.motion-ready .motion-pending{opacity:0;transform:translateY(24px)}
+.motion-ready .motion-item.motion-instant{transition:none}
 
 /* hero */
 #top{min-height:88svh;display:flex;align-items:center;padding:150px 40px 110px}
@@ -145,7 +165,7 @@ dl.dt li::before{content:"–";position:absolute;left:0;color:var(--sub)}
 .pname h3{font-size:26px;letter-spacing:.06em}
 .pname .lat{font-size:11px;letter-spacing:.26em;color:var(--sub);text-transform:uppercase}
 .pname .role{margin-top:14px;font-size:13.5px;line-height:1.9}
-.pname .role span{font-family:var(--lat);font-size:11px;letter-spacing:.16em;color:var(--sub);margin-left:10px}
+.pname .role span{display:block;font-family:var(--lat);font-size:11px;letter-spacing:.16em;color:var(--sub);margin:4px 0 0}
 .books{margin-top:48px}
 .books h3{font-size:16px;margin-top:26px}
 .books .m{font-size:13px;color:var(--sub)}
@@ -170,32 +190,50 @@ footer .cap{display:inline-block;border:1px solid rgba(255,255,255,.32);border-r
 footer nav{margin:34px 0 26px;font-size:13.5px;color:rgba(255,255,255,.62);display:flex;justify-content:center;gap:10px 26px;flex-wrap:wrap}
 footer nav a:hover{color:#fff}
 footer .cr{font-family:var(--lat);font-size:12px;letter-spacing:.14em;color:rgba(255,255,255,.45)}
+.motion-toggle{border:1px solid rgba(255,255,255,.32);border-radius:999px;background:transparent;color:#fff;font:inherit;font-size:12px;padding:8px 18px;margin:24px 0 0;cursor:pointer}
 
 @media (max-width:1200px){.wrap{padding-right:40px}}
 @media (hover:none){html{scrollbar-gutter:auto}}
 @media (max-width:860px){
+  .logo{top:14px;left:16px;padding:11px 20px;font-size:20px}
   .c3,.c2{grid-template-columns:1fr}
   .rows article{grid-template-columns:1fr;gap:14px}
   section{padding:96px 24px}
-  .wrap{padding-right:56px}
-  .vnav{right:6px;padding:20px 8px}
-  .vnav ul{gap:12px}
-  .vnav a{font-size:10px;letter-spacing:.14em;padding-left:9px}
+  .wrap{padding-right:0}
+  .vnav{position:relative;inset:auto;transform:none;writing-mode:horizontal-tb;margin:100px 24px 0;padding:16px 20px}
+  .vnav ul{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;white-space:normal}
+  .vnav a{font-size:13px;letter-spacing:.05em;padding:12px 0 12px 12px}
+  .vnav a::before{left:0;top:12px}
+  .vnav a.cur::before{height:calc(100% - 24px)}
+  .nav-ready .vnav{display:none;position:fixed;top:80px;right:24px;left:24px;margin:0;max-height:calc(100svh - 104px);overflow-y:auto;box-shadow:0 12px 40px rgba(0,0,0,.08)}
+  .nav-ready .vnav.is-open{display:block}
+  .nav-ready .menu-toggle{position:fixed;display:inline-flex;align-items:center;justify-content:center;gap:10px;z-index:121;top:14px;right:16px;min-height:44px;padding:10px 18px;border:1px solid var(--line);border-radius:999px;background:var(--bg);color:var(--text);font:inherit;font-size:12px;cursor:pointer}
+  .menu-toggle::after{content:'＋';font-size:16px}
+  .menu-toggle[aria-expanded="true"]::after{content:'−'}
+  .motion-ready .motion-pending{transform:translateY(16px)}
   dl.dt>div{grid-template-columns:1fr;gap:4px}
   #top{padding:130px 24px 90px}
 }
 @media (max-width:720px){
   .logo{top:14px;left:16px;padding:11px 20px;font-size:20px}
   footer .cap{padding:11px 20px;font-size:20px}
-  .wrap{padding-right:52px}
-  footer .wrap,#top .wrap{padding-right:52px}
+  .wrap,footer .wrap,#top .wrap{padding-right:0}
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   #curtain{display:none}
-  .rv,.rv.in{transition:none;opacity:1;transform:none}
+  .intro-pending :is(main,footer,.logo,.vnav,.menu-toggle){visibility:visible}
+  .motion-ready .motion-item,.motion-ready .motion-pending{transition:none;opacity:1;transform:none}
   .faq .a{transition:none}
   .logo{transition:none}
+}
+html.motion-off{scroll-behavior:auto}
+.motion-off .faq .a,.motion-off .logo{transition:none}
+@media print{
+  #curtain,.vnav,.logo,.menu-toggle,.motion-toggle{display:none!important}
+  .intro-pending :is(main,footer){visibility:visible}
+  .motion-ready .motion-item,.motion-ready .motion-pending{opacity:1;transform:none;transition:none}
+  .faq .a{grid-template-rows:1fr}
 }
 
 /* 端末のダークモードでも白基調を保つ */
@@ -239,7 +277,8 @@ footer .cr{font-family:var(--lat);font-size:12px;letter-spacing:.14em;color:rgba
 
 <a class="logo" href="#top">高嶌悠人</a>
 
-<nav class="vnav" aria-label="ページ内ナビゲーション">
+<button class="menu-toggle" type="button" aria-controls="page-nav" aria-expanded="false">メニュー</button>
+<nav class="vnav" id="page-nav" aria-label="ページ内ナビゲーション">
   <ul>
     <li><a href="#about">高嶌について</a></li>
     <li><a href="#request">ご相談の例</a></li>
@@ -486,24 +525,143 @@ footer .cr{font-family:var(--lat);font-size:12px;letter-spacing:.14em;color:rgba
     <a href="#about">高嶌について</a><a href="#services">できること</a><a href="#engage">関わり方</a><a href="#profile">経歴</a><a href="https://caica.tokyo" target="_blank" rel="noopener">株式会社カイカ</a><a href="#contact">お問い合わせ</a>
   </nav>
   <p class="cr">© YUTO TAKASHIMA</p>
+  <button class="motion-toggle" type="button" aria-pressed="true" hidden>動きを止める</button>
 </footer>
 
 <script>
-if('scrollRestoration' in history){history.scrollRestoration='manual';}
+// One controller sequences the opening and each piece of content.
 (function(){
+  var root=document.documentElement;
   var c=document.getElementById('curtain');
-  setTimeout(function(){window.scrollTo(0,0);c.classList.add('up');},3700);
-  setTimeout(function(){c.style.display='none';},5300);
+  var button=document.querySelector('.motion-toggle');
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)');
+  var opening=root.classList.contains('intro-pending');
+  var observer=null,timers=[],items=[],pending=new Set(),seen=new WeakSet();
+  var off=false;
+  try{off=sessionStorage.getItem('takashima-motion')==='off';}catch(e){}
+  function enabled(){return !off&&!reduce.matches;}
+  function label(){
+    root.classList.toggle('motion-off',!enabled());
+    button.hidden=false;button.disabled=reduce.matches;
+    button.setAttribute('aria-pressed',String(enabled()));
+    button.textContent=reduce.matches?'動きを減らしています':off?'動きを再開する':'動きを止める';
+  }
+  function reveal(el,delay,instant){
+    if(!pending.has(el))return;
+    pending.delete(el);seen.add(el);
+    el.classList.toggle('motion-instant',!!instant);
+    el.style.setProperty('--reveal-delay',delay+'ms');
+    el.classList.remove('motion-pending');
+    if(observer)observer.unobserve(el);
+  }
+  function inView(el){var r=el.getBoundingClientRect();return r.top<innerHeight&&r.bottom>0;}
+  function startContent(animate){
+    var visible=items.filter(function(el){return pending.has(el)&&inView(el);});
+    visible.forEach(function(el,i){reveal(el,animate?Math.min(i*140,420):0,!animate);});
+    if(observer)pending.forEach(function(el){observer.observe(el);});
+  }
+  function detachSkip(){
+    ['wheel','touchstart','pointerdown','keydown'].forEach(function(type){window.removeEventListener(type,skip);});
+  }
+  function finishIntro(animate){
+    timers.forEach(clearTimeout);timers=[];
+    clearTimeout(window.personalOpeningDeadline);
+    detachSkip();c.classList.remove('up');
+    root.classList.remove('intro-pending');opening=false;
+    startContent(animate&&enabled());
+  }
+  function skip(){if(opening)finishIntro(false);}
+  function stop(){
+    finishIntro(false);
+    if(observer)observer.disconnect();
+    root.classList.remove('motion-ready');
+    pending.forEach(function(el){el.classList.remove('motion-pending');});pending.clear();
+  }
+  function prepare(){
+    if(!enabled())return;
+    root.classList.add('motion-ready');
+    items.forEach(function(el){
+      var r=el.getBoundingClientRect();
+      if(seen.has(el)||!r.width||!r.height||r.bottom<=0)return;
+      // Deep links, restored pages and already visible text never wait for an entrance.
+      if(!opening&&r.top<innerHeight){seen.add(el);return;}
+      if(!observer&&r.top>=innerHeight)return;
+      el.classList.add('motion-item','motion-pending');pending.add(el);
+    });
+    if(!opening)startContent(false);
+  }
+  try{
+    var selected=Array.from(document.querySelectorAll('.head > *, .cards > .card, .rows > article, .faq > div, dl.dt > div, #about .wrap > .rv > p, #profile .pname, #profile .wrap > .rv > p, .books > *'));
+    document.querySelectorAll('.rv').forEach(function(el){
+      if(!selected.some(function(child){return el===child||el.contains(child);}))selected.push(el);
+    });
+    var selection=new Set(selected);
+    items=Array.from(document.querySelectorAll('main *')).filter(function(el){
+      if(!selection.has(el))return false;
+      for(var p=el.parentElement;p;p=p.parentElement)if(selection.has(p))return false;
+      return true;
+    });
+    if('IntersectionObserver' in window){
+      observer=new IntersectionObserver(function(entries){
+        entries.filter(function(e){return e.isIntersecting;}).sort(function(a,b){
+          return a.boundingClientRect.top-b.boundingClientRect.top||a.boundingClientRect.left-b.boundingClientRect.left;
+        }).forEach(function(e,i){reveal(e.target,Math.min(i*140,420),false);});
+      },{threshold:0,rootMargin:'0px 0px -8% 0px'});
+    }
+    label();prepare();
+    if(opening&&enabled()){
+      // Draw and fill overlap; a gentle drift continues through the curtain exit.
+      timers.push(setTimeout(function(){c.classList.add('up');},2000));
+      c.addEventListener('transitionend',function(event){
+        if(opening&&event.target===c&&event.propertyName==='transform')finishIntro(true);
+      });
+      timers.push(setTimeout(function(){finishIntro(true);},2850));
+      ['wheel','touchstart','pointerdown','keydown'].forEach(function(type){window.addEventListener(type,skip,{passive:true});});
+    }else finishIntro(false);
+    button.addEventListener('click',function(){
+      off=!off;try{sessionStorage.setItem('takashima-motion',off?'off':'on');}catch(e){}
+      label();if(enabled())prepare();else stop();
+    });
+    var onPreference=function(){label();if(enabled())prepare();else stop();};
+    if(reduce.addEventListener)reduce.addEventListener('change',onPreference);else reduce.addListener(onPreference);
+    document.addEventListener('focusin',function(event){
+      skip();items.forEach(function(el){if(el.contains(event.target)){
+        el.classList.add('motion-instant');el.style.setProperty('--reveal-delay','0ms');reveal(el,0,true);
+      }});
+    });
+    window.addEventListener('hashchange',function(){skip();requestAnimationFrame(function(){startContent(false);});});
+    window.addEventListener('pagehide',stop);
+    window.addEventListener('pageshow',function(event){if(event.persisted)stop();});
+    window.addEventListener('beforeprint',stop);
+  }catch(e){stop();}
+})();
+</script>
 
-  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.1});
-  document.querySelectorAll('.rv').forEach(function(el){io.observe(el);});
-
+<script>
+(function(){
   var links=document.querySelectorAll('.vnav a'),map=[];
   links.forEach(function(a){var s=document.querySelector(a.getAttribute('href'));if(s)map.push([s,a]);});
-  var so=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){links.forEach(function(a){a.classList.remove('cur')});map.forEach(function(p){if(p[0]===e.target)p[1].classList.add('cur')});}});},{rootMargin:'-45% 0px -50% 0px'});
-  map.forEach(function(p){so.observe(p[0]);});
+  if('IntersectionObserver' in window){
+    var so=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){links.forEach(function(a){a.classList.remove('cur');a.removeAttribute('aria-current');});map.forEach(function(p){if(p[0]===e.target){p[1].classList.add('cur');p[1].setAttribute('aria-current','location');}});}});},{rootMargin:'-45% 0px -50% 0px'});
+    map.forEach(function(p){so.observe(p[0]);});
+  }
+  var menu=document.querySelector('.menu-toggle'),nav=document.querySelector('.vnav');
+  function closeMenu(focus){nav.classList.remove('is-open');menu.setAttribute('aria-expanded','false');if(focus)menu.focus();}
+  menu.addEventListener('click',function(){
+    var open=menu.getAttribute('aria-expanded')!=='true';
+    menu.setAttribute('aria-expanded',String(open));nav.classList.toggle('is-open',open);
+  });
+  links.forEach(function(a){a.addEventListener('click',function(){
+    if(menu.getAttribute('aria-expanded')!=='true')return;
+    closeMenu(false);
+    var target=document.querySelector(a.getAttribute('href'));
+    if(target){target.setAttribute('tabindex','-1');target.focus({preventScroll:true});}
+  });});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&menu.getAttribute('aria-expanded')==='true')closeMenu(true);});
+  document.addEventListener('click',function(e){if(!nav.contains(e.target)&&!menu.contains(e.target))closeMenu(false);});
+  document.documentElement.classList.add('nav-ready');
 
-  var logo=document.querySelector('.logo'),last=0;
+  var logo=document.querySelector('.logo'),last=window.scrollY;
   window.addEventListener('scroll',function(){
     var y=window.scrollY;
     logo.classList.toggle('hide',y>last&&y>160);
