@@ -9,7 +9,7 @@
 - 構成：静的HTML
 - Vercel：チーム `caica-6eca556c` / プロジェクト `takashima-yuto`（[確認できたデプロイ](https://vercel.com/caica-6eca556c/takashima-yuto/9EQJk5wyVxkYhA2k7JyX4s8SdXKy)）
 
-上記のVercel対応はGitHubのコミットステータスで確認しました。Vercel管理画面のRoot Directory、Production Branch、独自ドメイン、環境変数は別途照合が必要です。
+Vercel再接続後、チーム・プロジェクト・割り当てドメインをAPIで直接確認しました（下記参照）。Root Directory、Build Command、Output Directory、Production Branch、環境変数は今回の取得結果に含まれず、設定値は未確認です。
 
 ## 編集する場所
 
@@ -81,4 +81,14 @@ Vercel設定を変更する前に現状と照合します。構成が異なる�
 
 検証：JavaScript構文、HTML構造・本文保持・リンク・画像参照を確認。実行コードでロゴと本文の表示順、スキップ、モーション低減、アンカー・履歴復帰、フォーカス、停止・再開、メニュー開閉、API欠落時のフォールバックを確認した。実ブラウザでの外観確認は未実施。
 
-Vercelの直接接続は403のため管理設定を変更せず、既存のGitHub連携を利用する。公開結果は該当コミットのVercelステータスと公開ページで確認する。
+上記の表示調整時点ではVercelの直接接続が403でしたが、その後の再認証でアクセスは復旧しました。公開は既存のGitHub連携を利用します。
+
+## Vercel再接続後の確認（2026-09-10）
+
+チーム：`caica-6eca556c`。次のリンクを管理・公開確認の入口として使用します。
+
+| プロジェクト | 管理画面 | 割り当てURL | 確認時の本番デプロイ |
+| --- | --- | --- | --- |
+| `takashima-yuto` | [開く](https://vercel.com/caica-6eca556c/takashima-yuto) | [www.takashima-yuto.com](https://www.takashima-yuto.com) / [takashima-yuto.vercel.app](https://takashima-yuto.vercel.app) / [takashima-yuto.com](https://takashima-yuto.com) | READY |
+
+READYはデプロイ処理の成功を示す確認結果です。ページ表示・フォーム・認証の実動作を検証した結果ではありません。Vercelの設定変更は行っていません。
