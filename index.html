@@ -21,7 +21,7 @@
 })();
 </script>
 <title>高嶌悠人</title>
-<meta name="description" content="高嶌悠人の個人サイト。株式会社カイカ代表取締役。壁打ち相手、相談役・顧問、社長補佐、経営企画として、経営や事業の相談を個人で受けています。北海道札幌市在住。就職活動に関する書籍を28冊監修・執筆。">
+<meta name="description" content="高嶌悠人の個人サイト。株式会社カイカ代表取締役。壁打ち相手、相談役・顧問、社長補佐、経営企画として、経営や事業の相談を個人で受けています。北海道札幌市在住。就職活動に関する書籍を監修・執筆。">
 <meta property="og:title" content="高嶌悠人">
 <meta property="og:description" content="壁打ち相手、相談役・顧問、社長補佐、経営企画として、経営や事業の相談を個人で受けています。北海道札幌市在住。">
 <meta property="og:type" content="website">
@@ -235,6 +235,40 @@ html.motion-off{scroll-behavior:auto}
   .motion-ready .motion-item,.motion-ready .motion-pending{opacity:1;transform:none;transition:none}
   .nav-ready .faq .a{grid-template-rows:1fr}
 }
+
+/* CAICA A: shared typography, spacing and restrained monochrome surfaces. */
+body{font-weight:400}
+h3,.card h3,.step h3{font-weight:700;line-height:1.5;letter-spacing:.01em}
+.card h3{font-size:25px;margin-bottom:10px}
+.card p,.rows article>p,#profile .rv>p,.faq .a p,dl.dt dd{font-size:17px;line-height:1.9}
+.en,.rows h3 em,.pname .lat{font-weight:500;font-size:12px;line-height:1.75;letter-spacing:.08em}
+.rows h3 em{margin-top:6px}
+.rows article{align-items:start}
+.pname h3{font-size:36px;font-weight:700}
+.card{padding:30px 32px 34px}
+#process{background:var(--bg);color:var(--text)}
+#process .card{background:var(--tint);border:1px solid var(--line);padding:28px 24px 32px}
+#process .en,#process .note,#process .step p{color:var(--sub)}
+#process .step .n{color:var(--sub);border-color:var(--line);font-weight:500;margin-bottom:16px}
+#process .step h3{font-size:23px;margin-bottom:12px}
+.nav-ready .vnav{display:block;visibility:hidden;opacity:0;transform:translateY(-10px);pointer-events:none;transition:opacity .65s ease,transform .78s var(--ease),visibility 0s .78s}
+.nav-ready .vnav.is-open{visibility:visible;opacity:1;transform:none;pointer-events:auto;transition-delay:0s}
+.nav-ready .faq .a{transition:grid-template-rows .65s cubic-bezier(.4,0,.2,1)}
+.nav-ready .faq .a.open{transition-duration:.78s}
+.faq .a>div{min-height:0}
+main details{overflow-anchor:none}
+html.anchor-gliding{scroll-behavior:auto!important}
+@media(max-width:740px){
+ .card{padding:26px 24px 30px}
+ .card h3{font-size:21px}
+ .card p,.rows article>p,#profile .rv>p,.faq .a p,dl.dt dd{font-size:16px}
+ .en,.rows h3 em,.pname .lat{font-size:11px}
+ .pname h3{font-size:30px}
+ #process .step h3{font-size:21px}
+}
+@media(prefers-reduced-motion:reduce){.nav-ready .vnav,.nav-ready .faq .a{transition:none!important}}
+.motion-off .vnav,.motion-off .faq .a{transition:none!important}
+
 </style>
 </head>
 <body>
@@ -422,7 +456,7 @@ html.motion-off{scroll-behavior:auto}
       <p>北海道札幌市生まれ。北海道苫小牧東高等学校を経て、慶應義塾大学法学部政治学科を卒業。</p>
       <p>新卒で株式会社電通に入社し、営業として広告、マーケティング、ブランディングに携わりました。その後、学生時代から関心のあった教育・キャリアの分野へ。キャリア・教育系ベンチャーの株式会社ガクーで人材事業部の事業部長を務め、採用や育成、事業の立ち上げに向き合いながら、ITの相談対応や検索広告、Webサイト制作などの実務も重ねました。</p>
       <p>2014年に株式会社カイカを設立。東証マザーズ上場（当時）の株式会社イードから出資を受け、新卒・第二新卒向けの就職情報サイトやキャリア支援スクールを運営しました。提携解消後は、株式会社ビートルの取締役として、PR案件や地方創生案件に取り組み、パートナー企業とともに販路を広げる体制づくりを担いました。並行してプロジェクトマネジメント（PM）の仕事を広げ、現在に至ります。</p>
-      <p>就職活動に関する書籍の監修・執筆も続けており、これまでに<span class="nw">28冊</span>を数えます。学生に向けて書いてきたのは、まず自分の言葉にする、ということでした。経営の相談で向き合っていることと、そう遠くありません。</p>
+      <p>就職活動に関する書籍の監修・執筆も続けています。学生に向けて書いてきたのは、まず自分の言葉にする、ということでした。経営の相談で向き合っていることと、そう遠くありません。</p>
       <p>学生時代は、アイスホッケーに打ち込みました。ポジションはゴールキーパーです。最後尾から全体を見て、声を出して味方に伝え、最後は引き受ける。得点を決める役ではありませんが、その位置が性に合っていました。小学校から高校まで、いずれのチームでも主将を務めています。U18日本代表として世界選手権ディビジョン2で準優勝、U20日本代表に選出され、全日本代表候補にも入りました。高校3年時には冬季国民体育大会で優勝しています。正直にやる、地道に続ける、チームで成果を出す。そこで教わった姿勢は、いまも仕事の土台です。</p>
       <p>このほか現在は、玄米カップ麺や玄米ライスペーパーなどをベトナムで製造し、日本で販売する株式会社イノウエ企画（ブランド名：BiNoo）の代表取締役を、共同代表として兼任しています。</p>
 
@@ -644,6 +678,122 @@ html.motion-off{scroll-behavior:auto}
   document.addEventListener('click',function(e){if(!nav.contains(e.target)&&!menu.contains(e.target))closeMenu(false);});
   document.documentElement.classList.add('nav-ready');
 
+  /* Disclosure motion: grow the existing panel without replacing its semantics. */
+(() => {
+  const root = document.documentElement;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  const allowed = () => !root.classList.contains('motion-off') && (!reduce.matches || root.classList.contains('motion-on'));
+  const active = new Set();
+  function bind(box, trigger, isOpen, setOpen) {
+    let animation, desired = isOpen(), original;
+    function finish() {
+      if (!original) return;
+      // Commit the native state while the final animated height still owns layout.
+      setOpen(desired);
+      Object.assign(box.style, original);
+      original = null;
+      const completed = animation;
+      animation = null;
+      if (completed) { completed.onfinish = null; completed.cancel(); }
+      active.delete(finish);
+    }
+    function closedHeight() {
+      // Do not close/reopen to measure: it collapses the document and lets the
+      // browser move the scroll anchor before the closing animation even starts.
+      const style = getComputedStyle(box);
+      const summary = getComputedStyle(trigger);
+      const px = value => parseFloat(value) || 0;
+      return trigger.getBoundingClientRect().height
+        + px(summary.marginTop) + px(summary.marginBottom)
+        + px(style.paddingTop) + px(style.paddingBottom)
+        + px(style.borderTopWidth) + px(style.borderBottomWidth);
+    }
+    trigger.addEventListener('click', event => {
+      if (event.target.closest('a,input,select,textarea')) return;
+      event.preventDefault(); event.stopImmediatePropagation();
+      const start = box.getBoundingClientRect().height;
+      desired = animation ? !desired : !isOpen();
+      if (animation) { animation.onfinish = null; animation.cancel(); animation = null; }
+      if (!allowed() || !box.animate) { setOpen(desired); finish(); return; }
+      original ||= {
+        height:box.style.height, overflow:box.style.overflow,
+        boxSizing:box.style.boxSizing, minHeight:box.style.minHeight
+      };
+      box.style.boxSizing = 'border-box';
+      box.style.minHeight = '0';
+      box.style.overflow = 'hidden';
+      // Closing keeps open=true throughout; only the measured summary remains
+      // visible at the end. Reversals start from the current on-screen height.
+      let end;
+      if (desired) {
+        setOpen(true);
+        box.style.height = '';
+        end = box.getBoundingClientRect().height;
+      } else end = closedHeight();
+      box.style.height = start + 'px';
+      animation = box.animate([{height:start+'px'},{height:end+'px'}], {
+        duration:desired?780:650, easing:'cubic-bezier(.4,0,.2,1)', fill:'forwards'
+      });
+      active.add(finish);
+      animation.onfinish = finish;
+    }, true);
+  }
+  document.querySelectorAll('main details').forEach(box => {
+    const trigger = box.querySelector(':scope > summary');
+    if (trigger) bind(box, trigger, () => box.open, value => { box.open = value; });
+  });
+  const settle = () => { for (const finish of [...active]) finish(); };
+  addEventListener('resize', settle); addEventListener('beforeprint', settle);
+  reduce.addEventListener('change', () => { if (!allowed()) settle(); });
+  new MutationObserver(() => { if (!allowed()) settle(); }).observe(root, {attributes:true,attributeFilter:['class']});
+})();
+
+/* A measured, ease-in/ease-out journey for same-page links. */
+(() => {
+  const root = document.documentElement;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  const allowed = () => !root.classList.contains('motion-off') && (!reduce.matches || root.classList.contains('motion-on'));
+  let frame = 0;
+  function cancel() { cancelAnimationFrame(frame); frame = 0; root.classList.remove('anchor-gliding'); }
+  document.addEventListener('click', event => {
+    const link = event.target.closest('a[href]');
+    if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || link.hasAttribute('download') || (link.target && link.target !== '_self') || !allowed()) return;
+    const url = new URL(link.href, location.href);
+    if (url.origin !== location.origin || url.pathname !== location.pathname || url.search !== location.search || !url.hash) return;
+    let target;
+    try { target = document.getElementById(decodeURIComponent(url.hash.slice(1))); } catch { return; }
+    if (!target) return;
+    event.preventDefault(); cancel();
+    const from = scrollY;
+    const padding = parseFloat(getComputedStyle(root).scrollPaddingTop) || 0;
+    const margin = parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
+    const header = document.querySelector('header');
+    const inset = Math.max(padding + margin, (header?.getBoundingClientRect().height || 0) + 20);
+    const to = Math.max(0, Math.min(document.documentElement.scrollHeight - innerHeight, target.getBoundingClientRect().top + from - inset));
+    const duration = Math.min(1300, 850 + Math.abs(to - from) * .16);
+    if (location.hash !== url.hash) history.pushState(null, '', url.hash);
+    root.classList.add('anchor-gliding');
+    const started = performance.now();
+    function step(now) {
+      if (!allowed()) { cancel(); return; }
+      const t = Math.min(1, (now - started) / duration);
+      const eased = (1 - Math.cos(Math.PI * t)) / 2;
+      scrollTo(0, from + (to - from) * eased);
+      if (t < 1) frame = requestAnimationFrame(step);
+      else {
+        cancel();
+        const hadTabindex = target.hasAttribute('tabindex');
+        if (!hadTabindex) target.setAttribute('tabindex', '-1');
+        target.focus({preventScroll:true});
+        if (!hadTabindex) target.removeAttribute('tabindex');
+      }
+    }
+    frame = requestAnimationFrame(step);
+  });
+  for (const type of ['wheel','touchstart','pointerdown','popstate','resize']) addEventListener(type, cancel, {passive:true});
+  addEventListener('keydown', event => { if (['ArrowDown','ArrowUp','PageDown','PageUp','Home','End','Escape',' '].includes(event.key)) cancel(); });
+})();
+
   var closedForPrint=[];
   window.addEventListener('beforeprint',function(){
     closedForPrint=Array.from(document.querySelectorAll('details:not([open])'));
@@ -680,3 +830,4 @@ html.motion-off{scroll-behavior:auto}
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
+
