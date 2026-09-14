@@ -70,7 +70,7 @@ br.sp{display:none}
 .intro-pending #curtain{display:flex}
 .intro-pending :is(main,footer,.site-header,.skip-link){visibility:hidden}
 #curtain.up{transform:translateY(-100%)}
-.opening-name{width:min(66vw,760px);animation:name-exit .65s ease-in-out 3.6s both}
+.opening-name{width:min(44vw,400px);animation:name-exit .65s ease-in-out 3.6s both}
 #curtain svg{display:block;width:100%;height:auto;animation:name-arrive 2.1s ease-in-out both}
 #curtain .mark path{fill:var(--text);stroke:none}
 @keyframes name-arrive{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
@@ -206,7 +206,7 @@ footer .cr{font-family:var(--lat);font-size:12px;letter-spacing:.08em;color:#c7c
   .nav-ready .vnav{padding:24px;max-height:calc(100dvh - 82px)}
   .vnav ul{column-gap:20px}
   .vnav a{font-size:15px}
-  .opening-name{width:76vw}
+  .opening-name{width:min(54vw,220px)}
   section{padding:72px 24px;scroll-margin-top:85px}
   #top .lead{max-width:34em;margin-top:28px;font-size:16px;line-height:1.95}
   #top .btnrow{max-width:34em}
@@ -269,6 +269,21 @@ html.anchor-gliding{scroll-behavior:auto!important}
 @media(prefers-reduced-motion:reduce){.nav-ready .vnav,.nav-ready .faq .a{transition:none!important}}
 .motion-off .vnav,.motion-off .faq .a{transition:none!important}
 
+
+/* Match CAICA's opening scale and navigation rhythm. */
+.site-header{height:88px;padding-block:16px;box-sizing:border-box}
+.nav-ready .vnav{max-height:calc(100dvh - 88px)}
+.pname .role{margin-top:20px;padding-top:0;border-top:0;line-height:1.7}
+.pname .role span{margin-top:3px;font-size:11px;line-height:1.6}
+.pname{margin-bottom:32px}
+#profile .rv>p+p{margin-top:22px}
+.card .freq{margin-top:8px;margin-bottom:16px;line-height:1.7}
+@media(max-width:740px){
+ .site-header{height:76px;padding-block:12px}
+ .nav-ready .vnav{max-height:calc(100dvh - 76px)}
+ .pname{margin-bottom:26px}
+ #profile .rv>p+p{margin-top:18px}
+}
 </style>
 </head>
 <body>
