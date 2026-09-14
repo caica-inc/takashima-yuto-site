@@ -33,7 +33,7 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@900&family=Noto+Sans+JP:wght@400;500;700;900&family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@700;900&family=Noto+Sans+JP:wght@400;500;700;900&family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
 :root{
   color-scheme:only light;
@@ -274,9 +274,9 @@ html.anchor-gliding{scroll-behavior:auto!important}
 .site-header{height:88px;padding:16px max(32px,calc((100vw - 1120px)/2));box-sizing:border-box}
 .logo{font-size:24px}
 .nav-ready .vnav{max-height:calc(100dvh - 88px)}
-#top{min-height:72svh;padding:76px 32px 100px}
-#top .lead{text-align:center;line-height:1.95}
-#top .btnrow{align-items:center;text-align:center}
+#top{min-height:74svh;padding:clamp(60px,9vh,110px) 24px clamp(70px,10vh,120px)}
+#top .lead{text-align:left;font-size:17px;line-height:1.9;color:var(--sub);word-break:normal;overflow-wrap:normal;text-wrap:pretty}
+#top .btnrow{align-items:flex-start;text-align:left}
 .head h2{font-size:42px;font-weight:700;line-height:1.5}
 .head .en{margin-top:6px;margin-bottom:24px}
 .service-detail{border-top:2px solid #bcbcbc}
@@ -306,7 +306,7 @@ html.anchor-gliding{scroll-behavior:auto!important}
  .site-header{height:76px;padding:12px 22px}
  .logo{font-size:21px}
  .nav-ready .vnav{max-height:calc(100dvh - 76px)}
- #top{min-height:60svh;padding:64px 24px 76px}
+ #top .lead{font-size:16px;line-height:1.9}
  .head h2{font-size:31px}
  .head .en{margin-bottom:20px}
  .service-detail summary{grid-template-columns:minmax(0,1fr) 24px;gap:10px 16px;padding:22px 0}
