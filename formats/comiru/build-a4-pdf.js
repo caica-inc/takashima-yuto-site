@@ -3,6 +3,7 @@ const FONTS='https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@5
 const THEMES={
   comiru:{src:'comisapo-site-flow-a4.src.html',out:'コミサポ_サイト制作工数整理_叩き台.pdf',html:'comisapo-site-flow-a4.html'},
   kcm:{src:'comisapo-site-flow-a4-kcm.src.html',out:'コミサポ_サイト制作工数整理_叩き台_KCM形式.pdf',html:'comisapo-site-flow-a4-kcm.html'},
+  format:{src:'comiru-design-format-a4.src.html',out:'コミル_デザインフォーマット_第2版.pdf',html:'comiru-design-format-a4.html',css:'comiru-format-a4.css'},
   kcmcomiru:{src:'comisapo-site-flow-a4-kcm.src.html',out:'コミサポ_サイト制作工数整理_叩き台（KCM体裁・コミル配色）.pdf',html:'comisapo-site-flow-a4-kcm-comiru.html',override:`
 /* theme: KCM体裁 × コミル配色 */
 :root{--navy:#231F20;--navy2:#55595E;--title:#231F20;--box:#F4F4F1;--box2:#FFF6CF;--box3:#FAFAF8;--line:#DADCD8;--ink:#231F20;--mute:#55595E;--red:#C9463D}
@@ -31,6 +32,7 @@ tr.t td{background:#FFF6CF}
   const scratch='/tmp/claude-0/-home-user-takashima-yuto-site/8319d126-87f7-50b6-aa7f-8e062e29d587/scratchpad';
   let src=fs.readFileSync(path.join(repo,T.src),'utf8');
   if(T.override) src=src.replace('</style></head>',T.override+'\n</style></head>');
+  if(T.css) src=src.replace('/*CSS*/',fs.readFileSync(path.join(repo,T.css),'utf8'));
   fs.writeFileSync(path.join(repo,T.html),src.replace('/*FONTS*/',FONTS));
   const render=path.join(scratch,'render-'+theme+'.html');
   fs.writeFileSync(render,src.replace('/*FONTS*/','fonts/fonts.local.css'));
