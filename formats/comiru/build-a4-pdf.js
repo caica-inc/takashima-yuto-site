@@ -6,13 +6,13 @@ const THEMES={
   kcmcomiru:{src:'comisapo-site-flow-a4-kcm.src.html',out:'コミサポ_サイト制作工数整理_叩き台（KCM体裁・コミル配色）.pdf',html:'comisapo-site-flow-a4-kcm-comiru.html',override:`
 /* theme: KCM体裁 × コミル配色 */
 :root{--navy:#231F20;--navy2:#55595E;--title:#231F20;--box:#F4F4F1;--box2:#FFF6CF;--box3:#FAFAF8;--line:#DADCD8;--ink:#231F20;--mute:#55595E;--red:#C9463D}
-.tb::after{background:linear-gradient(90deg,#231F20 0%,#231F20 30%,#FFD12A 30%,#FFD12A 62%,#FFF6CF 100%)}
+.tb::after{background:#FFD12A}
 .tb .ref{color:#231F20}
 .num i,.tree .bx b.h i{background:#FFD12A;color:#231F20}
 .bx .chip{background:#FFD12A;color:#231F20}
 .bx .chip.alt{background:#fff;color:#231F20;border-color:#FFD12A}
-.sum{background:#231F20;color:#fff}
-.sum span{color:#FFD12A;opacity:1}
+.sum{background:#FFD12A;color:#231F20}
+.sum span{color:#231F20;opacity:.75}
 .flow .ar{color:#231F20}
 .bar .t i{background:#FFD12A}
 .bar .t i.k{background:#9A9EA3}
