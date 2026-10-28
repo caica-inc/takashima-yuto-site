@@ -25,13 +25,16 @@ html,body{margin:0;padding:0;background:#fff;color:var(--ink);font-family:var(--
 .pg:last-child{page-break-after:auto;break-after:auto}
 /* タイトル帯：左上から 14.3mm 高、下に紺→薄青のグラデーション線 */
 .tb{height:14.3mm;display:flex;align-items:flex-end;justify-content:space-between;padding-bottom:2.2mm;margin:0 -2mm 6mm;position:relative}
-.tb::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:linear-gradient(90deg,var(--navy) 0%,var(--navy2) 45%,var(--line) 100%)}
+.tb::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1pt;background:var(--line)}
+.tb h1::after{content:"";display:block;height:2.2px;background:var(--navy2);margin-top:1.6mm;border-radius:2px}
+.tb .pn{align-self:flex-end}
 .tb h1{font-size:17pt;font-weight:700;color:var(--title);margin:0;letter-spacing:.02em;line-height:1.2}
 .tb .ref{font-size:12pt;font-weight:700;color:var(--mute);letter-spacing:.1em}
 .tb .pn{font-family:var(--en);font-size:9pt;color:var(--mute)}
 .body{flex:1;min-height:0;display:flex;flex-direction:column;gap:4mm}
 .body>*{flex-shrink:0}
-h2{font-size:18pt;font-weight:700;color:var(--navy);margin:0;line-height:1.25}
+h2{font-size:18pt;font-weight:700;color:var(--navy);margin:0;line-height:1.25;display:flex;align-items:center;gap:3mm}
+h2 .hn{font-family:var(--en);font-size:9.5pt;font-weight:700;letter-spacing:.12em;background:var(--box2);color:var(--navy);border-radius:99px;padding:.6mm 3mm;flex:none}
 .lead{font-size:12pt;font-weight:400;color:var(--ink);margin:0;line-height:1.55;padding-left:.2em}
 p{margin:0}
 .num{display:flex;align-items:center;gap:3mm;margin:0}
@@ -93,23 +96,24 @@ ul.pl li{margin-bottom:1mm}
 .q{font-size:9.5pt;line-height:1.45;border-left:3px solid var(--navy2);padding-left:3mm}
 .q b{display:block;color:var(--mute);font-weight:400;font-size:8.5pt}
 .tree{display:grid;grid-template-columns:1fr 1fr;gap:4mm}
-.tree .bx{font-weight:400;color:var(--ink);font-size:9pt;padding:2.5mm 3.5mm}
+.tree .bx{font-weight:400;color:var(--ink);font-size:9pt;padding:1.8mm 3.5mm}
+.tree .bx b.h{margin-bottom:1mm}
 .tree .bx b.h{display:flex;align-items:center;gap:2mm;color:var(--navy);font-size:11pt;margin-bottom:1.5mm}
 .tree .bx b.h i{width:6mm;height:6mm;border-radius:50%;background:var(--navy);color:#fff;font-family:var(--en);font-style:normal;font-size:9pt;display:flex;align-items:center;justify-content:center}
 .tree ul{margin:0;padding-left:1.1em}.tree li{margin-bottom:.8mm}
-.tree .ev{color:var(--mute);font-size:8.6pt}
+.tree .ev{color:var(--mute);font-size:.93em}
 </style></head><body>
 
 <!-- 1 -->
 <section class="pg">
   <div class="tb"><h1>コミサポ　塾サイト制作、どうすれば12時間で回せるか（相談用メモ）</h1><span class="pn">1</span></div>
   <div class="body">
-    <h2>１. このメモでやりたいこと</h2>
-    <p class="lead">塾サイトの制作を、初期費用の中で、ちゃんとしたものを1案件12時間くらいで回せる形にしたい。そのために「どこを変えれば楽になるか」を、Slackの実案件から整理してみました。</p>
+    <h2><span class="hn">01</span>このメモでやりたいこと</h2>
+    <p class="lead">塾サイトの制作を、初期費用の中で、品質を落とさずに1案件12時間で回せる形にしたい。そのために「どこを変えれば楽になるか」を、ポパー Slack の実案件（2026年5月〜10月、22件）から整理しました。</p>
     <div class="cols c2">
       <div>
         <div class="num"><i>1</i><b>今の数字</b></div>
-        <div class="kp" style="grid-template-columns:repeat(3,1fr);margin-top:3mm">
+        <div class="kp" style="grid-template-columns:repeat(3,1fr);margin-top:3mm;gap:3mm;font-size:9pt">
           <div class="bx"><div class="l">目標（佐久間さん見込み）</div><div class="v">10<small>〜12 h</small></div><div class="s">カイカ稼働・1案件</div></div>
           <div class="bx hl"><div class="l">実感値</div><div class="v">20<small>〜30 h</small></div><div class="s">目標の2倍</div></div>
           <div class="bx"><div class="l">初期費用で賄える上限</div><div class="v">39<small>h</small></div><div class="s">98,000円 ÷ 2,500円</div></div>
@@ -117,11 +121,11 @@ ul.pl li{margin-bottom:1mm}
           <div class="bx"><div class="l">初稿後の修正往復</div><div class="v">3<small>〜4回</small></div><div class="s">目標2回。多いと6回</div></div>
           <div class="bx"><div class="l">10月の新規受注</div><div class="v">6<small>件</small></div><div class="s">受注が先に増えている</div></div>
         </div>
-        <p class="note" style="margin-top:2mm">※ 稼働時間は推定（岡部さんの9月申告38時間と案件数から逆算）。11月から案件別・工程別に実測し、12月に置き換える。</p>
+        
       </div>
       <div>
         <div class="num"><i>2</i><b>差分の正体と、やってみたいこと</b></div>
-        <p style="font-size:10.5pt;margin-top:2mm;line-height:1.5">差分の約10時間は、作業そのものより「ずれの調整」に消えていそうです。塾側で考えが動くこと、ビットスターが塾と直接会わないので雰囲気が初稿に乗らないこと、そのずれを岡部さん・井口さんが往復で埋めていること。この3つが大きいと見ています。</p>
+        <p style="font-size:10.5pt;margin-top:2mm;line-height:1.5">差分の約10時間は、作業そのものではなく「ずれの調整」に消えています。塾側で考えが動くこと、ビットスターが塾と直接会わないので雰囲気が初稿に乗らないこと、そのずれを岡部さん・井口さんが往復で埋めていること。この3つが主因です（根拠は6〜7ページ）。</p>
         <div class="cols c3" style="margin-top:3mm;gap:3mm">
           <div class="bx hl">やってみたいこと①　「ここまで」を決める<small>5ページ・修正2往復・塾の素材提出は2週間以内。超えた分はオプションに。営業資料と契約書に同じ言葉で</small></div>
           <div class="bx hl">やってみたいこと②　ビットスターにキックオフへ来てもらう<small>塾長と直接話して、雰囲気と参考サイトをその場で決める。ずれの元を最初に潰す</small></div>
@@ -129,6 +133,13 @@ ul.pl li{margin-bottom:1mm}
         </div>
         <p class="note" style="margin-top:2mm">※ 高嶌（カイカ）が書いた叩き台です。一緒に決めたいことは11ページにまとめています</p>
       </div>
+    </div>
+    <div class="num" style="margin-top:-1mm"><i>3</i><b>このメモの読み方と前提</b></div>
+    <div class="cols" style="grid-template-columns:1fr 1fr 1fr 1fr;gap:3mm;font-size:8.6pt">
+      <div class="nb" style="font-size:8.6pt"><b>2〜5ページ：今の姿</b>流れ、分担、やる人と決める人、数字。ここは事実だけを並べています。</div>
+      <div class="nb" style="font-size:8.6pt"><b>6〜7ページ：引っかかりと原因</b>範囲・役割・仕組み・体制の4つの切り口と、工程別の時間。根拠は Slack の発言と案件の経過。</div>
+      <div class="nb" style="font-size:8.6pt"><b>8〜9ページ：やれそうなこと</b>効果とやりやすさで並べた13の手と、「ここまで」の案、変えたあとの流れ。</div>
+      <div class="nb" style="font-size:8.6pt"><b>10〜11ページ：進め方と決めたいこと</b>11月〜1月の進め方、見る数字、気になっていること、一緒に決めたい9項目。出典と前提は最終ページ。</div>
     </div>
     <div class="sum"><span>ひとこと｜</span>流れも顔ぶれも変えなくていい。「どこまで」「誰が止めるか」「ビットスターとの接点」「同時に何件か」を決め直せば、12時間は見えてくる</div>
   </div>
@@ -138,7 +149,7 @@ ul.pl li{margin-bottom:1mm}
 <section class="pg">
   <div class="tb"><h1>コミサポ　塾サイト制作、どうすれば12時間で回せるか（相談用メモ）</h1><span class="pn">2</span></div>
   <div class="body">
-    <h2>２. 今の流れ（6ステップ）</h2>
+    <h2><span class="hn">02</span>今の流れ（6ステップ）</h2>
     <p class="lead">ポパーが商談で条件を説明して契約を結び、そこからキックオフへ。以降の進行はカイカが前に立ち、やり取りにはポパーの担当がいつも一緒にいる、という形で動いています。</p>
     <div class="flow">
       <div class="bx"><span class="chip">POPER</span>セールス<small>商談で制約・条件（スコープ、料金、期間、塾側の作業）を説明</small></div>
@@ -157,7 +168,7 @@ ul.pl li{margin-bottom:1mm}
 
         <div class="nb"><b>やり取りの決まりごと</b>塾・ビットスターとのテキストのやり取りには、ポパー側（佐久間さん・槻山さん）がいつも入っていて、実際に手を動かすのはカイカ側（主に井口さん）。</div>
         <div class="nb"><b>カイカが持つところ</b>構成から納品までの進行。塾へのリマインドは2回目以降もカイカがやる（ここはポパーの希望どおりで）。引っかかっているのは「誰がリマインドするか」ではなく、「何往復まで・何ページまで・素材が来なかったらどうするか」が決まっていないこと。</div>
-        <div class="nb"><b>情報の置き場</b>ヒアリングフォーム、入力フォーマット、構成案、修正指示（3形式）、顧客 Slack、#bitstar_制作関連。9/4 以降は構成案を正とする運用に寄せている</div>
+        <div class="nb"><b>情報の置き場が工程ごとに違う</b>ヒアリングフォーム（ビットスター製）、入力フォーマット、構成案、修正指示（3形式）、顧客 Slack、#bitstar_制作関連。9/4 にビットスターの今地さんから「情報源が分散しており、漏れが発生しやすく」と指摘があり、以後は構成案を正とする運用に寄せています。</div>
       
     </div>
     <div class="sum"><span>ひとこと｜</span>流れと役割はもう整っている。決まっていないのは「初期費用でどこまでやるか」と「それ以上を誰が止めるか」の2つだけ</div>
@@ -168,7 +179,7 @@ ul.pl li{margin-bottom:1mm}
 <section class="pg">
   <div class="tb"><h1>コミサポ　塾サイト制作、どうすれば12時間で回せるか（相談用メモ）</h1><span class="pn">3</span></div>
   <div class="body">
-    <h2>３. ステップごとに、誰が何を持っているか</h2>
+    <h2><span class="hn">03</span>ステップごとに、誰が何を持っているか</h2>
     <p class="lead">今の分担を表にしました。カイカは「岡部さん＝ディレクション、井口さん＝制作進行」で分けています。</p>
     <table class="s" style="table-layout:fixed"><colgroup><col style="width:22mm"><col style="width:52mm"><col style="width:46mm"><col style="width:52mm"><col style="width:40mm"><col></colgroup>
         <thead><tr><th>フェーズ</th><th>ポパー</th><th>岡部さん（ディレクション）</th><th>井口さん（制作進行）</th><th>ビットスター</th><th>塾</th></tr></thead>
@@ -181,6 +192,10 @@ ul.pl li{margin-bottom:1mm}
           <tr><td class="k">6 納品</td><td>請求開始、GA 設置（移行中）</td><td>納品後チェック、事例記事</td><td>公開前チェック、切替案内</td><td>公開</td><td>塾側作業</td></tr>
         </tbody>
       </table>
+    <div class="cols c2">
+      <div class="nb"><b>みんなの気になりどころ</b>佐久間さん：採算、プラン設計、案件数（商談は10月下旬から下田さんへ移管中）／槻山さん：調整工数の増加、ビットスターとの条件、契約条項／岡部さん・井口さん：修正往復、塾の停滞、情報の分散／ビットスター高山さん・今地さん：情報の正本、修正回数、プラン範囲／塾長：教室の雰囲気が伝わるサイト、早い公開</div>
+      <div class="nb"><b>今使っているツール</b>調整アポ、SF（商談・売上見込）、#comirusupport_コミサポβ（受注・契約・請求）、クラウドサイン、ビットスター個別発注ワークフロー、入力フォーマット（スプレッドシート）、構成案（Google ドキュメント／スライド）、修正指示（ドキュメント／スライド／スプレッドシート青字／Dropbox）、顧客別 Slack、#bitstar_制作関連（案件ごとのスレッド）、案件管理スプレッドシート（SF 自動転記）、Vercel テスト URL</div>
+    </div>
     <div class="sum"><span>ひとこと｜</span>誰が何をやるかははっきりしている。ビットスターがキックオフにいないこと、修正往復に上限がないこと、がこの先の話</div>
   </div>
 </section>
@@ -189,7 +204,7 @@ ul.pl li{margin-bottom:1mm}
 <section class="pg">
   <div class="tb"><h1>コミサポ　塾サイト制作、どうすれば12時間で回せるか（相談用メモ）</h1><span class="pn">4</span></div>
   <div class="body">
-    <h2>４. 「やる人」と「決める人」の整理</h2>
+    <h2><span class="hn">04</span>「やる人」と「決める人」の整理</h2>
     <p class="lead">やる人はステップごとにはっきりしています。ただ「それは範囲外です」と決める人だけ、誰にも置かれていません。</p>
     <div class="cols" style="grid-template-columns:1.75fr 1fr">
       <table>
@@ -220,8 +235,8 @@ ul.pl li{margin-bottom:1mm}
 <section class="pg">
   <div class="tb"><h1>コミサポ　塾サイト制作、どうすれば12時間で回せるか（相談用メモ）</h1><span class="pn">5</span></div>
   <div class="body">
-    <h2>５. 数字で見ると</h2>
-    <p class="lead">初期費用98,000円（税抜）だと、カイカの稼働は39時間までが上限。実感値の20〜30時間だと、半額の案件はもう赤字になってしまいます。</p>
+    <h2><span class="hn">05</span>数字で見ると</h2>
+    <p class="lead">初期費用98,000円（税抜）だと、カイカの稼働は39時間が上限です。実感値の20〜30時間では、半額の案件は赤字になります。</p>
     <div class="kp">
       <div class="bx"><div class="l">顧客 初期費用（標準）</div><div class="v">98,000<small>円</small></div><div class="s">値引き例 49,000 / 29,000 / 0円</div></div>
       <div class="bx"><div class="l">顧客 月額（2年契約）</div><div class="v">9,800<small>円</small></div><div class="s">サーバー・ドメイン・保守込み</div></div>
@@ -274,7 +289,7 @@ ul.pl li{margin-bottom:1mm}
 <section class="pg">
   <div class="tb"><h1>コミサポ　塾サイト制作、どうすれば12時間で回せるか（相談用メモ）</h1><span class="pn">6</span></div>
   <div class="body">
-    <h2>６. 引っかかっているところ（範囲・役割・仕組み・体制）</h2>
+    <h2><span class="hn">06</span>引っかかっているところ（範囲・役割・仕組み・体制）</h2>
     <p class="lead">顔ぶれと流れはそのままに、「この流れの中で時間を押し上げているもの」を4つの切り口で洗い出してみました。</p>
     <table class="xs">
       <thead><tr><th style="width:22mm">観点</th><th>課題</th><th>実案件での現れ方</th><th style="width:40mm">どの手で扱うか（8ページ）</th></tr></thead>
@@ -301,17 +316,17 @@ ul.pl li{margin-bottom:1mm}
 <section class="pg">
   <div class="tb"><h1>コミサポ　塾サイト制作、どうすれば12時間で回せるか（相談用メモ）</h1><span class="pn">7</span></div>
   <div class="body">
-    <h2>７. なぜ12時間に収まらないのか</h2>
-    <p class="lead">順調に進めば13.5時間、実案件に近いと29時間。差の15.5時間は「手戻り」「待ちと催促」「公開まわり」で生まれていそうです。</p>
+    <h2><span class="hn">07</span>なぜ12時間に収まらないのか</h2>
+    <p class="lead">順調に進めば13.5時間、実案件に近いと29時間。差の15.5時間は「手戻り」「待ちと催促」「公開まわり」で生まれています。</p>
     <div class="cols" style="grid-template-columns:1fr 1.25fr">
-      <div class="tree" style="grid-template-columns:1fr;gap:2.5mm">
-        <div class="bx"><b class="h"><i>A</i>作業そのものの量　順調で約8h</b><ul><li>キックオフ同席1.5h、ヒアリング整理1.5h、構成案4h、発注・初稿確認1h。目標内に収まる。</li><li class="ev">根拠：岡部さん 10/9「構成案を作成しております。全体で6ページ」</li></ul></div>
-        <div class="bx"><b class="h"><i>B</i>手戻り（修正往復）　3h → 8h</b><ul><li><b>塾側で方向が動く。</b>言語化が苦手な先生は「なんとなく違う」としか言えず、理想が高い先生は「もっと良くしたい」が止まらない。</li><li><b>ビットスターが塾と直接会わない。</b>文字情報だけで制作するため雰囲気が初稿に乗らず、岡部さん・井口さんが素材を集め直して伝え直す。</li><li><b>情報の正本が複数</b>で、反映漏れと「見ていない」の応酬。</li><li class="ev">根拠：槻山さん 8/24「まじで修正のラリーが多い」</li></ul></div>
-        <div class="bx"><b class="h"><i>C</i>待ちと催促　0.5h → 3h</b><ul><li>原稿・写真が揃わない。初稿後に返事が来ない。待つ間のリマインドと再開時の再確認。</li><li class="ev">根拠：槻山さん 9/29「初稿出してるのに止まってる案件：まなサポ、佐分利、ボストン」</li></ul></div>
-        <div class="bx"><b class="h"><i>D</i>公開まわりの周辺作業　2h → 5h</b><ul><li>公開前チェック、切替案内、契約条件の確認、計測の設置。塾側作業の案内と確認に時間がかかる。細部には立ち入らず、範囲を決める対象として扱う。</li></ul></div>
+      <div class="tree" style="grid-template-columns:1fr;gap:1.5mm;font-size:8pt;line-height:1.4">
+        <div class="bx"><b class="h"><i>A</i>作業そのものの量　順調で約8h</b><ul><li>キックオフ同席1.5h、ヒアリング整理1.5h、構成案4h、発注・初稿確認1h。目標内に収まる。</li><li class="ev">根拠：岡部さん 10/9「構成案を作成しております。全体で6ページ」。STERA・幸彩・西沢の構成案はいずれも1〜2日で提出</li></ul></div>
+        <div class="bx"><b class="h"><i>B</i>手戻り（修正往復）　3h → 8h</b><ul><li><b>塾側で方向が動く。</b>言語化が苦手な先生は「なんとなく違う」としか言えず、理想が高い先生は「もっと良くしたい」が止まらない。</li><li><b>ビットスターが塾と直接会わない。</b>文字情報だけで制作するため雰囲気が初稿に乗らず、岡部さん・井口さんが素材を集め直して伝え直す。<b>情報の正本も複数</b>で、反映漏れと「見ていない」の応酬になる。</li><li class="ev">根拠：槻山さん 8/24「まじで修正のラリーが多い」。井口さん 9/7「修正の量やばw」。岡部さん 9/2「支給したテキストでなく全く別のものが入っており」。今地さん 9/4「情報源が分散」</li></ul></div>
+        <div class="bx"><b class="h"><i>C</i>待ちと催促　0.5h → 3h</b><ul><li>原稿・写真が揃わない。初稿後に返事が来ない。待つ間のリマインドと再開時の再確認。</li><li class="ev">根拠：アップ進学ゼミ（夏期講習で原稿遅延、6/24→10/9）。槻山さん 9/29「初稿出してるのに止まってる案件：まなサポ、佐分利、ボストン」</li></ul></div>
+        <div class="bx"><b class="h"><i>D</i>公開まわりの周辺作業　2h → 5h</b><ul><li>公開前チェック、切替案内、契約条件の確認、計測の設置。塾側作業の案内と確認に時間がかかる。細部には立ち入らず、範囲を決める対象として扱う。</li><li class="ev">根拠：アップ進学ゼミ・V-follows・スタディメイトで公開後の切替に往復。GA はポパー側へ移行中（10/20）</li></ul></div>
       </div>
       <div style="display:flex;flex-direction:column;gap:3mm">
-        <table class="s">
+        <table class="xs">
           <thead><tr><th>工程</th><th>枝</th><th class="n">順調</th><th class="n">実態</th><th>増える理由</th></tr></thead>
           <tbody>
             <tr><td class="k">キックオフ同席・議事</td><td>A</td><td class="n">1.5</td><td class="n">2.0</td><td>2名同席、日程再調整</td></tr>
@@ -325,7 +340,7 @@ ul.pl li{margin-bottom:1mm}
             <tr class="t"><td>合計</td><td></td><td class="n">13.5</td><td class="n">29.0</td><td>B・C・D で15.5時間増える</td></tr>
           </tbody>
         </table>
-        <div class="nb"><b>高嶌の見立て</b>見込み10〜12時間と実感値20時間前後の差は、作業量の見積もり違いというより、①塾側で考えが動くこと、②ビットスターが塾と直接会っていないこと、この2つの調整に使われている気がします。①は「ここまで」と期限で、②はビットスターのキックオフ同席で縮められそう。</div>
+        <div class="nb"><b>高嶌の見立て</b>見込み10〜12時間と実感値20時間前後の差は、作業量の見積もり違いではなく、①塾側で考えが動くこと、②ビットスターが塾と直接会っていないこと、この2つの調整に使われています。①は「ここまで」と期限で、②はビットスターのキックオフ同席で縮められます。</div>
       </div>
     </div>
     <div class="sum"><span>ひとこと｜</span>順調でも13.5時間。12時間は、「ここまで」を決めたうえで B〜D を削って、やっと届く数字</div>
@@ -335,9 +350,9 @@ ul.pl li{margin-bottom:1mm}
 <!-- 7 -->
 <section class="pg">
   <div class="tb"><h1>コミサポ　塾サイト制作、どうすれば12時間で回せるか（相談用メモ）</h1><span class="pn">8</span></div>
-  <div class="body">
-    <h2>８. やれそうなことと、順番</h2>
-    <p class="lead">効果（削れる時間）とやりやすさで並べました。塗りのあるところから。①〜⑥で、実態29時間から12時間圏内に入りそうです。</p>
+  <div class="body" style="gap:3mm">
+    <h2><span class="hn">08</span>やれそうなことと、順番</h2>
+    <p class="lead">効果（削れる時間）とやりやすさで並べました。塗りのあるところから手を付けます。①〜⑥を合わせると、実態29時間から12時間圏内に入る計算です（重複分は割り引いて）。</p>
     <div class="cols c12">
       <div class="mx">
         <div class="bx hl"><b class="h">効果 大 × すぐできる（まずやる）</b><ul><li><b>①標準スコープの明文化</b>：5ページ・修正2往復・塾の提出期限・オプション価格</li><li><b>②ビットスターのキックオフ同席</b>：高山さんが60〜90分参加し、雰囲気と参考サイトをその場で合意</li><li><b>③情報の正本を構成案1つに</b>：フォーム廃止、修正指示も1形式</li></ul></div>
@@ -370,7 +385,7 @@ ul.pl li{margin-bottom:1mm}
 <section class="pg">
   <div class="tb"><h1>コミサポ　塾サイト制作、どうすれば12時間で回せるか（相談用メモ）</h1><span class="pn">9</span></div>
   <div class="body">
-    <h2>９. こう変えたい</h2>
+    <h2><span class="hn">09</span>こう変えたい</h2>
     <p class="lead">新しい条件を増やすというより、契約書に入り始めた条項とビットスターのプラン上限を、営業とキックオフの段階で先に言っておく、という整理です。</p>
     <div class="num"><i>1</i><b>「ここまで」の案</b></div>
     <div class="cols c3" style="gap:4mm;font-size:9.5pt">
@@ -410,7 +425,7 @@ ul.pl li{margin-bottom:1mm}
 <section class="pg">
   <div class="tb"><h1>コミサポ　塾サイト制作、どうすれば12時間で回せるか（相談用メモ）</h1><span class="pn">10</span></div>
   <div class="body">
-    <h2>１０. 進め方と、見る数字</h2>
+    <h2><span class="hn">10</span>進め方と、見る数字</h2>
     <p class="lead">11月に決めて測り始め、11〜12月の3案件で試して、12月末に実測で判断。佐久間さんの「年内に意見がほしい」に合わせています。</p>
     <div class="flow" style="margin-top:5mm">
       <div class="bx"><span class="chip">11月</span>決めて、測り始める<small>標準スコープの文言を確定（営業資料・契約書）／ビットスターに同席と戻し2営業日を打診／工程別の稼働記録を開始（8区分）／修正指示の書式を1つに</small></div>
@@ -449,7 +464,7 @@ ul.pl li{margin-bottom:1mm}
 <section class="pg">
   <div class="tb"><h1>コミサポ　塾サイト制作、どうすれば12時間で回せるか（相談用メモ）</h1><span class="pn">11</span></div>
   <div class="body">
-    <h2>１１. 一緒に決めたいこと</h2>
+    <h2><span class="hn">11</span>一緒に決めたいこと</h2>
     <p class="lead">決めたいこと、選択肢、高嶌の考え、決める人、いつまでに。「高嶌の考え」はあくまで叩き台なので、ひっくり返してもらって大丈夫です。</p>
     <table class="s">
       <thead><tr><th>#</th><th>決めたいこと</th><th>選択肢</th><th>高嶌の考え</th><th>決める人</th><th>いつまでに</th></tr></thead>
@@ -473,7 +488,7 @@ ul.pl li{margin-bottom:1mm}
 <section class="pg">
   <div class="tb"><h1>コミサポ　塾サイト制作、どうすれば12時間で回せるか（相談用メモ）</h1><span class="ref">参考メモ</span></div>
   <div class="body">
-    <h2>案件一覧（2026年5月〜10月、Slack でわかった範囲）</h2>
+    <h2><span class="hn">参考</span>案件一覧（2026年5月〜10月、Slack でわかった範囲）</h2>
     <table class="xs">
       <thead><tr><th>塾</th><th>担当</th><th>キックオフ</th><th>公開・状態</th><th class="n">初期費用（税抜）</th><th>メモ</th></tr></thead>
       <tbody>
@@ -509,7 +524,7 @@ ul.pl li{margin-bottom:1mm}
 <section class="pg">
   <div class="tb"><h1>コミサポ　塾サイト制作、どうすれば12時間で回せるか（相談用メモ）</h1><span class="ref">参考メモ</span></div>
   <div class="body">
-    <h2>みんなの言葉（ポパー Slack、原文）と、このメモの前提</h2>
+    <h2><span class="hn">参考</span>みんなの言葉（ポパー Slack、原文）と、このメモの前提</h2>
     <div class="cols c2">
       <div style="display:flex;flex-direction:column;gap:3.5mm">
         <div class="q">【役割イメージ】※案件数により様子見ながら 営業：佐久間（天神）／マーケコンサル：佐久間 or 槻山／構成：岡部／制作ディレクション：岡部／進行・修正：井口<b>佐久間さん 2026年5月28日 #サイト制作ディレクション</b></div>
