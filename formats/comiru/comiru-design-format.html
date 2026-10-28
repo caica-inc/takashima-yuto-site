@@ -1,0 +1,412 @@
+<title>コミル デザインフォーマット</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700&family=Noto+Sans+JP:wght@400;500;700&family=Barlow:wght@500;600;700&display=swap">
+<style>
+/* ============================================================
+   コミル デザインフォーマット — 共通スタイル
+   骨格はカイカ版／関東建設マネジメント版の資料フォーマットと同じ。
+   配色・角丸・書体だけをコミル（Comiru）のトンマナに差し替えている。
+   レイアウト：左に固定目次、右に本文（70ch）。番号付き章＋要約＋数値タイル＋表＋カード＋論点。
+   ============================================================ */
+:root{
+  /* --- color: 白・墨・コミルイエロー・グレー --- */
+  --paper:#FAFAF8;          /* 紙。真っ白より半歩だけ温かい */
+  --surface:#FFFFFF;        /* 囲み・表の地 */
+  --sunk:#F2F3F1;           /* 表のヘッダー・縞 */
+  --ink:#231F20;            /* 墨（Comiru 本文色。純黒は使わない） */
+  --ink-2:#55595E;          /* 補足文 */
+  --ink-3:#8A8F96;          /* 注記・ラベル */
+  --line:#E3E5E2;           /* 細罫 */
+  --line-2:#C9CCC8;         /* 太罫・区切り */
+  --yellow:#FFD12A;         /* コミルイエロー（面・タグ・強調） */
+  --marker:#FFF450;         /* マーカー（見出し・キーワードの下敷き） */
+  --yellow-soft:#FFF6CF;    /* イエロー淡（要約ボックスの地） */
+  --yellow-ink:#231F20;     /* 黄の上に置く文字は必ず墨 */
+  --risk:#C9463D;           /* リスクだけに使う赤。本文・見出しには使わない */
+  --risk-soft:#F9E3E0;
+  --good:#231F20;           /* 「良い点」は色を増やさず墨＋黄マーカーで示す */
+  --shadow:0 1px 2px rgba(35,31,32,.04),0 10px 28px -20px rgba(35,31,32,.25);
+  /* --- type --- */
+  --display:"Zen Maru Gothic","Hiragino Maru Gothic ProN","Rounded Mplus 1c","Noto Sans JP",sans-serif;
+  --body:"Noto Sans JP","Hiragino Sans","Yu Gothic UI",system-ui,sans-serif;
+  --num:"Barlow","Helvetica Neue",Arial,sans-serif;
+  --r:12px;                 /* 角丸。カイカ版の8〜10pxより一段やわらかく */
+  --r-s:6px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#16171A;--surface:#1E2024;--sunk:#262930;--ink:#ECEDEA;--ink-2:#B3B7BD;--ink-3:#858A92;
+    --line:#2E3137;--line-2:#43474E;--yellow:#F2C636;--marker:#C9BE2E;--yellow-soft:#3A3416;--yellow-ink:#16171A;
+    --risk:#F08A82;--risk-soft:#3C2320;--good:#ECEDEA;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px -20px rgba(0,0,0,.8);color-scheme:dark}
+}
+:root[data-theme="dark"]{
+  --paper:#16171A;--surface:#1E2024;--sunk:#262930;--ink:#ECEDEA;--ink-2:#B3B7BD;--ink-3:#858A92;
+  --line:#2E3137;--line-2:#43474E;--yellow:#F2C636;--marker:#C9BE2E;--yellow-soft:#3A3416;--yellow-ink:#16171A;
+  --risk:#F08A82;--risk-soft:#3C2320;--good:#ECEDEA;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px -20px rgba(0,0,0,.8);color-scheme:dark}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.9;
+  -webkit-font-smoothing:antialiased;font-feature-settings:"palt" 1;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0}
+.page{max-width:1160px;margin:0 auto;padding:40px 8px 96px;display:grid;grid-template-columns:220px minmax(0,1fr);gap:48px}
+@media (max-width:900px){.page{grid-template-columns:1fr;gap:20px;padding-top:24px}.toc{position:static!important}}
+main{min-width:0}
+
+/* ---- toc ---- */
+.toc{position:sticky;top:24px;align-self:start;font-size:13px}
+.toc .t{font-family:var(--num);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:10px;font-weight:600}
+.toc a{display:block;color:var(--ink-2);text-decoration:none;padding:5px 0 5px 12px;border-left:2px solid var(--line);line-height:1.5}
+.toc a:hover,.toc a:focus-visible{color:var(--ink);border-color:var(--yellow);outline:none}
+.toc a b{font-family:var(--num);font-weight:600;color:var(--ink-3);margin-right:6px;font-size:11.5px}
+
+/* ---- header ---- */
+header.hd{border-bottom:2px solid var(--ink);padding-bottom:26px;margin-bottom:36px}
+.eyebrow{font-family:var(--num);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2);font-weight:600;
+  display:inline-flex;align-items:center;gap:8px}
+.eyebrow::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--yellow);flex:none}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(26px,4vw,36px);line-height:1.4;margin:10px 0 10px;text-wrap:balance;letter-spacing:.01em}
+h1 .mk,.mk{background:linear-gradient(transparent 62%,var(--marker) 62%,var(--marker) 94%,transparent 94%);padding:0 .08em}
+.lede{font-size:16px;color:var(--ink-2);max-width:66ch;margin:0 0 14px}
+.meta{color:var(--ink-3);font-size:13px;display:flex;flex-wrap:wrap;gap:4px 18px}
+.meta b{color:var(--ink-2);font-weight:500}
+
+/* ---- sections ---- */
+h2{font-family:var(--display);font-weight:700;font-size:23px;margin:60px 0 14px;line-height:1.45;text-wrap:balance;
+  display:flex;gap:14px;align-items:baseline;scroll-margin-top:20px}
+h2 .no{font-family:var(--num);font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--yellow-ink);background:var(--yellow);
+  border-radius:999px;padding:2px 10px;flex:none;line-height:1.6;transform:translateY(-3px)}
+h3{font-family:var(--display);font-size:16.5px;font-weight:700;margin:30px 0 8px;padding-left:12px;border-left:4px solid var(--yellow);line-height:1.5}
+h4{font-size:14px;font-weight:700;margin:18px 0 6px}
+p{margin:0 0 14px;max-width:70ch}
+ul,ol{margin:0 0 14px;padding-left:1.4em;max-width:70ch}
+li{margin-bottom:6px}
+a{color:var(--ink);text-decoration-color:var(--yellow);text-decoration-thickness:2px;text-underline-offset:3px}
+:focus-visible{outline:2px solid var(--yellow);outline-offset:2px}
+strong{font-weight:700}
+code{font-family:var(--num);background:var(--sunk);padding:1px 6px;border-radius:4px;font-size:.92em}
+.note{font-size:13px;color:var(--ink-2);border-left:2px solid var(--line-2);padding-left:12px;margin:10px 0 16px;max-width:70ch}
+.small{font-size:12.5px;color:var(--ink-3)}
+
+/* ---- summary box ---- */
+.summary{background:var(--yellow-soft);border:1px solid transparent;border-radius:var(--r);padding:20px 24px;margin:0 0 8px}
+.summary .lbl{font-family:var(--num);font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--ink-2);margin-bottom:6px}
+.summary ol{margin:0;padding-left:22px}
+.summary li{margin:6px 0}
+.summary li::marker{font-family:var(--num);font-weight:700}
+
+/* ---- kpi tiles ---- */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:18px 0 22px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;min-width:0}
+.kpi .l{font-size:12px;color:var(--ink-2)}
+.kpi .v{font-family:var(--num);font-size:28px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.01em;line-height:1.2;margin-top:4px}
+.kpi .v small{font-family:var(--body);font-size:13px;font-weight:500;margin-left:3px}
+.kpi .s{font-size:12px;color:var(--ink-3);margin-top:2px}
+.kpi.hl{background:var(--yellow);border-color:var(--yellow);color:var(--yellow-ink)}
+.kpi.hl .l,.kpi.hl .s{color:var(--yellow-ink);opacity:.8}
+
+/* ---- tables ---- */
+.wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);margin:12px 0 18px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;font-variant-numeric:tabular-nums;background:var(--surface)}
+th,td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;line-height:1.7}
+th{font-weight:600;color:var(--ink-2);background:var(--sunk);white-space:nowrap;font-size:12.5px}
+td.n,th.n{text-align:right;white-space:nowrap;font-family:var(--num);font-size:14px}
+td.k{font-weight:600;white-space:nowrap}
+tbody tr:last-child td{border-bottom:0}
+tr.sum td{font-weight:700;border-top:2px solid var(--line-2);background:var(--yellow-soft)}
+tr.dim td{color:var(--ink-3)}
+.wrap table{border:0}
+
+/* ---- cards (良い点 / 課題) ---- */
+.cards{display:grid;gap:12px;margin:14px 0 20px}
+.card{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--yellow);border-radius:var(--r);padding:14px 18px;min-width:0}
+.card.risk{border-left-color:var(--risk)}
+.card.neutral{border-left-color:var(--line-2)}
+.card h4{margin:0 0 6px;font-size:15px;font-weight:700;display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-family:var(--display)}
+.card p{margin:0;max-width:none;font-size:14px}
+.tag{font-family:var(--num);font-size:11px;letter-spacing:.06em;padding:2px 9px;border-radius:999px;font-weight:700;white-space:nowrap;text-transform:uppercase}
+.tag.y{background:var(--yellow);color:var(--yellow-ink)}
+.tag.g{background:var(--sunk);color:var(--ink-2);border:1px solid var(--line)}
+.tag.r{background:var(--risk-soft);color:var(--risk)}
+.tag.k{background:var(--ink);color:var(--paper)}
+
+/* ---- steps / flow ---- */
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0 18px;counter-reset:step}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;position:relative;min-width:0;counter-increment:step}
+.step::before{content:counter(step,decimal-leading-zero);font-family:var(--num);font-weight:700;font-size:12px;letter-spacing:.08em;
+  color:var(--yellow-ink);background:var(--yellow);border-radius:999px;padding:1px 8px;display:inline-block;margin-bottom:6px}
+.step b{display:block;font-family:var(--display);font-size:14.5px;line-height:1.5}
+.step span{display:block;font-size:12.5px;color:var(--ink-2);line-height:1.65;margin-top:4px}
+.step .who{display:block;font-family:var(--num);font-size:11px;letter-spacing:.06em;color:var(--ink-3);margin-top:6px;text-transform:uppercase}
+
+/* ---- dl ---- */
+dl{display:grid;grid-template-columns:max-content 1fr;gap:6px 18px;font-size:14px;margin:8px 0 16px}
+dt{color:var(--ink-2);font-weight:500}dd{margin:0;min-width:0}
+@media (max-width:560px){dl{grid-template-columns:1fr}dt{margin-top:6px}}
+
+/* ---- swatches / spec (フォーマット仕様ページ用) ---- */
+.sw{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin:10px 0 18px}
+.chip{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--surface)}
+.chip .fill{height:60px;border-bottom:1px solid var(--line)}
+.chip .m{padding:8px 11px 10px}
+.chip .m b{display:block;font-size:12.5px;line-height:1.5}
+.chip .m span{display:block;font-family:var(--num);font-size:12px;color:var(--ink-3);letter-spacing:.03em}
+.chip .m i{display:block;font-style:normal;font-size:11.5px;color:var(--ink-2);margin-top:4px;line-height:1.55}
+.spm{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:0 0 18px;margin:0 0 12px;overflow-x:auto}
+.spm .lbl{font-family:var(--num);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);
+  padding:8px 18px;background:var(--sunk);border-bottom:1px solid var(--line);margin-bottom:14px}
+.spm .txt{padding:0 18px;white-space:nowrap;line-height:1.3}
+pre{background:var(--ink);color:var(--paper);border-radius:var(--r);padding:18px 20px;overflow-x:auto;font-family:var(--num);font-size:12.5px;line-height:1.7;margin:0 0 16px}
+:root[data-theme="dark"] pre{background:#0E0F11}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) pre{background:#0E0F11}}
+.chk{list-style:none;padding:0;margin:10px 0 0;columns:2;column-gap:34px;max-width:none}
+.chk li{break-inside:avoid;position:relative;padding-left:26px;margin-bottom:9px;font-size:13.5px;line-height:1.7}
+.chk li::before{content:"";position:absolute;left:0;top:7px;width:13px;height:13px;border:2px solid var(--line-2);border-radius:4px}
+@media (max-width:640px){.chk{columns:1}}
+.cmp{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin:10px 0 18px}
+.cmp>div{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;min-width:0}
+.cmp h4{margin:0 0 4px;font-family:var(--display)}
+.cmp p{font-size:13px;color:var(--ink-2);margin:0}
+figure{margin:18px 0 22px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px}
+figcaption{font-size:12.5px;color:var(--ink-3);margin-top:8px}
+svg{max-width:100%;height:auto;display:block}
+details{margin:8px 0}
+summary{cursor:pointer;font-weight:600;font-size:14px}
+footer.end{margin-top:64px;padding-top:18px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-3);line-height:1.8}
+@media print{.toc{display:none}.page{grid-template-columns:1fr}body{background:#fff}}
+@media (prefers-reduced-motion:no-preference){.toc a{transition:color .15s,border-color .15s}}
+
+</style>
+
+<div class="page">
+<nav class="toc" aria-label="目次">
+  <div class="t">Contents</div>
+  <a href="#s0"><b>00</b>この資料について</a>
+  <a href="#s1"><b>01</b>位置づけと差分</a>
+  <a href="#s2"><b>02</b>カラー</a>
+  <a href="#s3"><b>03</b>書体と級数</a>
+  <a href="#s4"><b>04</b>部品カタログ</a>
+  <a href="#s5"><b>05</b>資料の章構成</a>
+  <a href="#s6"><b>06</b>書き方のルール</a>
+  <a href="#s7"><b>07</b>トークン（コピー用）</a>
+  <a href="#s8"><b>08</b>公開前チェック</a>
+</nav>
+
+<main>
+<header class="hd">
+  <div class="eyebrow">Comiru / コミサポ　資料デザインフォーマット</div>
+  <h1>コミル版 <span class="mk">デザインフォーマット</span>定義</h1>
+  <p class="lede">株式会社カイカ版・関東建設マネジメント版の資料フォーマットと同じ骨格のまま、株式会社ポパーのサービス「Comiru（コミル）」のトーン&amp;マナーに合わせた版です。白・墨・コミルイエロー・グレーの4系統だけで組み、角丸と丸ゴシックで一段やわらかくしています。</p>
+  <div class="meta"><span><b>用途</b> ポパー・コミル・コミサポ向けの打ち合わせ資料、整理メモ、レビュー</span><span><b>作成</b> 2026年10月28日</span><span><b>状態</b> 初版（叩き台）</span></div>
+</header>
+
+<section id="s0">
+<div class="summary">
+<div class="lbl">要点</div>
+<ol>
+<li><strong>骨格は既存2フォーマットと同じ。</strong>左に固定目次、右に本文。番号付きの章、冒頭の要約ボックス、数値タイル、表、良い点／課題のカード、最後に論点リスト。</li>
+<li><strong>色はコミルの4系統だけ。</strong>白（紙）・墨 #231F20・コミルイエロー #FFD12A（＋マーカー #FFF450）・グレー3段。赤はリスク表示に限って使う。</li>
+<li><strong>やわらかさは3か所で出す。</strong>見出しを丸ゴシック（Zen Maru Gothic）に、角丸を12pxに、章番号を黄色の丸いピルにする。本文は Noto Sans JP のまま読みやすさを優先する。</li>
+<li><strong>黄色の上の文字は必ず墨。</strong>黄地に白文字はコントラストが足りないので使わない。黄は「目を止める場所」にだけ置き、1画面に2〜3か所まで。</li>
+</ol>
+</div>
+</section>
+
+<h2 id="s1"><span class="no">01</span>位置づけと既存フォーマットとの差分</h2>
+<p>カイカ版（緑青のアクセント・明朝見出し）、関東建設マネジメント版（紺・角ゴシック）、コミル版（黄・丸ゴシック）の3つは、同じ部品を同じ順番で使います。違うのはトークンの値だけなので、どの会社の資料も同じ手順で作れます。</p>
+<div class="wrap"><table>
+<thead><tr><th>項目</th><th>カイカ版</th><th>関東建設マネジメント版</th><th>コミル版（本書）</th></tr></thead>
+<tbody>
+<tr><td class="k">アクセント</td><td>#0F5F63（緑青）</td><td>#123A80（紺）</td><td>#FFD12A（コミルイエロー）＋マーカー #FFF450</td></tr>
+<tr><td class="k">本文の墨</td><td>#17201F</td><td>#1C2230</td><td>#231F20（Comiru 印刷物と同じ値）</td></tr>
+<tr><td class="k">紙</td><td>#F6F7F6</td><td>#F4F6FA</td><td>#FAFAF8</td></tr>
+<tr><td class="k">見出し書体</td><td>Shippori Mincho（明朝）</td><td>Yu Gothic UI 系</td><td>Zen Maru Gothic（丸ゴシック）</td></tr>
+<tr><td class="k">本文書体</td><td>Noto Sans JP</td><td>Yu Gothic / Hiragino</td><td>Noto Sans JP（同じ）</td></tr>
+<tr><td class="k">数値書体</td><td>Noto Sans JP tabular</td><td>同左</td><td>Barlow（Comiru 白書の DIN 代替）</td></tr>
+<tr><td class="k">角丸</td><td>8〜10px</td><td>6〜8px</td><td>12px（タグ・章番号はピル）</td></tr>
+<tr><td class="k">章番号</td><td>アクセント色の小さな数字</td><td>同左</td><td>黄色のピルに墨の数字</td></tr>
+<tr><td class="k">要約ボックス</td><td>白地・細罫</td><td>白地・細罫</td><td>イエロー淡 #FFF6CF の面・罫なし</td></tr>
+<tr><td class="k">カードの左罫</td><td>良い＝緑／注意＝橙／リスク＝赤</td><td>同左</td><td>標準＝黄／リスク＝赤／補足＝グレー（色数を減らす）</td></tr>
+</tbody>
+</table></div>
+<p class="note">「少し柔らかく」の指示は、色や装飾を増やす方向ではなく、角と書体の形で出しています。装飾を足すと Comiru の「白が7割」の誌面感から離れるためです。</p>
+
+<h2 id="s2"><span class="no">02</span>カラー</h2>
+<p>Comiru 白書・チラシの実測値から、資料に必要な色だけを取り出しています。使用比率の目安は <strong>白 70%・墨 20%・グレー 8%・黄 2%</strong>。黄はアクセントであって地色ではありません。</p>
+<h3>基本色</h3>
+<div class="sw">
+<div class="chip"><div class="fill" style="background:#FFFFFF"></div><div class="m"><b>白</b><span>#FFFFFF</span><i>囲み・表・タイルの地</i></div></div>
+<div class="chip"><div class="fill" style="background:#FAFAF8"></div><div class="m"><b>紙</b><span>#FAFAF8</span><i>ページ全体の地。真っ白より半歩温かい</i></div></div>
+<div class="chip"><div class="fill" style="background:#231F20"></div><div class="m"><b>墨</b><span>#231F20</span><i>本文・見出し・太罫。純黒は使わない</i></div></div>
+<div class="chip"><div class="fill" style="background:#FFD12A"></div><div class="m"><b>コミルイエロー</b><span>#FFD12A</span><i>章番号・タグ・強調タイル・罫</i></div></div>
+<div class="chip"><div class="fill" style="background:#FFF450"></div><div class="m"><b>マーカー</b><span>#FFF450</span><i>見出し・キーワードの下敷きのみ</i></div></div>
+<div class="chip"><div class="fill" style="background:#FFF6CF"></div><div class="m"><b>イエロー淡</b><span>#FFF6CF</span><i>要約ボックス・合計行の地</i></div></div>
+</div>
+<h3>グレー（3段）と例外色</h3>
+<div class="sw">
+<div class="chip"><div class="fill" style="background:#55595E"></div><div class="m"><b>グレー濃</b><span>#55595E</span><i>補足文・表の見出し文字</i></div></div>
+<div class="chip"><div class="fill" style="background:#8A8F96"></div><div class="m"><b>グレー</b><span>#8A8F96</span><i>注記・ラベル・出典</i></div></div>
+<div class="chip"><div class="fill" style="background:#E3E5E2"></div><div class="m"><b>グレー淡</b><span>#E3E5E2</span><i>細罫・区切り</i></div></div>
+<div class="chip"><div class="fill" style="background:#F2F3F1"></div><div class="m"><b>沈み</b><span>#F2F3F1</span><i>表ヘッダー・縞・コード地</i></div></div>
+<div class="chip"><div class="fill" style="background:#C9463D"></div><div class="m"><b>リスク赤（例外）</b><span>#C9463D</span><i>リスクカードの左罫とタグだけ</i></div></div>
+<div class="chip"><div class="fill" style="background:#F9E3E0"></div><div class="m"><b>リスク淡</b><span>#F9E3E0</span><i>リスクタグの地</i></div></div>
+</div>
+<div class="cmp">
+<div><h4>黄の使いどころ</h4><p>章番号ピル、タグ、1枚だけの強調タイル、見出しの左罫、ステップ番号。本文の文字色には使わない（読めない）。</p></div>
+<div><h4>黄の上の文字</h4><p>必ず墨 #231F20。白文字は禁止。ダークテーマでは黄を #F2C636 に落とし、文字は背景色の墨を使う。</p></div>
+<div><h4>良い・注意・リスクの表し方</h4><p>「良い」はカード左罫＝黄＋タグ。「注意」も黄（タグ文言で区別）。「リスク」だけ赤。緑・橙は使わない。</p></div>
+</div>
+
+<h2 id="s3"><span class="no">03</span>書体と級数</h2>
+<p>和文2書体＋欧文1書体。<strong>丸ゴシック＝見出し、Noto Sans JP＝本文、Barlow＝数字</strong>の役割分担です。Comiru 白書の「明朝＝主張／ゴシック＝情報／DIN＝数値」を、画面向けにやわらかく置き換えています。</p>
+<div class="wrap"><table>
+<thead><tr><th>役割</th><th>書体</th><th class="n">サイズ</th><th class="n">行送り</th><th>色・備考</th></tr></thead>
+<tbody>
+<tr><td class="k">資料タイトル h1</td><td>Zen Maru Gothic 700</td><td class="n">26〜36px</td><td class="n">1.4</td><td>墨。キーワード1語にマーカー</td></tr>
+<tr><td class="k">章見出し h2</td><td>Zen Maru Gothic 700</td><td class="n">23px</td><td class="n">1.45</td><td>墨。先頭に黄ピルの章番号</td></tr>
+<tr><td class="k">小見出し h3</td><td>Zen Maru Gothic 700</td><td class="n">16.5px</td><td class="n">1.5</td><td>左に黄の罫 4px</td></tr>
+<tr><td class="k">リード</td><td>Noto Sans JP 400</td><td class="n">16px</td><td class="n">1.9</td><td>グレー濃。66字幅まで</td></tr>
+<tr><td class="k">本文</td><td>Noto Sans JP 400</td><td class="n">15px</td><td class="n">1.9</td><td>墨。70字幅まで</td></tr>
+<tr><td class="k">表</td><td>Noto Sans JP 400</td><td class="n">13.5px</td><td class="n">1.7</td><td>数値列は Barlow 14px・右寄せ・等幅数字</td></tr>
+<tr><td class="k">数値タイルの値</td><td>Barlow 700</td><td class="n">28px</td><td class="n">1.2</td><td>単位は Noto 13px で添える</td></tr>
+<tr><td class="k">ラベル・eyebrow</td><td>Barlow 600</td><td class="n">11〜12px</td><td class="n">—</td><td>大文字・字間 .14em・グレー</td></tr>
+<tr><td class="k">注記</td><td>Noto Sans JP 400</td><td class="n">12.5〜13px</td><td class="n">1.8</td><td>グレー。左に細罫</td></tr>
+</tbody>
+</table></div>
+<div class="spm"><div class="lbl">h1 / Zen Maru Gothic 700 36px / マーカー #FFF450</div><div class="txt" style="font-family:var(--display);font-weight:700;font-size:36px">塾サイト制作の<span class="mk">進め方</span>を整理する</div></div>
+<div class="spm"><div class="lbl">h2 / Zen Maru Gothic 700 23px / 章番号ピル</div><div class="txt" style="font-family:var(--display);font-weight:700;font-size:23px"><span class="no" style="font-family:var(--num);font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--yellow-ink);background:var(--yellow);border-radius:999px;padding:2px 10px;margin-right:12px;vertical-align:middle">03</span>現行の制作フロー</div></div>
+<div class="spm"><div class="lbl">本文 / Noto Sans JP 400 15px / 行送り 1.9 / 数字は Barlow</div><div style="padding:0 18px;max-width:none">初期費用 <span style="font-family:var(--num);font-weight:600;font-size:16px">98,000</span>円の中で、カイカの稼働を <span style="font-family:var(--num);font-weight:600;font-size:16px">10〜12</span> 時間に収めたい、というのが出発点です。</div></div>
+
+<h2 id="s4"><span class="no">04</span>部品カタログ</h2>
+<p>資料で使う部品は次の8種です。これ以外の装飾（影の強いカード、グラデーション、アイコンの多用、絵文字）は使いません。各部品はこのページ上でそのまま動いているので、見た目はここを基準にしてください。</p>
+
+<h3>① 要約ボックス（章00の先頭に必ず1つ）</h3>
+<div class="summary"><div class="lbl">要点</div><ol><li><strong>結論を先に。</strong>太字で1行、続けて根拠を1〜2文。</li><li>項目は3〜5個。それ以上になるときは章に分ける。</li></ol></div>
+
+<h3>② 数値タイル（数字が主役のときだけ）</h3>
+<div class="kpis">
+<div class="kpi"><div class="l">目標稼働</div><div class="v">10<small>〜12 h</small></div><div class="s">1案件あたり・カイカ側</div></div>
+<div class="kpi"><div class="l">時給</div><div class="v">2,500<small>円</small></div><div class="s">岡部・井口の単価</div></div>
+<div class="kpi hl"><div class="l">初期費用で賄える上限</div><div class="v">40<small>h</small></div><div class="s">100,000 ÷ 2,500</div></div>
+<div class="kpi"><div class="l">実態の目安</div><div class="v">20<small>〜30 h</small></div><div class="s">ページ数により変動</div></div>
+</div>
+<p class="note">強調（黄地）のタイルは1列に1枚まで。全部を黄色にすると、どれも目立たなくなります。</p>
+
+<h3>③ 表（角丸の枠に入れ、横に広いときはスクロール）</h3>
+<div class="wrap"><table>
+<thead><tr><th>項目</th><th class="n">時間</th><th class="n">金額</th><th>備考</th></tr></thead>
+<tbody>
+<tr><td>キックオフ同席</td><td class="n">1.5</td><td class="n">3,750</td><td>月山さんと同席</td></tr>
+<tr><td>構成案作成</td><td class="n">4.0</td><td class="n">10,000</td><td>Google ドキュメント</td></tr>
+<tr class="sum"><td>合計</td><td class="n">5.5</td><td class="n">13,750</td><td></td></tr>
+</tbody>
+</table></div>
+
+<h3>④ カード（良い点・課題・リスク）</h3>
+<div class="cards">
+<div class="card"><h4><span class="tag y">良い点</span>標準の左罫は黄。良い点も注意点もこれで表す</h4><p>タグの文言で区別する。色を増やさないことで、資料全体の印象を Comiru の誌面に揃える。</p></div>
+<div class="card risk"><h4><span class="tag r">リスク</span>赤はリスクだけ</h4><p>本文や見出しに赤を使わない。赤が出てくる場所＝意思決定が必要な場所、と読める状態を保つ。</p></div>
+<div class="card neutral"><h4><span class="tag g">補足</span>グレーの左罫は背景情報</h4><p>判断に直結しない前提や経緯はグレーのカードに逃がす。</p></div>
+</div>
+
+<h3>⑤ ステップ（流れを示すとき）</h3>
+<div class="flow">
+<div class="step"><b>営業・受注</b><span>ポパーが商談し、受注。</span><em class="who">POPER</em></div>
+<div class="step"><b>キックオフ</b><span>方向性を決める初回打ち合わせ。</span><em class="who">POPER + CAICA</em></div>
+<div class="step"><b>構成・原稿</b><span>構成案を作り、塾と詰める。</span><em class="who">CAICA</em></div>
+<div class="step"><b>制作</b><span>ビットスターが実装。</span><em class="who">BITSTAR</em></div>
+<div class="step"><b>納品</b><span>確認・公開・移管。</span><em class="who">ALL</em></div>
+</div>
+
+<h3>⑥ 定義リスト（前提・集計条件）</h3>
+<dl><dt>対象期間</dt><dd>2026年6月〜10月の案件</dd><dt>出典</dt><dd>ポパー Slack（#サイト制作ディレクション ほか）</dd><dt>限界</dt><dd>稼働時間は申告ベース。実測ではない</dd></dl>
+
+<h3>⑦ 注記と出典</h3>
+<p class="note">注記は本文より一段小さく、左に細いグレー罫。出典・集計条件・未確認事項をここに書く。本文に混ぜない。</p>
+
+<h3>⑧ 論点リスト（最終章）</h3>
+<ol><li><strong>太字で問いを立てる。</strong>続けて、今わかっている事実と選択肢を2〜3文で。</li><li><strong>決める人と期限を書く。</strong>「誰が・いつまでに」がない論点は書かない。</li></ol>
+
+<h2 id="s5"><span class="no">05</span>資料の章構成</h2>
+<p>打ち合わせ用の整理資料は、次の並びを基本にします。章の増減は構いませんが、要約と論点は必ず入れます。</p>
+<div class="wrap"><table>
+<thead><tr><th>章</th><th>内容</th><th>使う部品</th></tr></thead>
+<tbody>
+<tr><td class="k">ヘッダー</td><td>eyebrow（会社・サービス名）、タイトル、リード、作成日・出典・状態</td><td>—</td></tr>
+<tr><td class="k">00 要約</td><td>結論3〜5個</td><td>要約ボックス</td></tr>
+<tr><td class="k">01 前提</td><td>対象範囲、集計方法、用語、登場人物</td><td>定義リスト、表</td></tr>
+<tr><td class="k">02 現状</td><td>流れ・数字・実績</td><td>ステップ、数値タイル、表</td></tr>
+<tr><td class="k">03 良い点</td><td>続けること</td><td>カード（黄）</td></tr>
+<tr><td class="k">04 課題とリスク</td><td>詰まっている場所、原因</td><td>カード（黄・赤）</td></tr>
+<tr><td class="k">05 選択肢</td><td>比較表</td><td>表、カード（グレー）</td></tr>
+<tr><td class="k">06 論点</td><td>決めること、誰が、いつまでに</td><td>論点リスト</td></tr>
+<tr><td class="k">付録</td><td>明細、ログ、参照リンク</td><td>details で畳む</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="s6"><span class="no">06</span>書き方のルール</h2>
+<ul>
+<li><strong>敬体（です・ます）で統一。</strong>見出し・タグ・表の中は体言止め。</li>
+<li><strong>数字は半角、3桁区切り。</strong>時間は「h」か「時間」のどちらかに資料内で統一する。金額は税込・税抜を表の注記に必ず書く。</li>
+<li><strong>固有名詞の表記。</strong>株式会社ポパー（POPER）／Comiru（コミル）／コミサポ／株式会社カイカ／ビットスター（BitStar）。初出はフルネーム、以降は短縮形。人名は「姓＋さん」。</li>
+<li><strong>1文1意。</strong>20〜40字で切る。ダッシュや括弧で補足を挟まない。補足は注記へ。</li>
+<li><strong>事実と解釈を分ける。</strong>Slack からの引用は「誰が・いつ・何と言ったか」を書き、解釈は別の文にする。</li>
+<li><strong>推定値は推定と書く。</strong>タイルや表で推定を使うときは「目安」「推定」をラベルに入れる。</li>
+<li><strong>絵文字・感嘆符は使わない。</strong>強調はマーカーか太字。</li>
+</ul>
+
+<h2 id="s7"><span class="no">07</span>トークン（コピー用）</h2>
+<p>HTML・スライド・他ツールに流し込むための値です。CSS の <code>:root</code> をそのまま貼れば、このページと同じ見た目になります。</p>
+<pre>{
+  "color": {
+    "paper": "#FAFAF8", "surface": "#FFFFFF", "sunk": "#F2F3F1",
+    "ink": "#231F20", "ink2": "#55595E", "ink3": "#8A8F96",
+    "line": "#E3E5E2", "line2": "#C9CCC8",
+    "yellow": "#FFD12A", "marker": "#FFF450", "yellowSoft": "#FFF6CF",
+    "risk": "#C9463D", "riskSoft": "#F9E3E0"
+  },
+  "font": {
+    "display": "Zen Maru Gothic 700",
+    "body": "Noto Sans JP 400/500/700",
+    "num": "Barlow 500/600/700"
+  },
+  "radius": { "card": 12, "small": 6, "pill": 999 },
+  "ratio": { "white": 70, "ink": 20, "gray": 8, "yellow": 2 },
+  "rule": "yellow-on-ink only; never white text on yellow; red for risk only"
+}</pre>
+<details><summary>CSS（:root ブロック）を開く</summary>
+<pre>:root{
+  --paper:#FAFAF8; --surface:#FFFFFF; --sunk:#F2F3F1;
+  --ink:#231F20; --ink-2:#55595E; --ink-3:#8A8F96;
+  --line:#E3E5E2; --line-2:#C9CCC8;
+  --yellow:#FFD12A; --marker:#FFF450; --yellow-soft:#FFF6CF; --yellow-ink:#231F20;
+  --risk:#C9463D; --risk-soft:#F9E3E0;
+  --display:"Zen Maru Gothic","Hiragino Maru Gothic ProN",sans-serif;
+  --body:"Noto Sans JP","Hiragino Sans",sans-serif;
+  --num:"Barlow","Helvetica Neue",Arial,sans-serif;
+  --r:12px;
+}</pre>
+</details>
+
+<h2 id="s8"><span class="no">08</span>公開前チェック</h2>
+<ul class="chk">
+<li>要約ボックスが先頭にあり、項目は3〜5個</li>
+<li>最後の章が論点で、各論点に「誰が・いつまでに」がある</li>
+<li>黄地のタイルは1列に1枚まで</li>
+<li>黄の上の文字がすべて墨になっている</li>
+<li>赤がリスクのカード・タグ以外に出ていない</li>
+<li>数字が半角・3桁区切り・等幅で揃っている</li>
+<li>金額の税込・税抜が注記にある</li>
+<li>推定値に「目安」「推定」のラベルがある</li>
+<li>Slack の引用に日付と発言者がある</li>
+<li>固有名詞の表記が06のルール通り</li>
+<li>本文が70字幅を超えていない</li>
+<li>スマートフォン幅で表が横スクロールし、本文は折り返す</li>
+<li>ダークテーマで黄が沈み、文字が読める</li>
+<li>絵文字・感嘆符・ダッシュを使っていない</li>
+</ul>
+
+<footer class="end">出典：Comiru白書フォーマット（2026-09）、コミサポ チラシ デザインフォーマット（2026-09-03）、カイカ 今期売上レビュー 2026、KCM 新卒採用ターゲット校マップ の各トークン。comiru.jp 本体はこのセッションの通信制限で参照できなかったため、色値は社内の Comiru 印刷物データから取っています。</footer>
+</main>
+</div>
