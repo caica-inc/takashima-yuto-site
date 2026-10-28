@@ -189,94 +189,100 @@ footer.end{margin-top:64px;padding-top:18px;border-top:1px solid var(--line);fon
 .bar .t i{position:absolute;left:0;top:0;bottom:0;background:var(--yellow);border-radius:4px}
 .bar .t i.k{background:var(--ink)}
 .bar .n{font-family:var(--num);font-variant-numeric:tabular-nums;color:var(--ink-2)}
+/* issue tree */
+.tree{list-style:none;padding:0;margin:12px 0 18px;max-width:none}
+.tree>li{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 16px;margin-bottom:10px}
+.tree>li>b{font-family:var(--display);font-size:15px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.tree>li>b .h{font-family:var(--num);font-size:12px;font-weight:700;background:var(--yellow);color:var(--yellow-ink);border-radius:999px;padding:1px 9px}
+.tree ul{margin:8px 0 0;padding-left:1.2em;font-size:13.5px;max-width:none}
+.tree li li{margin-bottom:4px}
+.tree .ev{color:var(--ink-3);font-size:12.5px}
+/* 2x2 */
+.mx{display:grid;grid-template-columns:max-content 1fr 1fr;grid-template-rows:1fr 1fr max-content;gap:8px;margin:14px 0 6px}
+.mx .cell{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;min-height:120px;font-size:13px;min-width:0}
+.mx .cell.hot{background:var(--yellow-soft);border-color:var(--yellow)}
+.mx .cell h5{margin:0 0 6px;font-family:var(--num);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.mx .cell ul{margin:0;padding-left:1.1em}
+.mx .cell li{margin-bottom:3px}
+.mx .ax{font-family:var(--num);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);display:flex;align-items:center;justify-content:center}
+.mx .ay{writing-mode:vertical-rl;transform:rotate(180deg)}
+@media (max-width:640px){.mx{grid-template-columns:1fr;grid-template-rows:none}.mx .ax{display:none}}
+/* raci */
+td.r{text-align:center;font-family:var(--num);font-weight:700;white-space:nowrap}
+td.r.R{background:var(--yellow-soft)}
+/* roadmap */
+.rm{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:14px 0 18px}
+.rm>div{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;min-width:0}
+.rm h4{margin:0 0 4px;font-family:var(--display)}
+.rm .w{font-family:var(--num);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.rm ul{margin:6px 0 0;padding-left:1.2em;font-size:13px}
 </style>
 
 <div class="page">
 <nav class="toc" aria-label="目次">
   <div class="t">Contents</div>
-  <a href="#s0"><b>00</b>要約</a>
-  <a href="#s1"><b>01</b>前提と登場人物</a>
-  <a href="#s2"><b>02</b>お金の構造</a>
-  <a href="#s3"><b>03</b>現行の制作フロー</a>
-  <a href="#s4"><b>04</b>実績から見える時間</a>
-  <a href="#s5"><b>05</b>時間がかかる場所</a>
-  <a href="#s6"><b>06</b>すでに動いている改善</a>
-  <a href="#s7"><b>07</b>12時間に近づける選択肢</a>
-  <a href="#s8"><b>08</b>打ち合わせで決めたいこと</a>
+  <a href="#s0"><b>00</b>エグゼクティブサマリー</a>
+  <a href="#s1"><b>01</b>プロジェクトの定義</a>
+  <a href="#s2"><b>02</b>現状（As-Is）</a>
+  <a href="#s3"><b>03</b>ギャップ</a>
+  <a href="#s4"><b>04</b>原因の構造</a>
+  <a href="#s5"><b>05</b>打ち手と優先順位</a>
+  <a href="#s6"><b>06</b>あるべき進め方（To-Be）</a>
+  <a href="#s7"><b>07</b>ロードマップと KPI</a>
+  <a href="#s8"><b>08</b>リスクと前提</a>
+  <a href="#s9"><b>09</b>意思決定事項</a>
   <a href="#ap"><b>付録</b>案件一覧・引用</a>
 </nav>
 
 <main>
 <header class="hd">
   <div class="eyebrow">Comiru / コミサポ　サイト制作</div>
-  <h1>塾サイト制作の流れと<span class="mk">工数</span>の整理（叩き台）</h1>
-  <p class="lede">コミサポの塾サイト制作について、営業から納品までの流れ、1案件あたりの費用構造、実案件で時間がかかっている場所を整理したものです。佐久間さん・槻山さんとの打ち合わせ、ならびに岡部さん・井口さんとの分担の見直しに使う叩き台で、結論はまだ置いていません。</p>
-  <div class="meta"><span><b>作成</b> 株式会社カイカ 高嶌　2026年10月28日</span><span><b>出典</b> ポパー Slack（#サイト制作ディレクション、#bitstar_制作関連、#comirusupport_コミサポβ、各スレッド）2026年5月〜10月28日</span><span><b>状態</b> 叩き台。稼働時間は推定を含む</span></div>
+  <h1>塾サイト制作を<span class="mk">1案件12時間</span>で回すための整理（叩き台）</h1>
+  <p class="lede">コミサポの塾サイト制作について、目標・現状・ギャップ・原因・打ち手・計画・意思決定の順に整理した PM 視点の叩き台です。佐久間さん・槻山さんとの打ち合わせ、岡部さん・井口さんとの分担見直しに使います。数字は Slack の実案件から取り、稼働時間は推定を含みます。</p>
+  <div class="meta"><span><b>作成</b> 株式会社カイカ 高嶌　2026年10月28日</span><span><b>出典</b> ポパー Slack（#サイト制作ディレクション、#bitstar_制作関連、#comirusupport_コミサポβ、各スレッド）2026年5月〜10月28日</span><span><b>状態</b> 叩き台。意思決定は 09 に集約</span></div>
 </header>
 
 <section id="s0">
 <div class="summary">
-<div class="lbl">要約</div>
+<div class="lbl">Executive Summary</div>
 <ol>
-<li><strong>目標と実態に2倍以上の差がある。</strong>佐久間さんの希望はカイカ稼働で1案件10〜12時間（時給2,500円で25,000〜30,000円）。実感値は20〜30時間で、初期費用98,000円（税抜）で賄える上限は約39時間。</li>
-<li><strong>時間は「作る」より「待つ・回す」に消えている。</strong>塾の原稿・写真待ち、ビットスターとの修正ラリー、ドメイン移管、契約条件の後決めが主因。構成案づくりそのものは1案件4〜6時間程度と見込める。</li>
-<li><strong>差分の約10時間は「ずれの調整」だと見ている。</strong>キックオフで方向を決めても、塾側で考えが変わる、言葉にしにくい希望が後から出る、もっと良くしたいという理想が積み上がる。加えてビットスターは塾と直接の接点を持たないため、塾長の人柄や教室の雰囲気が初稿に乗らず、そのずれを岡部さん・井口さんが素材の用意と往復で埋めている。</li>
-<li><strong>公開までの期間は2〜3.5か月。</strong>Manabill は2か月、アップ進学ゼミは3.5か月。期間が延びるほど催促・調整の時間が増える構造になっている。</li>
-<li><strong>改善はすでに始まっている。</strong>キックオフでのスケジュール固定、構成案の一本化、仮サイト先行の二段構え、初稿の標準仕様、GA 設置のポパー側移管。ただし「どこまでを標準スコープにするか」が決まっていない。</li>
-<li><strong>決めるべきは線引き。</strong>標準スコープ（ページ数・修正回数・原稿の責任）を決め、超過分を時間課金かオプションに切り替えれば、12時間は現実的な目標になる。佐久間さんも10月28日に「今の金額でできるのはここまで、のプランを決めたい」と発言している。</li>
+<li><strong>目標と実態に2倍の差。</strong>目標はカイカ稼働1案件10〜12時間（25,000〜30,000円）。実感値は20〜30時間。初期費用98,000円（税抜）で賄える上限は39時間で、半額案件（49,000円）では20時間で使い切る。</li>
+<li><strong>差分の正体は「作業」ではなく「ずれの調整」。</strong>構成案づくりは4〜6時間で済む。残りは、塾側で方向が動くこと、ビットスターが塾と直接会わないため雰囲気が初稿に乗らないこと、ドメイン・契約の後始末に使われている。</li>
+<li><strong>納期も崩れている。</strong>キックオフから公開まで2〜3.5か月。9月の正式公開はゼロ。遅れるほど催促と再確認の時間が積み上がる。</li>
+<li><strong>提言は3つ。</strong>①標準スコープ（5ページ・修正2往復・塾の提出期限）を決め、超過を有償化する。②ビットスターをキックオフに同席させ、ずれの発生源を初回で潰す。③催促・契約・ドメイン案内をポパー側に戻し、カイカは「構成〜初稿確認〜修正指示」に集中する。</li>
+<li><strong>求める判断。</strong>目標の定義（スコープ内稼働か総稼働か）、標準スコープの文言、ビットスター同席の費用枠、持ち分の変更。11〜12月の3案件で試行し、実測で判断する。</li>
 </ol>
 </div>
 </section>
 
-<h2 id="s1"><span class="no">01</span>前提と登場人物</h2>
+<h2 id="s1"><span class="no">01</span>プロジェクトの定義</h2>
 <dl>
-<dt>対象</dt><dd>コミサポのうち「塾の Web サイト制作」。IG 運用・MEO・事務代行は参考として触れるにとどめる。</dd>
-<dt>期間</dt><dd>2026年5月28日（#サイト制作ディレクション 開設）〜10月28日。</dd>
-<dt>出典</dt><dd>ポパー Slack の3チャンネルと関連スレッド。案件管理スプレッドシート（SF 自動転記）は閲覧権限がなく未参照。</dd>
-<dt>限界</dt><dd>カイカ側の案件別稼働時間は Slack に記録がない。本資料の時間は、工程ごとの推定と岡部さんの月次申告（9月は時給対応分で約38時間）から置いた目安。</dd>
-<dt>表記</dt><dd>株式会社ポパー＝ポパー、Comiru＝コミル、株式会社カイカ＝カイカ、ビットスター（BitStar）＝ビットスター。槻山さんは Slack 表記の「槻山美沙子」。</dd>
+<dt>目的</dt><dd>コミサポの塾サイト制作を、初期費用の範囲内で、品質を落とさずに回せる型にする。</dd>
+<dt>成功の定義</dt><dd>1案件あたりのカイカ稼働12時間以内。キックオフから公開まで45日以内。初稿後の修正2往復以内。初期費用に対するカイカ費用の比率30%以下。</dd>
+<dt>対象</dt><dd>塾の Web サイト制作（新規・リニューアル）。IG 運用、MEO、事務代行は対象外。</dd>
+<dt>期間・出典</dt><dd>2026年5月28日（#サイト制作ディレクション 開設）〜10月28日の Slack。案件管理スプレッドシートは閲覧権限がなく未参照。</dd>
+<dt>限界</dt><dd>案件別の稼働記録がないため、時間は工程別の推定と岡部さんの月次申告（9月は時給対応分で約38時間）から置いた。</dd>
+<dt>表記</dt><dd>ポパー＝株式会社ポパー、コミル＝Comiru、カイカ＝株式会社カイカ、ビットスター＝BitStar。槻山さんは Slack 表記「槻山美沙子」。</dd>
 </dl>
-<h3>役割分担（2026年5月28日に佐久間さんが置いた原案と、現在の実態）</h3>
-<div class="lane">
-<div><h4>POPER</h4><ul><li>営業・商談：佐久間さん（10月下旬から下田さんへ移管中）</li><li>ディレクション統括・コピー・ビットスター交渉：槻山さん</li><li>契約書・請求・顧客 Slack 開設：根本さん、法務（佐藤さん・山﨑さん）</li><li>ビットスターへの個別発注・支払い：石橋さん</li><li>アポ調整・架電：湯田さん、田中さん</li></ul></div>
-<div><h4>CAICA</h4><ul><li>キックオフ同席・ヒアリング：岡部さん、井口さん</li><li>構成案（Google ドキュメント／スライド）：岡部さん</li><li>初稿〜納品の塾・ビットスター往復、修正指示：井口さん（岡部さんと案件ごとに分担）</li><li>納品後チェック、事例記事：岡部さん</li><li>稼働は時給制で月次申告</li></ul></div>
-<div><h4>BITSTAR</h4><ul><li>AI 生成＋Vercel での制作・修正・公開：高山さん（窓口・デザイン）、今地さん（制作）</li><li>DNS 設定値の案内、IG 自動投稿</li><li>契約・OEM：上田さん、冨松さん</li><li>初稿5営業日、修正戻し2営業日（10月26日に槻山さんが依頼、回答未確認）</li></ul></div>
-</div>
-<p class="note">井口さんは8月20日に「岡部さんに構成から初稿まで、初稿から納品までを井口で」という分担を提案しています。原案の「構成：岡部／進行・修正：井口」と同じ方向で、実態もこれに近い形で動いています。</p>
-
-<h2 id="s2"><span class="no">02</span>お金の構造</h2>
-<p>顧客からの入金、ビットスターへの支払い、カイカの稼働費を1案件で並べると次のようになります。金額は税抜。顧客向けの標準価格は Slack 上の複数の発言で「初期98,000円＋月額9,800円」と確認できます。</p>
-<div class="kpis">
-<div class="kpi"><div class="l">顧客 初期費用（標準）</div><div class="v">98,000<small>円</small></div><div class="s">値引き例 49,000 / 29,000 / 0円</div></div>
-<div class="kpi"><div class="l">顧客 月額（2年契約）</div><div class="v">9,800<small>円</small></div><div class="s">サーバー・ドメイン・保守込み</div></div>
-<div class="kpi"><div class="l">ビットスター 月額</div><div class="v">6,800<small>円</small></div><div class="s">プレミアプラン・初期0円</div></div>
-<div class="kpi"><div class="l">カイカ 時給</div><div class="v">2,500<small>円</small></div><div class="s">岡部さん・井口さん</div></div>
-<div class="kpi hl"><div class="l">初期費用で賄える上限</div><div class="v">39<small>h</small></div><div class="s">98,000 ÷ 2,500</div></div>
-<div class="kpi"><div class="l">佐久間さんの目標</div><div class="v">10<small>〜12 h</small></div><div class="s">25,000〜30,000円</div></div>
-</div>
-<h3>カイカ稼働時間ごとの初期費用の残り（目安）</h3>
+<h3>ステークホルダーと関心事</h3>
 <div class="wrap"><table>
-<thead><tr><th>カイカ稼働</th><th class="n">カイカ費用</th><th class="n">初期費用の残り</th><th>月額側の2年粗利（参考）</th><th>評価</th></tr></thead>
+<thead><tr><th>立場</th><th>人</th><th>関心事</th><th>この資料で欲しいもの</th></tr></thead>
 <tbody>
-<tr><td class="k">10 h</td><td class="n">25,000</td><td class="n">73,000</td><td rowspan="5" style="vertical-align:middle">(9,800 − 6,800) × 24か月 ＝ <span style="font-family:var(--num);font-weight:600">72,000</span>円<br><span class="small">初期費用の値引き分は、月額粗利で2年かけて回収する形になる</span></td><td>目標。現体制では未達</td></tr>
-<tr><td class="k">12 h</td><td class="n">30,000</td><td class="n">68,000</td><td>目標上限</td></tr>
-<tr><td class="k">20 h</td><td class="n">50,000</td><td class="n">48,000</td><td>実感値の下限</td></tr>
-<tr><td class="k">30 h</td><td class="n">75,000</td><td class="n">23,000</td><td>実感値の上限。半額案件では赤字</td></tr>
-<tr class="sum"><td class="k">39 h</td><td class="n">97,500</td><td class="n">500</td><td>初期費用を使い切る</td></tr>
+<tr><td class="k">事業責任者</td><td>佐久間さん（ポパー）</td><td>採算、プラン設計、案件数の拡大。10月下旬から商談を下田さんへ移管中</td><td>線引きの材料、年内の判断</td></tr>
+<tr><td class="k">ディレクション統括</td><td>槻山さん（ポパー）</td><td>調整工数の増加、ビットスターとの条件、契約条項</td><td>工程の持ち分、ビットスターへの依頼事項</td></tr>
+<tr><td class="k">制作ディレクター</td><td>岡部さん・井口さん（カイカ）</td><td>修正往復、塾の停滞、情報の分散</td><td>標準スコープ、スコープ外の言い方</td></tr>
+<tr><td class="k">契約・請求</td><td>根本さん、法務（佐藤さん・山﨑さん）、石橋さん（ポパー）</td><td>契約条項の整合、請求開始日</td><td>条件の先出し</td></tr>
+<tr><td class="k">制作会社</td><td>高山さん・今地さん（ビットスター）</td><td>情報の正本、修正回数、プラン範囲</td><td>同席の可否、戻し日数</td></tr>
+<tr><td class="k">顧客</td><td>塾長</td><td>教室の雰囲気が伝わるサイト、早い公開</td><td>（直接の読者ではない）</td></tr>
 </tbody>
 </table></div>
-<p class="note">初期費用の値引き（49,000円・29,000円・0円）が複数あるため、実際の採算は案件ごとに大きく違います。ECC ベストワン川口校は初期0円・月額9,800円・2年後買取49,000円の設計で、カイカ稼働は丸ごと月額側で回収することになります。ビットスターの支払条件は「公開日の翌月1日起算」のため、公開が遅れるほどポパー側の月額収入も遅れます。</p>
-<h3>価格に関する佐久間さんの直近の発言</h3>
-<div class="q">今のやり方だと結構制作工数かかるよね という課題があると思うので 例えば今の金額の場合できるのはここまで ここまでやりたければいくら あたりのプランを決めておこうかなと思っております。<b>佐久間さん 2026年10月28日 10:29 #comirusupport_コミサポβ（槻山さん宛）</b></div>
-<div class="q">月額9,800円はサーバー、ドメイン込（3,000円くらい）それに運用保守だから実はそこまで高くないはず<b>佐久間さん 2026年10月28日（下田さん宛）</b></div>
-<p class="note">「1案件10〜12時間」という発言そのものは Slack 上では見つかりませんでした。口頭での共有と思われるため、本資料では高嶌の聞き取りとして扱っています。</p>
 
-<h2 id="s3"><span class="no">03</span>現行の制作フロー</h2>
-<p>Slack 上の実案件から整理した、受注から納品後までの11工程です。担当は実態ベースで、ツールは工程ごとに違うものが使われています。</p>
+<h2 id="s2"><span class="no">02</span>現状（As-Is）</h2>
+<h3>プロセスと担当（11工程）</h3>
 <div class="flow">
 <div class="step"><b>営業・商談</b><span>調整アポで60分枠。架電とセミナー経由。</span><em class="who">POPER 佐久間・下田</em></div>
 <div class="step"><b>受注・契約書</b><span>#コミサポβ に受注投稿。根本さんが法務へ依頼、クラウドサイン。</span><em class="who">POPER 根本・法務</em></div>
-<div class="step"><b>キックオフ 60分</b><span>佐久間さんが引き継ぎ、槻山さんが契約確認、岡部さん・井口さんがヒアリング。</span><em class="who">POPER + CAICA</em></div>
+<div class="step"><b>キックオフ 60分</b><span>佐久間さんが引き継ぎ、槻山さんが契約確認、岡部さん・井口さんがヒアリング。ビットスターは不参加。</span><em class="who">POPER + CAICA</em></div>
 <div class="step"><b>ヒアリング整理</b><span>入力フォーマット（スプレッドシート）へ。コピーは槻山さん案、佐久間さん確認。</span><em class="who">CAICA + POPER</em></div>
 <div class="step"><b>構成案</b><span>Google ドキュメント／スライドで全ページ分。参考サイトとデザイン指示を同梱。</span><em class="who">CAICA 岡部</em></div>
 <div class="step"><b>ビットスター発注</b><span>#bitstar_制作関連 に案件スレッド。石橋さんが個別発注ワークフロー。</span><em class="who">POPER + CAICA</em></div>
@@ -286,11 +292,31 @@ footer.end{margin-top:64px;padding-top:18px;border-top:1px solid var(--line);fon
 <div class="step"><b>ドメイン・メール</b><span>DNS 切替、ドメイン移管、旧サイト停止。塾側作業が多い。</span><em class="who">塾 + BITSTAR + CAICA</em></div>
 <div class="step"><b>納品後</b><span>GTM / GA / サチコ設置（ポパー側で開始予定）、事例記事、月額課金開始。</span><em class="who">POPER + CAICA</em></div>
 </div>
-<h3>ツールの分散</h3>
-<p>ヒアリングフォーム（ビットスター製）、入力フォーマット（スプレッドシート）、構成案（ドキュメント／スライド）、修正指示（ドキュメント／スライド／スプレッドシート青字／Dropbox）、顧客別 Slack、#bitstar_制作関連 のスレッド、と情報の置き場が工程ごとに違います。9月4日にビットスターの今地さんから「情報源が分散しており、漏れが発生しやすく」と指摘があり、以後は構成案を正とする運用に寄せています。</p>
-
-<h2 id="s4"><span class="no">04</span>実績から見える時間</h2>
-<p>案件別の稼働時間は記録がないため、まず「キックオフから公開までの期間」を並べます。期間が長い案件ほど、催促・再確認・再修正の時間が積み上がっています。</p>
+<h3>RACI（現状）</h3>
+<p class="note">R＝実行、A＝説明責任、C＝相談、I＝報告。黄色は R。現状は「塾への催促」「ドメイン案内」「スコープ外の判断」の A が空いており、結果としてカイカが R を引き受けている。</p>
+<div class="wrap"><table>
+<thead><tr><th>工程</th><th>佐久間・下田</th><th>槻山</th><th>根本・法務</th><th>岡部・井口</th><th>ビットスター</th><th>塾</th></tr></thead>
+<tbody>
+<tr><td class="k">営業・受注</td><td class="r R">R/A</td><td class="r">I</td><td class="r">I</td><td class="r">I</td><td class="r">—</td><td class="r">C</td></tr>
+<tr><td class="k">契約書・請求</td><td class="r">A</td><td class="r">C</td><td class="r R">R</td><td class="r">I</td><td class="r">I</td><td class="r">C</td></tr>
+<tr><td class="k">キックオフ</td><td class="r">R</td><td class="r R">R/A</td><td class="r">—</td><td class="r R">R</td><td class="r">—</td><td class="r">C</td></tr>
+<tr><td class="k">構成案・コピー</td><td class="r">C</td><td class="r">C</td><td class="r">—</td><td class="r R">R/A</td><td class="r">I</td><td class="r">C</td></tr>
+<tr><td class="k">初稿・修正</td><td class="r">—</td><td class="r">C</td><td class="r">—</td><td class="r R">R/A</td><td class="r R">R</td><td class="r">C</td></tr>
+<tr><td class="k">塾への催促</td><td class="r">—</td><td class="r">C</td><td class="r">—</td><td class="r R">R</td><td class="r">—</td><td class="r">—</td></tr>
+<tr><td class="k">ドメイン・メール</td><td class="r">—</td><td class="r">C</td><td class="r">—</td><td class="r R">R</td><td class="r">C</td><td class="r R">R</td></tr>
+<tr><td class="k">スコープ外の判断</td><td class="r">（A 不在）</td><td class="r">C</td><td class="r">—</td><td class="r">C</td><td class="r">—</td><td class="r">—</td></tr>
+<tr><td class="k">GA・事例・請求開始</td><td class="r">A</td><td class="r R">R</td><td class="r R">R</td><td class="r">R</td><td class="r">I</td><td class="r">I</td></tr>
+</tbody>
+</table></div>
+<h3>数字</h3>
+<div class="kpis">
+<div class="kpi"><div class="l">顧客 初期費用（標準）</div><div class="v">98,000<small>円</small></div><div class="s">値引き例 49,000 / 29,000 / 0円</div></div>
+<div class="kpi"><div class="l">顧客 月額（2年契約）</div><div class="v">9,800<small>円</small></div><div class="s">サーバー・ドメイン・保守込み</div></div>
+<div class="kpi"><div class="l">ビットスター 月額</div><div class="v">6,800<small>円</small></div><div class="s">プレミアプラン・初期0円</div></div>
+<div class="kpi"><div class="l">カイカ 時給</div><div class="v">2,500<small>円</small></div><div class="s">岡部さん・井口さん</div></div>
+<div class="kpi"><div class="l">10月の新規受注</div><div class="v">6<small>件</small></div><div class="s">宇宙叶Q、STERA×2、ECC、ゼロプラス、早稲田TS</div></div>
+<div class="kpi"><div class="l">9月の正式公開</div><div class="v">0<small>件</small></div><div class="s">ビットスター今地さん 10/28</div></div>
+</div>
 <h3>キックオフから公開までの日数（判明分）</h3>
 <div class="bar"><span>Manabill</span><div class="t"><i style="width:36%"></i></div><span class="n">60日（6/29→8/28）</span></div>
 <div class="bar"><span>スタディパワー</span><div class="t"><i style="width:30%"></i></div><span class="n">49日（7/13→8/31）</span></div>
@@ -300,99 +326,165 @@ footer.end{margin-top:64px;padding-top:18px;border-top:1px solid var(--line);fon
 <div class="bar"><span>飛翔</span><div class="t"><i class="k" style="width:54%"></i></div><span class="n">89日以上（7/31→未公開）</span></div>
 <div class="bar"><span>ボストン</span><div class="t"><i class="k" style="width:60%"></i></div><span class="n">107日以上（7/13→未公開）</span></div>
 <div class="bar"><span>ラリュミエール</span><div class="t"><i class="k" style="width:41%"></i></div><span class="n">68日以上（8/21→9/8で停滞）</span></div>
-<p class="note">黒は10月28日時点で未公開。ビットスターの今地さんによると「9月中に正式公開した物は無し」。10月に公開できたのはアップ進学ゼミとスタディメイトの2件。</p>
-<h3>1案件の稼働内訳（推定）</h3>
-<p>工程ごとに、順調に進んだ場合と、実案件で起きている往復を含めた場合を置きました。「待ち」の時間は含めず、手を動かした時間だけです。</p>
+<p class="note">黒は10月28日時点で未公開。目標45日を満たした案件はない。</p>
+
+<h2 id="s3"><span class="no">03</span>ギャップ</h2>
 <div class="wrap"><table>
-<thead><tr><th>工程</th><th class="n">順調な場合</th><th class="n">実案件に近い場合</th><th>時間が増える理由（実例）</th></tr></thead>
+<thead><tr><th>指標</th><th class="n">目標</th><th class="n">現状（推定含む）</th><th class="n">差</th><th>根拠</th></tr></thead>
 <tbody>
-<tr><td class="k">キックオフ同席・議事</td><td class="n">1.5</td><td class="n">2.0</td><td>2名同席、日程再調整</td></tr>
-<tr><td class="k">ヒアリング整理・コピー確認</td><td class="n">1.5</td><td class="n">3.0</td><td>塾の原稿が揃わず再ヒアリング（アップ進学ゼミ）</td></tr>
-<tr><td class="k">構成案作成</td><td class="n">4.0</td><td class="n">6.0</td><td>6ページ構成、参考サイト調査、既存サイト再現（V-follows）</td></tr>
-<tr><td class="k">ビットスター発注・初稿確認</td><td class="n">1.0</td><td class="n">2.0</td><td>ヒアリング内容の反映漏れを洗い出す（ラリュミエール 9/2）</td></tr>
-<tr><td class="k">塾確認・修正指示（1往復あたり1〜1.5h）</td><td class="n">3.0</td><td class="n">8.0</td><td>2往復で済むか、6往復になるか。アップ進学ゼミは修正複数回で「修正回数×2」</td></tr>
-<tr><td class="k">塾への催促・個別 MTG</td><td class="n">0.5</td><td class="n">3.0</td><td>初稿後に止まる案件（まなサポ、ラリュミエール、ボストン）</td></tr>
-<tr><td class="k">公開・ドメイン・メール</td><td class="n">1.0</td><td class="n">3.0</td><td>Wix の DNS 書換、A レコード重複、ドメイン移管（V-follows）</td></tr>
-<tr><td class="k">納品後チェック・GA・事例</td><td class="n">1.0</td><td class="n">2.0</td><td>事例記事は別枠。GA 設置はポパー側へ移行中</td></tr>
-<tr class="sum"><td>合計</td><td class="n">13.5</td><td class="n">29.0</td><td>順調でも12時間をわずかに超える</td></tr>
+<tr><td class="k">カイカ稼働／案件</td><td class="n">10〜12 h</td><td class="n">20〜30 h</td><td class="n">+10〜18 h</td><td>岡部さん9月申告38h ÷ 稼働案件4〜5件 × 公開まで2〜3か月</td></tr>
+<tr><td class="k">カイカ費用／初期費用</td><td class="n">≦30%</td><td class="n">50〜77%</td><td class="n">+20〜47pt</td><td>98,000円に対し50,000〜75,000円。半額案件では100%超</td></tr>
+<tr><td class="k">キックオフ→公開</td><td class="n">45日</td><td class="n">49〜107日</td><td class="n">+4〜62日</td><td>上の日数グラフ。未公開3件は90日超</td></tr>
+<tr><td class="k">初稿後の修正往復</td><td class="n">2回</td><td class="n">3〜6回</td><td class="n">+1〜4回</td><td>プラン上限6回に達する案件あり（アップ進学ゼミ「修正回数×2」、V-follows 修正3/6）</td></tr>
+<tr><td class="k">情報の正本</td><td class="n">1つ</td><td class="n">4〜5つ</td><td class="n">—</td><td>フォーム、入力フォーマット、構成案、修正指示（3形式）、顧客 Slack</td></tr>
 </tbody>
 </table></div>
-<p class="note">推定値です。岡部さんの9月申告は時給対応分で約38時間（記事2本と CMS 登録4本は別）で、同月に動いていた案件は4〜5件。1案件あたり月8〜10時間、公開まで2〜3か月なら20〜30時間という実感値と矛盾しません。</p>
+<h3>カイカ稼働時間ごとの初期費用の残り（目安・税抜）</h3>
+<div class="wrap"><table>
+<thead><tr><th>カイカ稼働</th><th class="n">カイカ費用</th><th class="n">98,000円案件の残り</th><th class="n">49,000円案件の残り</th><th>評価</th></tr></thead>
+<tbody>
+<tr><td class="k">12 h</td><td class="n">30,000</td><td class="n">68,000</td><td class="n">19,000</td><td>目標上限</td></tr>
+<tr><td class="k">20 h</td><td class="n">50,000</td><td class="n">48,000</td><td class="n">−1,000</td><td>実感値の下限。半額案件は赤字</td></tr>
+<tr><td class="k">30 h</td><td class="n">75,000</td><td class="n">23,000</td><td class="n">−26,000</td><td>実感値の上限</td></tr>
+<tr class="sum"><td class="k">39 h</td><td class="n">97,500</td><td class="n">500</td><td class="n">−48,500</td><td>初期費用を使い切る</td></tr>
+</tbody>
+</table></div>
+<p class="note">月額側の2年粗利は (9,800 − 6,800) × 24 ＝ 72,000円。初期費用の値引きや稼働超過は、この月額粗利で2年かけて回収する構造になる。ビットスターへの支払いは公開翌月1日起算のため、公開が遅れるほど月額収入も遅れる。</p>
 
-<h2 id="s5"><span class="no">05</span>時間がかかる場所</h2>
-<p>Slack 上で繰り返し出ている詰まりを7つに分けました。上の3つが時間の大半を占めています。</p>
-<h3>差分約10時間の内訳についての仮説（高嶌）</h3>
-<p>佐久間さんの見込み10〜12時間と、実感値20時間前後との差は、作業量の見積もり違いというより、次の2つの「ずれの調整」に使われていると考えています。</p>
-<div class="cmp">
-<div><h4>① 塾側で方向が動く</h4><p>キックオフでカイカが要件を整理し方向付けをしても、その後に塾の考えが変わる。言語化が得意でない先生は「なんとなく違う」としか言えず、理想が高い先生は「もっと良くしたい」が止まらない。初稿後の修正が2往復で終わらず、6往復になるのはこのため。</p></div>
-<div><h4>② ビットスターが塾と直接の接点を持たない</h4><p>ビットスターに届くのはヒアリングフォームと構成案の文字情報だけで、塾長の人柄や教室の空気を見ていない。初稿で「雰囲気が違う」ずれが出ると、塾と直接会っている岡部さん・井口さんが参考サイトや写真を集め直し、言葉で伝え直す往復を引き受けることになる。</p></div>
+<h2 id="s4"><span class="no">04</span>原因の構造</h2>
+<p>「なぜ12時間に収まらないか」を4つの枝に分け、それぞれに実案件の根拠と推定時間を置きました。合計で、順調なら13.5時間、実案件に近いと29時間になります。</p>
+<ul class="tree">
+<li><b><span class="h">A</span>作業そのものの量　順調で約8時間</b><ul>
+<li>キックオフ同席1.5h、ヒアリング整理1.5h、構成案4h、発注・初稿確認1h。ここは目標内に収まる。</li>
+<li class="ev">根拠：岡部さん 10/9「構成案を作成しております。全体で6ページ」。STERA・幸彩・西沢の構成案はいずれも1〜2日で提出。</li>
+</ul></li>
+<li><b><span class="h">B</span>手戻り（修正往復）　順調3h → 実態8h</b><ul>
+<li><strong>塾側で方向が動く。</strong>キックオフで方向付けしても、後から考えが変わる。言語化が苦手な先生は「なんとなく違う」としか言えず、理想が高い先生は「もっと良くしたい」が止まらない。</li>
+<li><strong>ビットスターが塾と直接会わない。</strong>届くのは文字情報だけで、塾長の人柄や教室の空気が初稿に乗らない。ずれが出ると、塾と会っている岡部さん・井口さんが参考サイトや写真を集め直し、言葉で伝え直す。</li>
+<li><strong>情報の正本が複数。</strong>ヒアリングフォームと構成案の両方が渡り、反映漏れと「見ていない」の応酬になる。</li>
+<li class="ev">根拠：槻山さん 8/24「まじで修正のラリーが多い」。井口さん 9/7「修正の量やばw ヒアリングフォームあれだけ言っても見てない感じ」。岡部さん 9/2「支給したテキストでなく全く別のものが入っており」。ビットスター今地さん 9/4「情報源が分散しており、漏れが発生しやすく」。まなサポ「かわいいサイト」の希望が後出し。</li>
+</ul></li>
+<li><b><span class="h">C</span>待ちと催促　順調0.5h → 実態3h</b><ul>
+<li>原稿・写真が揃わない。夏期講習で推敲が止まる。初稿後に返事が来ない。待っている間もリマインドし、再開時に再確認が要る。</li>
+<li class="ev">根拠：アップ進学ゼミ（夏期講習で原稿遅延、6/24→10/9）。ラリュミエール初稿で未確定13項目。槻山さん 9/29「初稿出してるのに止まってる案件：まなサポ、佐分利、ボストン」。</li>
+</ul></li>
+<li><b><span class="h">D</span>周辺作業（ドメイン・契約・計測）　順調2h → 実態5h</b><ul>
+<li>DNS 切替を塾が実施して失敗、ドメイン移管を先生が実施、旧サイトを消せない。契約条項が実態に合わず修正。GA アカウントの混乱。</li>
+<li class="ev">根拠：アップ進学ゼミ（Wix の A レコード重複）、V-follows（旧制作会社解約でメール停止、Xserver 移管）、スタディメイト（旧サイト削除不可で屋号検索に出ない）、宇宙叶Q（データ引継ぎ条項の修正）、飛翔（不明な GA アカウント）。ビットスター高山さん 10/19「AuthCode のお預かりはお引き受けしておりません」。</li>
+</ul></li>
+</ul>
+<h3>工程別の稼働（推定）</h3>
+<div class="wrap"><table>
+<thead><tr><th>工程</th><th>枝</th><th class="n">順調な場合</th><th class="n">実案件に近い場合</th><th>時間が増える理由</th></tr></thead>
+<tbody>
+<tr><td class="k">キックオフ同席・議事</td><td>A</td><td class="n">1.5</td><td class="n">2.0</td><td>2名同席、日程再調整</td></tr>
+<tr><td class="k">ヒアリング整理・コピー確認</td><td>A/C</td><td class="n">1.5</td><td class="n">3.0</td><td>原稿が揃わず再ヒアリング</td></tr>
+<tr><td class="k">構成案作成</td><td>A</td><td class="n">4.0</td><td class="n">6.0</td><td>既存サイト再現（V-follows）、参考サイト調査</td></tr>
+<tr><td class="k">発注・初稿確認</td><td>A/B</td><td class="n">1.0</td><td class="n">2.0</td><td>反映漏れの洗い出し</td></tr>
+<tr><td class="k">塾確認・修正指示（1往復1〜1.5h）</td><td>B</td><td class="n">3.0</td><td class="n">8.0</td><td>2往復か6往復か</td></tr>
+<tr><td class="k">塾への催促・個別 MTG</td><td>C</td><td class="n">0.5</td><td class="n">3.0</td><td>初稿後の停滞</td></tr>
+<tr><td class="k">公開・ドメイン・メール</td><td>D</td><td class="n">1.0</td><td class="n">3.0</td><td>DNS、移管、旧サイト</td></tr>
+<tr><td class="k">納品後チェック・GA・事例</td><td>D</td><td class="n">1.0</td><td class="n">2.0</td><td>GA はポパー側へ移行中</td></tr>
+<tr class="sum"><td>合計</td><td></td><td class="n">13.5</td><td class="n">29.0</td><td>B と C と D で15.5時間増える</td></tr>
+</tbody>
+</table></div>
+<p class="note">推定値です。順調な場合でも13.5時間なので、12時間はスコープを決めた上で B〜D を削って初めて届く数字です。</p>
+
+<h2 id="s5"><span class="no">05</span>打ち手と優先順位</h2>
+<p>原因の枝ごとに打ち手を置き、効果（削れる時間）と実現のしやすさで並べました。黄色の象限から着手します。</p>
+<div class="mx">
+<div class="ax ay">効果 大 ↑</div>
+<div class="cell hot"><h5>効果 大 × すぐできる（まずやる）</h5><ul><li><strong>①標準スコープの明文化</strong>（B・C）：5ページ・修正2往復・塾の提出期限・オプション価格。</li><li><strong>②ビットスターのキックオフ同席</strong>（B）：高山さんが60分参加し、雰囲気と参考サイトをその場で合意。</li><li><strong>③情報の正本を構成案1つに</strong>（B）：9/4 合意済み。フォームは廃止し、修正指示も1形式。</li></ul></div>
+<div class="cell"><h5>効果 大 × 準備が要る（次にやる）</h5><ul><li><strong>④催促・契約・ドメイン案内をポパー側へ</strong>（C・D）：下田さん・根本さんの工数確認が要る。</li><li><strong>⑤仮サイト先行の二段構え</strong>（C）：宇宙叶Q で初適用。条件「仮サイト中は修正なし」の説明が要る。</li><li><strong>⑥構成案テンプレート</strong>（A）：定型7ページとヒアリング項目を固定。塾の個性との両立を設計。</li></ul></div>
+<div class="ax ay">効果 小 ↓</div>
+<div class="cell"><h5>効果 小 × すぐできる（ついでにやる）</h5><ul><li>⑦初稿の標準仕様4点（10/21 槻山さん、依頼済み）</li><li>⑧修正戻し2営業日の取り決め（回答待ち）</li><li>⑨GA・GTM・サチコをポパー計測アカウントで設置（次案件から）</li><li>⑩キックオフでスケジュール固定・定例化（V-follows で実施）</li></ul></div>
+<div class="cell"><h5>効果 小 × 準備が要る（保留）</h5><ul><li>⑪AI 内製への切り替え（8/24 テスト。品質と工数の両面で未評価）</li><li>⑫案件固定フィー化（スコープ外の判断者が決まってから）</li><li>⑬ビットスター管理画面でのアクセス解析（⑨で代替）</li></ul></div>
+<div></div><div class="ax">← すぐできる</div><div class="ax">準備が要る →</div>
 </div>
-<p class="note">この仮説が正しければ、①は「標準スコープと期限」で、②は「ビットスターをキックオフに同席させる」ことで縮められます。選択肢は 07 に置いています。実案件では、ラリュミエールの初稿（9月）で支給テキストが別の文章に差し替わっていた件や、まなサポで「かわいいサイト」の希望が後から出た件が②の例です。</p>
-<div class="cards">
-<div class="card"><h4><span class="tag y">最大</span>塾の原稿・写真待ちと、初稿後の停滞</h4><p>夏期講習でテキスト推敲が止まる（アップ進学ゼミ）、写真がすべて仮のまま初稿（ラリュミエール、未確定13項目）、初稿を出しても返事がない（9月29日時点でまなサポ・ラリュミエール・ボストン）。待ちの間も催促とリマインドの時間が発生し、再開時に再確認が必要になる。</p></div>
-<div class="card"><h4><span class="tag y">大</span>ビットスターとの修正ラリー</h4><p>槻山さん8月24日「まじで修正のラリーが多い」。井口さん9月7日「修正の量やばw ヒアリングフォームあれだけ言っても見てない感じ」。岡部さん9月2日は、支給した代表メッセージと別の文章が入っていた件を指摘。一方ビットスター側は「情報源が分散」と指摘しており、原因は双方にある。</p></div>
-<div class="card"><h4><span class="tag y">大</span>ドメイン・メール・旧サイトの後始末</h4><p>Wix の DNS 切替を塾が実施して A レコードが残り表示されない（アップ進学ゼミ）。旧制作会社の解約でメールまで止まり、Xserver 契約とドメイン移管を先生が実施（V-follows）。旧サイトを消せず屋号検索で新サイトが出ない（スタディメイト）。ビットスターは「アカウント作成・移管申請・AuthCode のお預かりはお引き受けしていない」。</p></div>
-<div class="card"><h4><span class="tag y">中</span>デザインの認識ずれとプラン制約</h4><p>参考サイトがないと初稿でずれる。写真アニメーションはプラン外、既存サイトの完全再現は不可、ペライチ系の保守は高額化。10月21日に槻山さんが初稿の標準仕様4点（モーションなし、余白、SP 改行、地図ピン）を事前合意に持ち込んだ。</p></div>
-<div class="card"><h4><span class="tag y">中</span>契約条件の後決め</h4><p>保守メニュー未定で契約が止まる（OKINAWA LAB）、個人契約と法人契約の不整合（ボストン）、データ引継ぎ条項が実態と合わず契約書修正（宇宙叶Q）、ドメイン移管の定義がビットスター契約と顧客契約でずれる（10月27日）。制作側で動いていても請求が始まらない。</p></div>
-<div class="card"><h4><span class="tag y">中</span>仕様の後出し</h4><p>納品後に「やはり既存ドメインにしたい」（アップ進学ゼミ）、初稿後にロゴと表記の変更（V-follows）、ブログ移行40,000円が営業時に漏れる（スタディパワー、槻山さん「営業時にやるの漏れそう」）。</p></div>
-<div class="card risk"><h4><span class="tag r">リスク</span>調整工数が増え続けている</h4><p>槻山さん10月28日「納品早めるのに MTG 増えて、調整工数が増えてきました」。案件数は10月だけで宇宙叶Q、STERA（2サイト）、ECC 川口、ゼロプラス、早稲田トップスクール、蛍雪ゼミナールと増えており、1案件あたりの時間を下げないと体制が先に限界を迎える。</p></div>
-</div>
-
-<h2 id="s6"><span class="no">06</span>すでに動いている改善</h2>
-<p>この5か月で提案・開始された対策です。いずれも「時間を減らす」方向に効くものなので、打ち合わせでは「標準にするか」を確認するだけで済みます。</p>
+<h3>打ち手ごとの削減見込み（推定）</h3>
 <div class="wrap"><table>
-<thead><tr><th>対策</th><th>提案者・時期</th><th>効く場所</th><th>状態</th></tr></thead>
+<thead><tr><th>打ち手</th><th>効く枝</th><th class="n">削減見込み</th><th>前提・コスト</th><th>決める人</th></tr></thead>
 <tbody>
-<tr><td class="k">キックオフでスケジュール固定・定例 MTG 化</td><td>槻山さん 10/20、10/26</td><td>塾の停滞、催促</td><td>V-follows で実施。他案件にも標準化予定</td></tr>
-<tr><td class="k">構成案（スライド／ドキュメント）を正本に一本化</td><td>ビットスターと合意 9/4、槻山さん 9/8</td><td>修正ラリー、反映漏れ</td><td>運用中。Drive フォルダをワンセット化</td></tr>
-<tr><td class="k">仮サイト先行の二段構え</td><td>佐久間さん 10/8、宇宙叶Q 10/26</td><td>原稿待ち、公開遅れ</td><td>宇宙叶Q で初適用。仮サイト中は修正なしが条件</td></tr>
-<tr><td class="k">初稿の標準仕様を事前合意</td><td>槻山さん 10/21</td><td>デザインずれ</td><td>ビットスターへ依頼済み</td></tr>
-<tr><td class="k">修正戻し2営業日の取り決め</td><td>槻山さん 10/26</td><td>ビットスター待ち</td><td>回答未確認</td></tr>
-<tr><td class="k">GTM / GA / サチコをポパー側で設置</td><td>佐久間さん・槻山さん 10/20</td><td>納品後、アカウント混乱</td><td>ポパー計測用アカウントを発行して次案件から</td></tr>
-<tr><td class="k">案件管理の SF 自動転記、契約状況の項目化</td><td>佐久間さん 10/26、10/28</td><td>状況確認の往復</td><td>スプレッドシート運用中</td></tr>
-<tr><td class="k">価格とスコープの線引き（プラン化）</td><td>佐久間さん 10/28</td><td>仕様後出し、採算</td><td>年内に意見を集める段階</td></tr>
-<tr><td class="k">AI 内製テスト</td><td>菊池さん・佐久間さん 8/24</td><td>ビットスター往復</td><td>テストのみ。「制作面ほぼ同等なら内製」</td></tr>
+<tr><td class="k">①標準スコープの明文化</td><td>B・C</td><td class="n">−5〜8 h</td><td>営業資料と契約書に同じ文言。塾の提出期限を守らせる仕組み（期限超過は仮サイトで公開）</td><td>佐久間さん・槻山さん</td></tr>
+<tr><td class="k">②ビットスター同席</td><td>B</td><td class="n">−3〜5 h</td><td>ビットスターの工数。プラン外なら費用。高山さんの日程</td><td>佐久間さん（費用）、槻山さん（打診）</td></tr>
+<tr><td class="k">③正本の一本化</td><td>B</td><td class="n">−1〜2 h</td><td>修正指示の書式をビットスターと合意</td><td>槻山さん・岡部さん</td></tr>
+<tr><td class="k">④持ち分の変更</td><td>C・D</td><td class="n">−3〜5 h</td><td>ポパー側の工数増。槻山さんの調整工数がすでに増えている</td><td>佐久間さん</td></tr>
+<tr><td class="k">⑤仮サイト先行</td><td>C</td><td class="n">−2〜3 h</td><td>仮サイト中は修正なし。公開翌月から月額課金が始まる利点あり</td><td>佐久間さん</td></tr>
+<tr><td class="k">⑥構成案テンプレート</td><td>A</td><td class="n">−2 h</td><td>AI 感への懸念と両立。実案件から汎用化（佐久間さん 6/24 方針）</td><td>岡部さん</td></tr>
+<tr class="sum"><td>①〜⑥の合計</td><td></td><td class="n">−16〜25 h</td><td>実態29h → 4〜13h。重複分を割り引いても12時間圏内</td><td></td></tr>
 </tbody>
 </table></div>
 
-<h2 id="s7"><span class="no">07</span>12時間に近づける選択肢</h2>
-<p>04 の内訳を見ると、順調に進んでも13.5時間で、12時間に収めるには「工程を減らす」か「カイカが持つ工程を減らす」か「ずれを初回で潰す」必要があります。案を5つ並べます。組み合わせを前提にしています。高嶌としては、まず E（ビットスターのキックオフ同席）と A（標準スコープ）の組み合わせを提案したいと考えています。</p>
-<div class="wrap"><table>
-<thead><tr><th>案</th><th>内容</th><th class="n">カイカ稼働の目安</th><th>利点</th><th>懸念</th></tr></thead>
-<tbody>
-<tr><td class="k">A 標準スコープを決める</td><td>初期費用の範囲を「3〜5ページ、修正2往復、原稿と写真は塾が期限内に提出、既存ドメインの DNS 切替まで」と明文化。超過は時間課金かオプション。</td><td class="n">12〜15 h</td><td>佐久間さんの「線引き」方針と一致。営業時の説明にも使える</td><td>値引き案件とスコープの整合。塾に期限を守らせる仕組みが要る</td></tr>
-<tr><td class="k">B 工程の持ち分を変える</td><td>カイカは「キックオフ、構成案、初稿確認、修正指示2回、納品チェック」に限定。塾への催促、契約・請求、ドメイン移管の案内はポパー側（下田さん・根本さん）に。</td><td class="n">10〜12 h</td><td>目標に届く。カイカの時間が「作る」に集中する</td><td>ポパー側の負荷が増える。槻山さんの調整工数がすでに増えている</td></tr>
-<tr><td class="k">C 構成案をテンプレート化</td><td>塾サイトの定型構成（TOP、コース、料金、講師、アクセス、問い合わせ、ブログ）とヒアリング項目を1枚に固定。構成案づくりを4時間から2時間に。</td><td class="n">−2 h</td><td>ビットスター側の反映漏れも減る。佐久間さんの「実案件を汎用化してテンプレ」方針と一致</td><td>塾ごとの個性が出しにくい。AI 感への懸念と両立が必要</td></tr>
-<tr><td class="k">E ビットスターをキックオフに同席させる</td><td>高山さん（または制作担当）がキックオフ60分に参加し、塾長と直接話す。雰囲気・参考サイト・写真の方針をその場で合意し、初稿から「空気」が乗った状態にする。</td><td class="n">−3〜5 h</td><td>ずれの発生源を初回で潰せる。カイカの「伝え直し」往復が減る。塾にとっても制作者の顔が見える</td><td>ビットスター側の工数と費用（プレミアプラン月額6,800円の範囲外になる可能性）。高山さん1人に集中しているため日程が詰まる。定例（水17時）が形骸化している現状で、同席の約束が守られるか</td></tr>
-<tr><td class="k">D 時給ではなく案件固定フィーにする</td><td>標準スコープ内は1案件30,000円固定、超過は2,500円/h で別請求。</td><td class="n">—</td><td>ポパーの採算が読める。カイカは超過分を可視化できる</td><td>スコープ外の判断を誰がするか。塾起因の遅延のコスト負担</td></tr>
-</tbody>
-</table></div>
-<h3>標準スコープの叩き台（案 A の中身）</h3>
+<h2 id="s6"><span class="no">06</span>あるべき進め方（To-Be）</h2>
+<h3>標準スコープ（案）</h3>
 <div class="cmp">
-<div><h4>含むもの</h4><p>キックオフ60分、ヒアリング整理、構成案（5ページまで）、初稿確認、修正2往復、公開前チェック、既存ドメインの DNS 切替の案内。</p></div>
+<div><h4>初期費用に含む</h4><p>キックオフ60分（ビットスター同席）、ヒアリング整理、構成案（5ページまで）、初稿確認、修正2往復、公開前チェック、既存ドメインの DNS 切替の案内。</p></div>
 <div><h4>塾の責任</h4><p>原稿・写真・ロゴをキックオフから2週間以内に提出。確認の返事は5営業日以内。期限を過ぎた場合は仮サイトで公開し、以後は月3回の保守枠で修正。</p></div>
 <div><h4>オプション（別料金）</h4><p>修正3往復目以降、ページ追加、ブログ移行（10,000〜40,000円）、ドメイン移管の代行（15,000円）、ロゴ制作（20,000円）、画像・イラスト6点目以降。</p></div>
 </div>
-<p class="note">この内容は、10月26日以降に契約書へ入り始めた条項（サーバー移管手数料15,000円、データ引継ぎ10,000円、画像・イラスト各5点上限）と、ビットスターのプラン上限（修正6回）を顧客向けに言い換えたものです。新しい条件を増やすというより、すでにある条件を営業・キックオフで先に言う、という整理です。</p>
+<p class="note">新しい条件を増やすのではなく、10月26日以降に契約書へ入り始めた条項（サーバー移管手数料15,000円、データ引継ぎ10,000円、画像・イラスト各5点上限）と、ビットスターのプラン上限（修正6回）を、営業・キックオフの段階で先に言う、という整理です。</p>
+<h3>RACI（To-Be 案）</h3>
+<div class="wrap"><table>
+<thead><tr><th>工程</th><th>佐久間・下田</th><th>槻山</th><th>根本・法務</th><th>岡部・井口</th><th>ビットスター</th><th>塾</th><th>現状との違い</th></tr></thead>
+<tbody>
+<tr><td class="k">営業・受注（スコープ説明込み）</td><td class="r R">R/A</td><td class="r">C</td><td class="r">I</td><td class="r">I</td><td class="r">—</td><td class="r">C</td><td>標準スコープとオプションを商談で提示</td></tr>
+<tr><td class="k">契約書・請求</td><td class="r">A</td><td class="r">C</td><td class="r R">R</td><td class="r">I</td><td class="r">I</td><td class="r">C</td><td>条項をスコープと一致させる</td></tr>
+<tr><td class="k">キックオフ</td><td class="r">R</td><td class="r R">R/A</td><td class="r">—</td><td class="r R">R</td><td class="r R">R</td><td class="r">C</td><td>ビットスター同席、スケジュール固定</td></tr>
+<tr><td class="k">構成案・コピー</td><td class="r">C</td><td class="r">C</td><td class="r">—</td><td class="r R">R/A</td><td class="r">C</td><td class="r">C</td><td>テンプレート化、正本は構成案のみ</td></tr>
+<tr><td class="k">初稿・修正（2往復）</td><td class="r">—</td><td class="r">C</td><td class="r">—</td><td class="r R">R/A</td><td class="r R">R</td><td class="r">C</td><td>修正指示は1形式</td></tr>
+<tr><td class="k">塾への催促</td><td class="r R">R</td><td class="r">A</td><td class="r">—</td><td class="r">I</td><td class="r">—</td><td class="r">—</td><td>ポパー側へ。期限超過は仮サイト公開</td></tr>
+<tr><td class="k">ドメイン・メール</td><td class="r">—</td><td class="r R">R/A</td><td class="r">—</td><td class="r">I</td><td class="r">C</td><td class="r R">R</td><td>場合分け表をビットスターに作ってもらい、案内はポパー</td></tr>
+<tr><td class="k">スコープ外の判断</td><td class="r R">A</td><td class="r R">R</td><td class="r">—</td><td class="r">C（検知して報告）</td><td class="r">—</td><td class="r">—</td><td>A を置く。カイカは「3往復目です」と報告するだけ</td></tr>
+<tr><td class="k">GA・事例・請求開始</td><td class="r">A</td><td class="r R">R</td><td class="r R">R</td><td class="r">R（事例）</td><td class="r">I</td><td class="r">I</td><td>計測はポパーアカウント</td></tr>
+</tbody>
+</table></div>
 
-<h2 id="s8"><span class="no">08</span>打ち合わせで決めたいこと</h2>
-<h3>佐久間さん・槻山さんと</h3>
-<ol>
-<li><strong>目標の置き方を揃える。</strong>「10〜12時間」は標準スコープ内の稼働なのか、塾起因の遅延も含めた総稼働なのか。前者なら案 A＋C で届く見込み、後者なら案 B が必要。決める人：佐久間さん、期限：年内（佐久間さんの「年内に意見がほしい」に合わせる）。</li>
-<li><strong>標準スコープの文言。</strong>07 の叩き台をもとに、ページ数・修正回数・塾の提出期限・オプション価格を1枚にする。営業資料と契約書の両方に入れる。決める人：佐久間さん・槻山さん、素材はカイカが用意。</li>
-<li><strong>催促と契約まわりの持ち分。</strong>初稿後の塾への催促、契約書の未返信フォロー、ドメイン移管の案内を誰が持つか。ポパー側に戻すなら、下田さん・根本さんの工数を確認する。</li>
-<li><strong>値引き案件の扱い。</strong>初期49,000円・29,000円・0円の案件でも同じスコープか、スコープを縮めるか。カイカ稼働の上限を初期費用の7割（98,000円なら約27時間）などで置くか。</li>
-<li><strong>仮サイト先行を標準にするか。</strong>宇宙叶Q の結果を見てからか、次案件から全件か。ビットスターの条件「仮サイト中は修正なし」を塾にどう説明するか。</li>
-<li><strong>ビットスターのキックオフ同席。</strong>次の2〜3案件で高山さんに同席してもらい、初稿後の修正往復が減るかを見る。費用が発生するなら、初期費用のうちいくらまでなら出せるか（カイカ稼働が5時間減れば12,500円の余地）。決める人：佐久間さん、ビットスターへの打診：槻山さん。</li>
-<li><strong>ビットスターへの依頼事項の確定。</strong>修正戻し2営業日、初稿の標準仕様、画像・イラスト超過単価、解約時のサーバー代とドメイン手数料。槻山さんが10月に投げている質問の回答期限を決める。</li>
-</ol>
-<h3>岡部さん・井口さんと</h3>
-<ol>
-<li><strong>案件別の稼働記録を始める。</strong>工程別（04 の8区分）で、1案件ごとに時間を残す。11月から2案件で試し、12月の打ち合わせで推定値を実測に置き換える。</li>
-<li><strong>構成案テンプレートと、ヒアリング項目の固定。</strong>岡部さんの直近の構成案（STERA、幸彩、西沢）から共通部分を抜き出す。</li>
-<li><strong>修正指示の書式を1つにする。</strong>ドキュメント・スライド・スプレッドシート・Dropbox に散っている形式を、ビットスターと合意した1形式に寄せる。</li>
-<li><strong>スコープ外の判断を誰がいつ言うか。</strong>修正3往復目、ページ追加、仕様変更が出た時点で、カイカから槻山さんに「オプション扱い」を提案する流れにするか。</li>
-</ol>
+<h2 id="s7"><span class="no">07</span>ロードマップと KPI</h2>
+<div class="rm">
+<div><div class="w">Phase 1 / 11月</div><h4>決めて、測り始める</h4><ul><li>標準スコープの文言を確定（営業資料・契約書）</li><li>ビットスターに同席と戻し2営業日を打診</li><li>工程別の稼働記録を開始（岡部さん・井口さん、8区分）</li><li>修正指示の書式を1つに</li></ul></div>
+<div><div class="w">Phase 2 / 11〜12月</div><h4>3案件で試行</h4><ul><li>ゼロプラス、早稲田トップスクール、ECC 川口（または次の新規）で To-Be を適用</li><li>ビットスター同席あり／なしを比較</li><li>仮サイト先行は宇宙叶Q の結果を見る</li></ul></div>
+<div><div class="w">Phase 3 / 12月末</div><h4>実測で判断</h4><ul><li>3案件の実測稼働と修正往復数を確認</li><li>12時間に収まる条件を特定</li><li>持ち分の変更（④）と固定フィー化（⑫）を判断</li><li>佐久間さんの「年内に意見がほしい」に合わせる</li></ul></div>
+<div><div class="w">Phase 4 / 1月〜</div><h4>標準運用</h4><ul><li>下田さんの商談から標準スコープで受注</li><li>月次で KPI を確認（案件管理スプレッドシートに列を追加）</li></ul></div>
+</div>
+<h3>KPI と測り方</h3>
+<div class="wrap"><table>
+<thead><tr><th>KPI</th><th class="n">目標</th><th>測り方</th><th>記録する人</th></tr></thead>
+<tbody>
+<tr><td class="k">カイカ稼働／案件</td><td class="n">≦12 h</td><td>工程別8区分で案件ごとに記録。月次申告と突合</td><td>岡部さん・井口さん</td></tr>
+<tr><td class="k">キックオフ→公開</td><td class="n">≦45日</td><td>案件管理スプレッドシートにキックオフ日と公開日</td><td>槻山さん</td></tr>
+<tr><td class="k">初稿後の修正往復</td><td class="n">≦2回</td><td>ビットスターの「修正 n/6」カウント</td><td>岡部さん・井口さん</td></tr>
+<tr><td class="k">塾の提出期限遵守</td><td class="n">2週間以内</td><td>キックオフ日と素材受領日</td><td>ポパー（催促担当）</td></tr>
+<tr><td class="k">カイカ費用／初期費用</td><td class="n">≦30%</td><td>稼働 × 2,500 ÷ 初期費用</td><td>高嶌（月次）</td></tr>
+<tr><td class="k">スコープ外の発生件数</td><td class="n">記録のみ</td><td>3往復目・ページ追加・仕様変更をカイカが検知して報告</td><td>岡部さん・井口さん</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="s8"><span class="no">08</span>リスクと前提</h2>
+<div class="cards">
+<div class="card risk"><h4><span class="tag r">リスク</span>ポパー側の調整工数が先に限界を迎える</h4><p>槻山さん 10/28「納品早めるのに MTG 増えて、調整工数が増えてきました」。④で催促を戻すと負荷がさらに増える。下田さんの商談移管と合わせ、ポパー側の持ち分を人で割り当てる必要がある。</p></div>
+<div class="card risk"><h4><span class="tag r">リスク</span>ビットスターが同席や戻し日数に応じない</h4><p>定例（水17時）は形骸化し、10/14 に解除提案が出ている。高山さん1人に集中。同席がプラン外の費用になる場合、カイカ稼働5時間減（12,500円）が上限の目安。</p></div>
+<div class="card risk"><h4><span class="tag r">リスク</span>標準スコープが値引き案件と合わない</h4><p>初期49,000円・29,000円・0円の案件が続いている。スコープを縮めるか、月額粗利（2年で72,000円）で回収するかを案件ごとに決めないと、採算が読めない。</p></div>
+<div class="card"><h4><span class="tag y">注意</span>塾に期限を守らせる仕組みは営業段階で決まる</h4><p>「期限超過は仮サイトで公開」は商談で言わないと、キックオフで初めて聞いた塾は反発する。下田さんへの商談移管と同時に組み込む。</p></div>
+<div class="card"><h4><span class="tag y">注意</span>テンプレート化と「AI 感」の両立</h4><p>佐久間さん 6/24「スピード優先すると AI 感は出るのでそこは認識の上、顧客の期待値調整をする」。テンプレートは構成だけに留め、写真・コピーで個性を出す線引きが要る。</p></div>
+<div class="card neutral"><h4><span class="tag g">前提</span>稼働時間は推定</h4><p>本資料の時間は推定と月次申告からの逆算。11月からの実測で置き換える。Phase 3 の判断は実測が揃ってから行う。</p></div>
+<div class="card neutral"><h4><span class="tag g">前提</span>「10〜12時間」の発言は Slack にない</h4><p>口頭での共有と思われるため、高嶌の聞き取りとして扱っている。打ち合わせで定義（スコープ内か総稼働か）を確認する。</p></div>
+</div>
+
+<h2 id="s9"><span class="no">09</span>意思決定事項</h2>
+<div class="wrap"><table>
+<thead><tr><th>#</th><th>決めること</th><th>選択肢</th><th>高嶌の提案</th><th>決める人</th><th>期限</th></tr></thead>
+<tbody>
+<tr><td class="n">1</td><td class="k">「12時間」の定義</td><td>標準スコープ内の稼働／塾起因の遅延も含む総稼働</td><td>前者。総稼働は KPI として別に追う</td><td>佐久間さん</td><td>打ち合わせ当日</td></tr>
+<tr><td class="n">2</td><td class="k">標準スコープの文言</td><td>06 の案をそのまま／ページ数・往復数を変える</td><td>06 の案で11月から試行</td><td>佐久間さん・槻山さん</td><td>11月中旬</td></tr>
+<tr><td class="n">3</td><td class="k">ビットスターのキックオフ同席</td><td>全案件／試行3件／やらない</td><td>試行3件。費用はカイカ稼働減の範囲（12,500円）まで</td><td>佐久間さん（費用）、槻山さん（打診）</td><td>11月中旬</td></tr>
+<tr><td class="n">4</td><td class="k">催促・契約・ドメイン案内の持ち分</td><td>ポパーへ戻す／カイカのまま時給で／折半</td><td>ポパーへ。人を決める（下田さん・根本さん）</td><td>佐久間さん</td><td>12月末</td></tr>
+<tr><td class="n">5</td><td class="k">値引き案件のスコープ</td><td>同じ／縮める／カイカ稼働上限を初期費用の7割に</td><td>カイカ稼働の上限を置く（98,000円なら27h、49,000円なら14h）</td><td>佐久間さん</td><td>12月末</td></tr>
+<tr><td class="n">6</td><td class="k">仮サイト先行を標準にするか</td><td>宇宙叶Q の結果を待つ／次案件から全件</td><td>結果を待つ。12月に判断</td><td>佐久間さん</td><td>12月末</td></tr>
+<tr><td class="n">7</td><td class="k">ビットスターへの依頼事項の回答期限</td><td>戻し2営業日、初稿標準仕様、画像超過単価、解約時費用、ドメイン場合分け表</td><td>11月中旬を期限に槻山さんから</td><td>槻山さん</td><td>11月中旬</td></tr>
+<tr><td class="n">8</td><td class="k">稼働記録の開始</td><td>8区分で案件別／月次合計のみ</td><td>8区分。11月の新規2案件から</td><td>岡部さん・井口さん</td><td>11月1日</td></tr>
+<tr><td class="n">9</td><td class="k">スコープ外の検知と報告の流れ</td><td>カイカが槻山さんへ報告／カイカが塾に直接言う</td><td>カイカは検知して報告、判断と塾への説明はポパー</td><td>槻山さん・岡部さん・井口さん</td><td>11月中旬</td></tr>
+</tbody>
+</table></div>
 
 <h2 id="ap"><span class="no">付録</span>案件一覧と主な引用</h2>
 <details><summary>案件一覧（2026年5月〜10月、Slack で判明した範囲）を開く</summary>
@@ -427,14 +519,15 @@ footer.end{margin-top:64px;padding-top:18px;border-top:1px solid var(--line);fon
 </details>
 <details><summary>主な引用（原文）を開く</summary>
 <div class="q">【役割イメージ】※案件数により様子見ながら 営業：佐久間（天神）／マーケコンサル：佐久間 or 槻山／構成：岡部／制作ディレクション：岡部／進行・修正：井口<b>佐久間さん 2026年5月28日 #サイト制作ディレクション</b></div>
+<div class="q">今後のサイト制作の方針 AI感はなくすためにはテンプレが必要／テンプレをつくるのに実案件を回してそれを汎用化する形でテンプレ化する／が、スピード優先するとAI感は出るのでそこは認識の上、顧客の期待値調整をする<b>佐久間さん 2026年6月24日（ビットスター定例メモ）</b></div>
 <div class="q">サイトのキックオフですが、現在岡部さんか私のどちらかで参加しているのですが、できる限り2人で参加し、岡部さんに構成→初稿まで、初稿から納品までを井口で担当させていただければと思いますが、よろしいでしょうか…？<b>井口さん 2026年8月20日</b></div>
 <div class="q">あとはまじで修正のラリーが多いので（すみません）現場としては速さと内容含めたやりやすさを気にしています<b>槻山さん 2026年8月24日</b></div>
 <div class="q">ヒアリングフォーム、ワイヤーフレーム、AI画像資料、現サイトと情報源が分散しており、漏れが発生しやすく<b>ビットスター 今地さん 2026年9月4日</b></div>
 <div class="q">今月は、時給対応分だけで、今日の稼働予定分を含めて38時間程度<b>岡部さん 2026年9月30日（記事2本・CMS 登録4本は別）</b></div>
 <div class="q">仮サイトを年内リリース…本サイトリリースまでを役務にしたい（仮サイトからの追加追加で課金はなるべくさけたい）<b>佐久間さん 2026年10月8日</b></div>
 <div class="q">この内容事前に伺ってましたでしょうか。何ができて何ができないのかわかっておりません<b>槻山さん 2026年10月19日（ドメイン移管の AuthCode をビットスターが預からない件）</b></div>
+<div class="q">今のやり方だと結構制作工数かかるよね という課題があると思うので 例えば今の金額の場合できるのはここまで ここまでやりたければいくら あたりのプランを決めておこうかなと思っております。<b>佐久間さん 2026年10月28日（槻山さん宛）</b></div>
 <div class="q">納品早めるのにMTG増えて、調整工数が増えてきました<b>槻山さん 2026年10月28日</b></div>
-<div class="q">下田くん webサイト商談はもう任せます！！！あと運用はどこまで取るか相談しよう<b>佐久間さん 2026年10月28日</b></div>
 </details>
 
 <footer class="end">本資料は株式会社カイカが打ち合わせ用に作成した叩き台です。金額は税抜、時間は推定を含みます。稼働時間の実測は11月以降に案件別で記録し、12月に置き換える前提です。デザインフォーマット：コミル版（formats/comiru）。</footer>
