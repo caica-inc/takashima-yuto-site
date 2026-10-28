@@ -1,0 +1,442 @@
+<title>コミサポ サイト制作 工数整理</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700&family=Noto+Sans+JP:wght@400;500;700&family=Barlow:wght@500;600;700&display=swap">
+<style>
+/* ============================================================
+   コミル デザインフォーマット — 共通スタイル
+   骨格はカイカ版／関東建設マネジメント版の資料フォーマットと同じ。
+   配色・角丸・書体だけをコミル（Comiru）のトンマナに差し替えている。
+   レイアウト：左に固定目次、右に本文（70ch）。番号付き章＋要約＋数値タイル＋表＋カード＋論点。
+   ============================================================ */
+:root{
+  /* --- color: 白・墨・コミルイエロー・グレー --- */
+  --paper:#FAFAF8;          /* 紙。真っ白より半歩だけ温かい */
+  --surface:#FFFFFF;        /* 囲み・表の地 */
+  --sunk:#F2F3F1;           /* 表のヘッダー・縞 */
+  --ink:#231F20;            /* 墨（Comiru 本文色。純黒は使わない） */
+  --ink-2:#55595E;          /* 補足文 */
+  --ink-3:#8A8F96;          /* 注記・ラベル */
+  --line:#E3E5E2;           /* 細罫 */
+  --line-2:#C9CCC8;         /* 太罫・区切り */
+  --yellow:#FFD12A;         /* コミルイエロー（面・タグ・強調） */
+  --marker:#FFF450;         /* マーカー（見出し・キーワードの下敷き） */
+  --yellow-soft:#FFF6CF;    /* イエロー淡（要約ボックスの地） */
+  --yellow-ink:#231F20;     /* 黄の上に置く文字は必ず墨 */
+  --risk:#C9463D;           /* リスクだけに使う赤。本文・見出しには使わない */
+  --risk-soft:#F9E3E0;
+  --good:#231F20;           /* 「良い点」は色を増やさず墨＋黄マーカーで示す */
+  --shadow:0 1px 2px rgba(35,31,32,.04),0 10px 28px -20px rgba(35,31,32,.25);
+  /* --- type --- */
+  --display:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",sans-serif;
+  --body:"Noto Sans JP","Hiragino Sans","Yu Gothic UI",system-ui,sans-serif;
+  --num:"Barlow","Helvetica Neue",Arial,sans-serif;
+  --r:10px;                 /* 角丸。カイカ版よりわずかに丸く、丸文字には寄せない */
+  --r-s:6px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#16171A;--surface:#1E2024;--sunk:#262930;--ink:#ECEDEA;--ink-2:#B3B7BD;--ink-3:#858A92;
+    --line:#2E3137;--line-2:#43474E;--yellow:#F2C636;--marker:#C9BE2E;--yellow-soft:#3A3416;--yellow-ink:#16171A;
+    --risk:#F08A82;--risk-soft:#3C2320;--good:#ECEDEA;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px -20px rgba(0,0,0,.8);color-scheme:dark}
+}
+:root[data-theme="dark"]{
+  --paper:#16171A;--surface:#1E2024;--sunk:#262930;--ink:#ECEDEA;--ink-2:#B3B7BD;--ink-3:#858A92;
+  --line:#2E3137;--line-2:#43474E;--yellow:#F2C636;--marker:#C9BE2E;--yellow-soft:#3A3416;--yellow-ink:#16171A;
+  --risk:#F08A82;--risk-soft:#3C2320;--good:#ECEDEA;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px -20px rgba(0,0,0,.8);color-scheme:dark}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.9;
+  -webkit-font-smoothing:antialiased;font-feature-settings:"palt" 1;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0}
+.page{max-width:1160px;margin:0 auto;padding:40px 8px 96px;display:grid;grid-template-columns:220px minmax(0,1fr);gap:48px}
+@media (max-width:900px){.page{grid-template-columns:1fr;gap:20px;padding-top:24px}.toc{position:static!important}}
+main{min-width:0}
+
+/* ---- toc ---- */
+.toc{position:sticky;top:24px;align-self:start;font-size:13px}
+.toc .t{font-family:var(--num);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:10px;font-weight:600}
+.toc a{display:block;color:var(--ink-2);text-decoration:none;padding:5px 0 5px 12px;border-left:2px solid var(--line);line-height:1.5}
+.toc a:hover,.toc a:focus-visible{color:var(--ink);border-color:var(--yellow);outline:none}
+.toc a b{font-family:var(--num);font-weight:600;color:var(--ink-3);margin-right:6px;font-size:11.5px}
+
+/* ---- header ---- */
+header.hd{border-bottom:2px solid var(--ink);padding-bottom:26px;margin-bottom:36px}
+.eyebrow{font-family:var(--num);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2);font-weight:600;
+  display:inline-flex;align-items:center;gap:8px}
+.eyebrow::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--yellow);flex:none}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(24px,3.6vw,32px);line-height:1.45;margin:10px 0 10px;text-wrap:balance;letter-spacing:.01em}
+h1 .mk,.mk{background:linear-gradient(transparent 62%,var(--marker) 62%,var(--marker) 94%,transparent 94%);padding:0 .08em}
+.lede{font-size:16px;color:var(--ink-2);max-width:66ch;margin:0 0 14px}
+.meta{color:var(--ink-3);font-size:13px;display:flex;flex-wrap:wrap;gap:4px 18px}
+.meta b{color:var(--ink-2);font-weight:500}
+
+/* ---- sections ---- */
+h2{font-family:var(--display);font-weight:700;font-size:21px;margin:60px 0 14px;line-height:1.45;text-wrap:balance;
+  display:flex;gap:14px;align-items:baseline;scroll-margin-top:20px}
+h2 .no{font-family:var(--num);font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--yellow-ink);background:var(--yellow);
+  border-radius:999px;padding:2px 10px;flex:none;line-height:1.6;transform:translateY(-3px)}
+h3{font-family:var(--display);font-size:16px;font-weight:700;margin:30px 0 8px;padding-left:12px;border-left:4px solid var(--yellow);line-height:1.5}
+h4{font-size:14px;font-weight:700;margin:18px 0 6px}
+p{margin:0 0 14px;max-width:70ch}
+ul,ol{margin:0 0 14px;padding-left:1.4em;max-width:70ch}
+li{margin-bottom:6px}
+a{color:var(--ink);text-decoration-color:var(--yellow);text-decoration-thickness:2px;text-underline-offset:3px}
+:focus-visible{outline:2px solid var(--yellow);outline-offset:2px}
+strong{font-weight:700}
+code{font-family:var(--num);background:var(--sunk);padding:1px 6px;border-radius:4px;font-size:.92em}
+.note{font-size:13px;color:var(--ink-2);border-left:2px solid var(--line-2);padding-left:12px;margin:10px 0 16px;max-width:70ch}
+.small{font-size:12.5px;color:var(--ink-3)}
+
+/* ---- summary box ---- */
+.summary{background:var(--yellow-soft);border:1px solid transparent;border-radius:var(--r);padding:20px 24px;margin:0 0 8px}
+.summary .lbl{font-family:var(--num);font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--ink-2);margin-bottom:6px}
+.summary ol{margin:0;padding-left:22px}
+.summary li{margin:6px 0}
+.summary li::marker{font-family:var(--num);font-weight:700}
+
+/* ---- kpi tiles ---- */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:18px 0 22px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;min-width:0}
+.kpi .l{font-size:12px;color:var(--ink-2)}
+.kpi .v{font-family:var(--num);font-size:28px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.01em;line-height:1.2;margin-top:4px}
+.kpi .v small{font-family:var(--body);font-size:13px;font-weight:500;margin-left:3px}
+.kpi .s{font-size:12px;color:var(--ink-3);margin-top:2px}
+.kpi.hl{background:var(--yellow);border-color:var(--yellow);color:var(--yellow-ink)}
+.kpi.hl .l,.kpi.hl .s{color:var(--yellow-ink);opacity:.8}
+
+/* ---- tables ---- */
+.wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);margin:12px 0 18px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;font-variant-numeric:tabular-nums;background:var(--surface)}
+th,td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;line-height:1.7}
+th{font-weight:600;color:var(--ink-2);background:var(--sunk);white-space:nowrap;font-size:12.5px}
+td.n,th.n{text-align:right;white-space:nowrap;font-family:var(--num);font-size:14px}
+td.k{font-weight:600;white-space:nowrap}
+tbody tr:last-child td{border-bottom:0}
+tr.sum td{font-weight:700;border-top:2px solid var(--line-2);background:var(--yellow-soft)}
+tr.dim td{color:var(--ink-3)}
+.wrap table{border:0}
+
+/* ---- cards (良い点 / 課題) ---- */
+.cards{display:grid;gap:12px;margin:14px 0 20px}
+.card{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--yellow);border-radius:var(--r);padding:14px 18px;min-width:0}
+.card.risk{border-left-color:var(--risk)}
+.card.neutral{border-left-color:var(--line-2)}
+.card h4{margin:0 0 6px;font-size:15px;font-weight:700;display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-family:var(--body)}
+.card p{margin:0;max-width:none;font-size:14px}
+.tag{font-family:var(--num);font-size:11px;letter-spacing:.06em;padding:2px 9px;border-radius:999px;font-weight:700;white-space:nowrap;text-transform:uppercase}
+.tag.y{background:var(--yellow);color:var(--yellow-ink)}
+.tag.g{background:var(--sunk);color:var(--ink-2);border:1px solid var(--line)}
+.tag.r{background:var(--risk-soft);color:var(--risk)}
+.tag.k{background:var(--ink);color:var(--paper)}
+
+/* ---- steps / flow ---- */
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0 18px;counter-reset:step}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;position:relative;min-width:0;counter-increment:step}
+.step::before{content:counter(step,decimal-leading-zero);font-family:var(--num);font-weight:700;font-size:12px;letter-spacing:.08em;
+  color:var(--yellow-ink);background:var(--yellow);border-radius:999px;padding:1px 8px;display:inline-block;margin-bottom:6px}
+.step b{display:block;font-family:var(--body);font-weight:700;font-size:14.5px;line-height:1.5}
+.step span{display:block;font-size:12.5px;color:var(--ink-2);line-height:1.65;margin-top:4px}
+.step .who{display:block;font-family:var(--num);font-size:11px;letter-spacing:.06em;color:var(--ink-3);margin-top:6px;text-transform:uppercase}
+
+/* ---- dl ---- */
+dl{display:grid;grid-template-columns:max-content 1fr;gap:6px 18px;font-size:14px;margin:8px 0 16px}
+dt{color:var(--ink-2);font-weight:500}dd{margin:0;min-width:0}
+@media (max-width:560px){dl{grid-template-columns:1fr}dt{margin-top:6px}}
+
+/* ---- swatches / spec (フォーマット仕様ページ用) ---- */
+.sw{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin:10px 0 18px}
+.chip{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--surface)}
+.chip .fill{height:60px;border-bottom:1px solid var(--line)}
+.chip .m{padding:8px 11px 10px}
+.chip .m b{display:block;font-size:12.5px;line-height:1.5}
+.chip .m span{display:block;font-family:var(--num);font-size:12px;color:var(--ink-3);letter-spacing:.03em}
+.chip .m i{display:block;font-style:normal;font-size:11.5px;color:var(--ink-2);margin-top:4px;line-height:1.55}
+.spm{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:0 0 18px;margin:0 0 12px;overflow-x:auto}
+.spm .lbl{font-family:var(--num);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);
+  padding:8px 18px;background:var(--sunk);border-bottom:1px solid var(--line);margin-bottom:14px}
+.spm .txt{padding:0 18px;white-space:nowrap;line-height:1.3}
+pre{background:var(--ink);color:var(--paper);border-radius:var(--r);padding:18px 20px;overflow-x:auto;font-family:var(--num);font-size:12.5px;line-height:1.7;margin:0 0 16px}
+:root[data-theme="dark"] pre{background:#0E0F11}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) pre{background:#0E0F11}}
+.chk{list-style:none;padding:0;margin:10px 0 0;columns:2;column-gap:34px;max-width:none}
+.chk li{break-inside:avoid;position:relative;padding-left:26px;margin-bottom:9px;font-size:13.5px;line-height:1.7}
+.chk li::before{content:"";position:absolute;left:0;top:7px;width:13px;height:13px;border:2px solid var(--line-2);border-radius:4px}
+@media (max-width:640px){.chk{columns:1}}
+.cmp{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin:10px 0 18px}
+.cmp>div{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;min-width:0}
+.cmp h4{margin:0 0 4px}
+.cmp p{font-size:13px;color:var(--ink-2);margin:0}
+figure{margin:18px 0 22px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px}
+figcaption{font-size:12.5px;color:var(--ink-3);margin-top:8px}
+svg{max-width:100%;height:auto;display:block}
+details{margin:8px 0}
+summary{cursor:pointer;font-weight:600;font-size:14px}
+footer.end{margin-top:64px;padding-top:18px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-3);line-height:1.8}
+@media print{.toc{display:none}.page{grid-template-columns:1fr}body{background:#fff}}
+@media (prefers-reduced-motion:no-preference){.toc a{transition:color .15s,border-color .15s}}
+
+.lane{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:14px 0 18px}
+.lane>div{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;min-width:0}
+.lane h4{margin:0 0 6px;font-family:var(--num);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.lane ul{margin:0;padding-left:1.2em;font-size:13.5px}
+.lane li{margin-bottom:3px}
+.q{font-size:13.5px;color:var(--ink-2);border-left:3px solid var(--yellow);padding:4px 0 4px 12px;margin:8px 0 12px;max-width:70ch}
+.q b{color:var(--ink);font-weight:500;display:block;font-size:12.5px;margin-top:2px}
+.bar{display:grid;grid-template-columns:minmax(120px,160px) 1fr max-content;gap:10px;align-items:center;font-size:13px;margin:4px 0}
+.bar .t{height:14px;border-radius:4px;background:var(--line);position:relative;overflow:hidden}
+.bar .t i{position:absolute;left:0;top:0;bottom:0;background:var(--yellow);border-radius:4px}
+.bar .t i.k{background:var(--ink)}
+.bar .n{font-family:var(--num);font-variant-numeric:tabular-nums;color:var(--ink-2)}
+</style>
+
+<div class="page">
+<nav class="toc" aria-label="目次">
+  <div class="t">Contents</div>
+  <a href="#s0"><b>00</b>要約</a>
+  <a href="#s1"><b>01</b>前提と登場人物</a>
+  <a href="#s2"><b>02</b>お金の構造</a>
+  <a href="#s3"><b>03</b>現行の制作フロー</a>
+  <a href="#s4"><b>04</b>実績から見える時間</a>
+  <a href="#s5"><b>05</b>時間がかかる場所</a>
+  <a href="#s6"><b>06</b>すでに動いている改善</a>
+  <a href="#s7"><b>07</b>12時間に近づける選択肢</a>
+  <a href="#s8"><b>08</b>打ち合わせで決めたいこと</a>
+  <a href="#ap"><b>付録</b>案件一覧・引用</a>
+</nav>
+
+<main>
+<header class="hd">
+  <div class="eyebrow">Comiru / コミサポ　サイト制作</div>
+  <h1>塾サイト制作の流れと<span class="mk">工数</span>の整理（叩き台）</h1>
+  <p class="lede">コミサポの塾サイト制作について、営業から納品までの流れ、1案件あたりの費用構造、実案件で時間がかかっている場所を整理したものです。佐久間さん・槻山さんとの打ち合わせ、ならびに岡部さん・井口さんとの分担の見直しに使う叩き台で、結論はまだ置いていません。</p>
+  <div class="meta"><span><b>作成</b> 株式会社カイカ 高嶌　2026年10月28日</span><span><b>出典</b> ポパー Slack（#サイト制作ディレクション、#bitstar_制作関連、#comirusupport_コミサポβ、各スレッド）2026年5月〜10月28日</span><span><b>状態</b> 叩き台。稼働時間は推定を含む</span></div>
+</header>
+
+<section id="s0">
+<div class="summary">
+<div class="lbl">要約</div>
+<ol>
+<li><strong>目標と実態に2倍以上の差がある。</strong>佐久間さんの希望はカイカ稼働で1案件10〜12時間（時給2,500円で25,000〜30,000円）。実感値は20〜30時間で、初期費用98,000円（税抜）で賄える上限は約39時間。</li>
+<li><strong>時間は「作る」より「待つ・回す」に消えている。</strong>塾の原稿・写真待ち、ビットスターとの修正ラリー、ドメイン移管、契約条件の後決めが主因。構成案づくりそのものは1案件4〜6時間程度と見込める。</li>
+<li><strong>差分の約10時間は「ずれの調整」だと見ている。</strong>キックオフで方向を決めても、塾側で考えが変わる、言葉にしにくい希望が後から出る、もっと良くしたいという理想が積み上がる。加えてビットスターは塾と直接の接点を持たないため、塾長の人柄や教室の雰囲気が初稿に乗らず、そのずれを岡部さん・井口さんが素材の用意と往復で埋めている。</li>
+<li><strong>公開までの期間は2〜3.5か月。</strong>Manabill は2か月、アップ進学ゼミは3.5か月。期間が延びるほど催促・調整の時間が増える構造になっている。</li>
+<li><strong>改善はすでに始まっている。</strong>キックオフでのスケジュール固定、構成案の一本化、仮サイト先行の二段構え、初稿の標準仕様、GA 設置のポパー側移管。ただし「どこまでを標準スコープにするか」が決まっていない。</li>
+<li><strong>決めるべきは線引き。</strong>標準スコープ（ページ数・修正回数・原稿の責任）を決め、超過分を時間課金かオプションに切り替えれば、12時間は現実的な目標になる。佐久間さんも10月28日に「今の金額でできるのはここまで、のプランを決めたい」と発言している。</li>
+</ol>
+</div>
+</section>
+
+<h2 id="s1"><span class="no">01</span>前提と登場人物</h2>
+<dl>
+<dt>対象</dt><dd>コミサポのうち「塾の Web サイト制作」。IG 運用・MEO・事務代行は参考として触れるにとどめる。</dd>
+<dt>期間</dt><dd>2026年5月28日（#サイト制作ディレクション 開設）〜10月28日。</dd>
+<dt>出典</dt><dd>ポパー Slack の3チャンネルと関連スレッド。案件管理スプレッドシート（SF 自動転記）は閲覧権限がなく未参照。</dd>
+<dt>限界</dt><dd>カイカ側の案件別稼働時間は Slack に記録がない。本資料の時間は、工程ごとの推定と岡部さんの月次申告（9月は時給対応分で約38時間）から置いた目安。</dd>
+<dt>表記</dt><dd>株式会社ポパー＝ポパー、Comiru＝コミル、株式会社カイカ＝カイカ、ビットスター（BitStar）＝ビットスター。槻山さんは Slack 表記の「槻山美沙子」。</dd>
+</dl>
+<h3>役割分担（2026年5月28日に佐久間さんが置いた原案と、現在の実態）</h3>
+<div class="lane">
+<div><h4>POPER</h4><ul><li>営業・商談：佐久間さん（10月下旬から下田さんへ移管中）</li><li>ディレクション統括・コピー・ビットスター交渉：槻山さん</li><li>契約書・請求・顧客 Slack 開設：根本さん、法務（佐藤さん・山﨑さん）</li><li>ビットスターへの個別発注・支払い：石橋さん</li><li>アポ調整・架電：湯田さん、田中さん</li></ul></div>
+<div><h4>CAICA</h4><ul><li>キックオフ同席・ヒアリング：岡部さん、井口さん</li><li>構成案（Google ドキュメント／スライド）：岡部さん</li><li>初稿〜納品の塾・ビットスター往復、修正指示：井口さん（岡部さんと案件ごとに分担）</li><li>納品後チェック、事例記事：岡部さん</li><li>稼働は時給制で月次申告</li></ul></div>
+<div><h4>BITSTAR</h4><ul><li>AI 生成＋Vercel での制作・修正・公開：高山さん（窓口・デザイン）、今地さん（制作）</li><li>DNS 設定値の案内、IG 自動投稿</li><li>契約・OEM：上田さん、冨松さん</li><li>初稿5営業日、修正戻し2営業日（10月26日に槻山さんが依頼、回答未確認）</li></ul></div>
+</div>
+<p class="note">井口さんは8月20日に「岡部さんに構成から初稿まで、初稿から納品までを井口で」という分担を提案しています。原案の「構成：岡部／進行・修正：井口」と同じ方向で、実態もこれに近い形で動いています。</p>
+
+<h2 id="s2"><span class="no">02</span>お金の構造</h2>
+<p>顧客からの入金、ビットスターへの支払い、カイカの稼働費を1案件で並べると次のようになります。金額は税抜。顧客向けの標準価格は Slack 上の複数の発言で「初期98,000円＋月額9,800円」と確認できます。</p>
+<div class="kpis">
+<div class="kpi"><div class="l">顧客 初期費用（標準）</div><div class="v">98,000<small>円</small></div><div class="s">値引き例 49,000 / 29,000 / 0円</div></div>
+<div class="kpi"><div class="l">顧客 月額（2年契約）</div><div class="v">9,800<small>円</small></div><div class="s">サーバー・ドメイン・保守込み</div></div>
+<div class="kpi"><div class="l">ビットスター 月額</div><div class="v">6,800<small>円</small></div><div class="s">プレミアプラン・初期0円</div></div>
+<div class="kpi"><div class="l">カイカ 時給</div><div class="v">2,500<small>円</small></div><div class="s">岡部さん・井口さん</div></div>
+<div class="kpi hl"><div class="l">初期費用で賄える上限</div><div class="v">39<small>h</small></div><div class="s">98,000 ÷ 2,500</div></div>
+<div class="kpi"><div class="l">佐久間さんの目標</div><div class="v">10<small>〜12 h</small></div><div class="s">25,000〜30,000円</div></div>
+</div>
+<h3>カイカ稼働時間ごとの初期費用の残り（目安）</h3>
+<div class="wrap"><table>
+<thead><tr><th>カイカ稼働</th><th class="n">カイカ費用</th><th class="n">初期費用の残り</th><th>月額側の2年粗利（参考）</th><th>評価</th></tr></thead>
+<tbody>
+<tr><td class="k">10 h</td><td class="n">25,000</td><td class="n">73,000</td><td rowspan="5" style="vertical-align:middle">(9,800 − 6,800) × 24か月 ＝ <span style="font-family:var(--num);font-weight:600">72,000</span>円<br><span class="small">初期費用の値引き分は、月額粗利で2年かけて回収する形になる</span></td><td>目標。現体制では未達</td></tr>
+<tr><td class="k">12 h</td><td class="n">30,000</td><td class="n">68,000</td><td>目標上限</td></tr>
+<tr><td class="k">20 h</td><td class="n">50,000</td><td class="n">48,000</td><td>実感値の下限</td></tr>
+<tr><td class="k">30 h</td><td class="n">75,000</td><td class="n">23,000</td><td>実感値の上限。半額案件では赤字</td></tr>
+<tr class="sum"><td class="k">39 h</td><td class="n">97,500</td><td class="n">500</td><td>初期費用を使い切る</td></tr>
+</tbody>
+</table></div>
+<p class="note">初期費用の値引き（49,000円・29,000円・0円）が複数あるため、実際の採算は案件ごとに大きく違います。ECC ベストワン川口校は初期0円・月額9,800円・2年後買取49,000円の設計で、カイカ稼働は丸ごと月額側で回収することになります。ビットスターの支払条件は「公開日の翌月1日起算」のため、公開が遅れるほどポパー側の月額収入も遅れます。</p>
+<h3>価格に関する佐久間さんの直近の発言</h3>
+<div class="q">今のやり方だと結構制作工数かかるよね という課題があると思うので 例えば今の金額の場合できるのはここまで ここまでやりたければいくら あたりのプランを決めておこうかなと思っております。<b>佐久間さん 2026年10月28日 10:29 #comirusupport_コミサポβ（槻山さん宛）</b></div>
+<div class="q">月額9,800円はサーバー、ドメイン込（3,000円くらい）それに運用保守だから実はそこまで高くないはず<b>佐久間さん 2026年10月28日（下田さん宛）</b></div>
+<p class="note">「1案件10〜12時間」という発言そのものは Slack 上では見つかりませんでした。口頭での共有と思われるため、本資料では高嶌の聞き取りとして扱っています。</p>
+
+<h2 id="s3"><span class="no">03</span>現行の制作フロー</h2>
+<p>Slack 上の実案件から整理した、受注から納品後までの11工程です。担当は実態ベースで、ツールは工程ごとに違うものが使われています。</p>
+<div class="flow">
+<div class="step"><b>営業・商談</b><span>調整アポで60分枠。架電とセミナー経由。</span><em class="who">POPER 佐久間・下田</em></div>
+<div class="step"><b>受注・契約書</b><span>#コミサポβ に受注投稿。根本さんが法務へ依頼、クラウドサイン。</span><em class="who">POPER 根本・法務</em></div>
+<div class="step"><b>キックオフ 60分</b><span>佐久間さんが引き継ぎ、槻山さんが契約確認、岡部さん・井口さんがヒアリング。</span><em class="who">POPER + CAICA</em></div>
+<div class="step"><b>ヒアリング整理</b><span>入力フォーマット（スプレッドシート）へ。コピーは槻山さん案、佐久間さん確認。</span><em class="who">CAICA + POPER</em></div>
+<div class="step"><b>構成案</b><span>Google ドキュメント／スライドで全ページ分。参考サイトとデザイン指示を同梱。</span><em class="who">CAICA 岡部</em></div>
+<div class="step"><b>ビットスター発注</b><span>#bitstar_制作関連 に案件スレッド。石橋さんが個別発注ワークフロー。</span><em class="who">POPER + CAICA</em></div>
+<div class="step"><b>初稿（5営業日）</b><span>Vercel のテスト URL で提出。構成案の反映をもって初稿扱い。</span><em class="who">BITSTAR</em></div>
+<div class="step"><b>塾確認・修正</b><span>修正指示をドキュメントにまとめてビットスターへ。プラン上限は修正6回。</span><em class="who">CAICA 井口 ⇄ 塾 ⇄ BITSTAR</em></div>
+<div class="step"><b>公開・納品</b><span>フォーム動作、ファビコン、インデックス確認。納品後チェック。</span><em class="who">CAICA + BITSTAR</em></div>
+<div class="step"><b>ドメイン・メール</b><span>DNS 切替、ドメイン移管、旧サイト停止。塾側作業が多い。</span><em class="who">塾 + BITSTAR + CAICA</em></div>
+<div class="step"><b>納品後</b><span>GTM / GA / サチコ設置（ポパー側で開始予定）、事例記事、月額課金開始。</span><em class="who">POPER + CAICA</em></div>
+</div>
+<h3>ツールの分散</h3>
+<p>ヒアリングフォーム（ビットスター製）、入力フォーマット（スプレッドシート）、構成案（ドキュメント／スライド）、修正指示（ドキュメント／スライド／スプレッドシート青字／Dropbox）、顧客別 Slack、#bitstar_制作関連 のスレッド、と情報の置き場が工程ごとに違います。9月4日にビットスターの今地さんから「情報源が分散しており、漏れが発生しやすく」と指摘があり、以後は構成案を正とする運用に寄せています。</p>
+
+<h2 id="s4"><span class="no">04</span>実績から見える時間</h2>
+<p>案件別の稼働時間は記録がないため、まず「キックオフから公開までの期間」を並べます。期間が長い案件ほど、催促・再確認・再修正の時間が積み上がっています。</p>
+<h3>キックオフから公開までの日数（判明分）</h3>
+<div class="bar"><span>Manabill</span><div class="t"><i style="width:36%"></i></div><span class="n">60日（6/29→8/28）</span></div>
+<div class="bar"><span>スタディパワー</span><div class="t"><i style="width:30%"></i></div><span class="n">49日（7/13→8/31）</span></div>
+<div class="bar"><span>スタディメイト</span><div class="t"><i style="width:38%"></i></div><span class="n">63日（8/12→10/14）</span></div>
+<div class="bar"><span>アップ進学ゼミ</span><div class="t"><i style="width:64%"></i></div><span class="n">107日（6/24→10/9）</span></div>
+<div class="bar"><span>ユメカナ</span><div class="t"><i class="k" style="width:72%"></i></div><span class="n">119日以上（7/1→未公開）</span></div>
+<div class="bar"><span>飛翔</span><div class="t"><i class="k" style="width:54%"></i></div><span class="n">89日以上（7/31→未公開）</span></div>
+<div class="bar"><span>ボストン</span><div class="t"><i class="k" style="width:60%"></i></div><span class="n">107日以上（7/13→未公開）</span></div>
+<div class="bar"><span>ラリュミエール</span><div class="t"><i class="k" style="width:41%"></i></div><span class="n">68日以上（8/21→9/8で停滞）</span></div>
+<p class="note">黒は10月28日時点で未公開。ビットスターの今地さんによると「9月中に正式公開した物は無し」。10月に公開できたのはアップ進学ゼミとスタディメイトの2件。</p>
+<h3>1案件の稼働内訳（推定）</h3>
+<p>工程ごとに、順調に進んだ場合と、実案件で起きている往復を含めた場合を置きました。「待ち」の時間は含めず、手を動かした時間だけです。</p>
+<div class="wrap"><table>
+<thead><tr><th>工程</th><th class="n">順調な場合</th><th class="n">実案件に近い場合</th><th>時間が増える理由（実例）</th></tr></thead>
+<tbody>
+<tr><td class="k">キックオフ同席・議事</td><td class="n">1.5</td><td class="n">2.0</td><td>2名同席、日程再調整</td></tr>
+<tr><td class="k">ヒアリング整理・コピー確認</td><td class="n">1.5</td><td class="n">3.0</td><td>塾の原稿が揃わず再ヒアリング（アップ進学ゼミ）</td></tr>
+<tr><td class="k">構成案作成</td><td class="n">4.0</td><td class="n">6.0</td><td>6ページ構成、参考サイト調査、既存サイト再現（V-follows）</td></tr>
+<tr><td class="k">ビットスター発注・初稿確認</td><td class="n">1.0</td><td class="n">2.0</td><td>ヒアリング内容の反映漏れを洗い出す（ラリュミエール 9/2）</td></tr>
+<tr><td class="k">塾確認・修正指示（1往復あたり1〜1.5h）</td><td class="n">3.0</td><td class="n">8.0</td><td>2往復で済むか、6往復になるか。アップ進学ゼミは修正複数回で「修正回数×2」</td></tr>
+<tr><td class="k">塾への催促・個別 MTG</td><td class="n">0.5</td><td class="n">3.0</td><td>初稿後に止まる案件（まなサポ、ラリュミエール、ボストン）</td></tr>
+<tr><td class="k">公開・ドメイン・メール</td><td class="n">1.0</td><td class="n">3.0</td><td>Wix の DNS 書換、A レコード重複、ドメイン移管（V-follows）</td></tr>
+<tr><td class="k">納品後チェック・GA・事例</td><td class="n">1.0</td><td class="n">2.0</td><td>事例記事は別枠。GA 設置はポパー側へ移行中</td></tr>
+<tr class="sum"><td>合計</td><td class="n">13.5</td><td class="n">29.0</td><td>順調でも12時間をわずかに超える</td></tr>
+</tbody>
+</table></div>
+<p class="note">推定値です。岡部さんの9月申告は時給対応分で約38時間（記事2本と CMS 登録4本は別）で、同月に動いていた案件は4〜5件。1案件あたり月8〜10時間、公開まで2〜3か月なら20〜30時間という実感値と矛盾しません。</p>
+
+<h2 id="s5"><span class="no">05</span>時間がかかる場所</h2>
+<p>Slack 上で繰り返し出ている詰まりを7つに分けました。上の3つが時間の大半を占めています。</p>
+<h3>差分約10時間の内訳についての仮説（高嶌）</h3>
+<p>佐久間さんの見込み10〜12時間と、実感値20時間前後との差は、作業量の見積もり違いというより、次の2つの「ずれの調整」に使われていると考えています。</p>
+<div class="cmp">
+<div><h4>① 塾側で方向が動く</h4><p>キックオフでカイカが要件を整理し方向付けをしても、その後に塾の考えが変わる。言語化が得意でない先生は「なんとなく違う」としか言えず、理想が高い先生は「もっと良くしたい」が止まらない。初稿後の修正が2往復で終わらず、6往復になるのはこのため。</p></div>
+<div><h4>② ビットスターが塾と直接の接点を持たない</h4><p>ビットスターに届くのはヒアリングフォームと構成案の文字情報だけで、塾長の人柄や教室の空気を見ていない。初稿で「雰囲気が違う」ずれが出ると、塾と直接会っている岡部さん・井口さんが参考サイトや写真を集め直し、言葉で伝え直す往復を引き受けることになる。</p></div>
+</div>
+<p class="note">この仮説が正しければ、①は「標準スコープと期限」で、②は「ビットスターをキックオフに同席させる」ことで縮められます。選択肢は 07 に置いています。実案件では、ラリュミエールの初稿（9月）で支給テキストが別の文章に差し替わっていた件や、まなサポで「かわいいサイト」の希望が後から出た件が②の例です。</p>
+<div class="cards">
+<div class="card"><h4><span class="tag y">最大</span>塾の原稿・写真待ちと、初稿後の停滞</h4><p>夏期講習でテキスト推敲が止まる（アップ進学ゼミ）、写真がすべて仮のまま初稿（ラリュミエール、未確定13項目）、初稿を出しても返事がない（9月29日時点でまなサポ・ラリュミエール・ボストン）。待ちの間も催促とリマインドの時間が発生し、再開時に再確認が必要になる。</p></div>
+<div class="card"><h4><span class="tag y">大</span>ビットスターとの修正ラリー</h4><p>槻山さん8月24日「まじで修正のラリーが多い」。井口さん9月7日「修正の量やばw ヒアリングフォームあれだけ言っても見てない感じ」。岡部さん9月2日は、支給した代表メッセージと別の文章が入っていた件を指摘。一方ビットスター側は「情報源が分散」と指摘しており、原因は双方にある。</p></div>
+<div class="card"><h4><span class="tag y">大</span>ドメイン・メール・旧サイトの後始末</h4><p>Wix の DNS 切替を塾が実施して A レコードが残り表示されない（アップ進学ゼミ）。旧制作会社の解約でメールまで止まり、Xserver 契約とドメイン移管を先生が実施（V-follows）。旧サイトを消せず屋号検索で新サイトが出ない（スタディメイト）。ビットスターは「アカウント作成・移管申請・AuthCode のお預かりはお引き受けしていない」。</p></div>
+<div class="card"><h4><span class="tag y">中</span>デザインの認識ずれとプラン制約</h4><p>参考サイトがないと初稿でずれる。写真アニメーションはプラン外、既存サイトの完全再現は不可、ペライチ系の保守は高額化。10月21日に槻山さんが初稿の標準仕様4点（モーションなし、余白、SP 改行、地図ピン）を事前合意に持ち込んだ。</p></div>
+<div class="card"><h4><span class="tag y">中</span>契約条件の後決め</h4><p>保守メニュー未定で契約が止まる（OKINAWA LAB）、個人契約と法人契約の不整合（ボストン）、データ引継ぎ条項が実態と合わず契約書修正（宇宙叶Q）、ドメイン移管の定義がビットスター契約と顧客契約でずれる（10月27日）。制作側で動いていても請求が始まらない。</p></div>
+<div class="card"><h4><span class="tag y">中</span>仕様の後出し</h4><p>納品後に「やはり既存ドメインにしたい」（アップ進学ゼミ）、初稿後にロゴと表記の変更（V-follows）、ブログ移行40,000円が営業時に漏れる（スタディパワー、槻山さん「営業時にやるの漏れそう」）。</p></div>
+<div class="card risk"><h4><span class="tag r">リスク</span>調整工数が増え続けている</h4><p>槻山さん10月28日「納品早めるのに MTG 増えて、調整工数が増えてきました」。案件数は10月だけで宇宙叶Q、STERA（2サイト）、ECC 川口、ゼロプラス、早稲田トップスクール、蛍雪ゼミナールと増えており、1案件あたりの時間を下げないと体制が先に限界を迎える。</p></div>
+</div>
+
+<h2 id="s6"><span class="no">06</span>すでに動いている改善</h2>
+<p>この5か月で提案・開始された対策です。いずれも「時間を減らす」方向に効くものなので、打ち合わせでは「標準にするか」を確認するだけで済みます。</p>
+<div class="wrap"><table>
+<thead><tr><th>対策</th><th>提案者・時期</th><th>効く場所</th><th>状態</th></tr></thead>
+<tbody>
+<tr><td class="k">キックオフでスケジュール固定・定例 MTG 化</td><td>槻山さん 10/20、10/26</td><td>塾の停滞、催促</td><td>V-follows で実施。他案件にも標準化予定</td></tr>
+<tr><td class="k">構成案（スライド／ドキュメント）を正本に一本化</td><td>ビットスターと合意 9/4、槻山さん 9/8</td><td>修正ラリー、反映漏れ</td><td>運用中。Drive フォルダをワンセット化</td></tr>
+<tr><td class="k">仮サイト先行の二段構え</td><td>佐久間さん 10/8、宇宙叶Q 10/26</td><td>原稿待ち、公開遅れ</td><td>宇宙叶Q で初適用。仮サイト中は修正なしが条件</td></tr>
+<tr><td class="k">初稿の標準仕様を事前合意</td><td>槻山さん 10/21</td><td>デザインずれ</td><td>ビットスターへ依頼済み</td></tr>
+<tr><td class="k">修正戻し2営業日の取り決め</td><td>槻山さん 10/26</td><td>ビットスター待ち</td><td>回答未確認</td></tr>
+<tr><td class="k">GTM / GA / サチコをポパー側で設置</td><td>佐久間さん・槻山さん 10/20</td><td>納品後、アカウント混乱</td><td>ポパー計測用アカウントを発行して次案件から</td></tr>
+<tr><td class="k">案件管理の SF 自動転記、契約状況の項目化</td><td>佐久間さん 10/26、10/28</td><td>状況確認の往復</td><td>スプレッドシート運用中</td></tr>
+<tr><td class="k">価格とスコープの線引き（プラン化）</td><td>佐久間さん 10/28</td><td>仕様後出し、採算</td><td>年内に意見を集める段階</td></tr>
+<tr><td class="k">AI 内製テスト</td><td>菊池さん・佐久間さん 8/24</td><td>ビットスター往復</td><td>テストのみ。「制作面ほぼ同等なら内製」</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="s7"><span class="no">07</span>12時間に近づける選択肢</h2>
+<p>04 の内訳を見ると、順調に進んでも13.5時間で、12時間に収めるには「工程を減らす」か「カイカが持つ工程を減らす」か「ずれを初回で潰す」必要があります。案を5つ並べます。組み合わせを前提にしています。高嶌としては、まず E（ビットスターのキックオフ同席）と A（標準スコープ）の組み合わせを提案したいと考えています。</p>
+<div class="wrap"><table>
+<thead><tr><th>案</th><th>内容</th><th class="n">カイカ稼働の目安</th><th>利点</th><th>懸念</th></tr></thead>
+<tbody>
+<tr><td class="k">A 標準スコープを決める</td><td>初期費用の範囲を「3〜5ページ、修正2往復、原稿と写真は塾が期限内に提出、既存ドメインの DNS 切替まで」と明文化。超過は時間課金かオプション。</td><td class="n">12〜15 h</td><td>佐久間さんの「線引き」方針と一致。営業時の説明にも使える</td><td>値引き案件とスコープの整合。塾に期限を守らせる仕組みが要る</td></tr>
+<tr><td class="k">B 工程の持ち分を変える</td><td>カイカは「キックオフ、構成案、初稿確認、修正指示2回、納品チェック」に限定。塾への催促、契約・請求、ドメイン移管の案内はポパー側（下田さん・根本さん）に。</td><td class="n">10〜12 h</td><td>目標に届く。カイカの時間が「作る」に集中する</td><td>ポパー側の負荷が増える。槻山さんの調整工数がすでに増えている</td></tr>
+<tr><td class="k">C 構成案をテンプレート化</td><td>塾サイトの定型構成（TOP、コース、料金、講師、アクセス、問い合わせ、ブログ）とヒアリング項目を1枚に固定。構成案づくりを4時間から2時間に。</td><td class="n">−2 h</td><td>ビットスター側の反映漏れも減る。佐久間さんの「実案件を汎用化してテンプレ」方針と一致</td><td>塾ごとの個性が出しにくい。AI 感への懸念と両立が必要</td></tr>
+<tr><td class="k">E ビットスターをキックオフに同席させる</td><td>高山さん（または制作担当）がキックオフ60分に参加し、塾長と直接話す。雰囲気・参考サイト・写真の方針をその場で合意し、初稿から「空気」が乗った状態にする。</td><td class="n">−3〜5 h</td><td>ずれの発生源を初回で潰せる。カイカの「伝え直し」往復が減る。塾にとっても制作者の顔が見える</td><td>ビットスター側の工数と費用（プレミアプラン月額6,800円の範囲外になる可能性）。高山さん1人に集中しているため日程が詰まる。定例（水17時）が形骸化している現状で、同席の約束が守られるか</td></tr>
+<tr><td class="k">D 時給ではなく案件固定フィーにする</td><td>標準スコープ内は1案件30,000円固定、超過は2,500円/h で別請求。</td><td class="n">—</td><td>ポパーの採算が読める。カイカは超過分を可視化できる</td><td>スコープ外の判断を誰がするか。塾起因の遅延のコスト負担</td></tr>
+</tbody>
+</table></div>
+<h3>標準スコープの叩き台（案 A の中身）</h3>
+<div class="cmp">
+<div><h4>含むもの</h4><p>キックオフ60分、ヒアリング整理、構成案（5ページまで）、初稿確認、修正2往復、公開前チェック、既存ドメインの DNS 切替の案内。</p></div>
+<div><h4>塾の責任</h4><p>原稿・写真・ロゴをキックオフから2週間以内に提出。確認の返事は5営業日以内。期限を過ぎた場合は仮サイトで公開し、以後は月3回の保守枠で修正。</p></div>
+<div><h4>オプション（別料金）</h4><p>修正3往復目以降、ページ追加、ブログ移行（10,000〜40,000円）、ドメイン移管の代行（15,000円）、ロゴ制作（20,000円）、画像・イラスト6点目以降。</p></div>
+</div>
+<p class="note">この内容は、10月26日以降に契約書へ入り始めた条項（サーバー移管手数料15,000円、データ引継ぎ10,000円、画像・イラスト各5点上限）と、ビットスターのプラン上限（修正6回）を顧客向けに言い換えたものです。新しい条件を増やすというより、すでにある条件を営業・キックオフで先に言う、という整理です。</p>
+
+<h2 id="s8"><span class="no">08</span>打ち合わせで決めたいこと</h2>
+<h3>佐久間さん・槻山さんと</h3>
+<ol>
+<li><strong>目標の置き方を揃える。</strong>「10〜12時間」は標準スコープ内の稼働なのか、塾起因の遅延も含めた総稼働なのか。前者なら案 A＋C で届く見込み、後者なら案 B が必要。決める人：佐久間さん、期限：年内（佐久間さんの「年内に意見がほしい」に合わせる）。</li>
+<li><strong>標準スコープの文言。</strong>07 の叩き台をもとに、ページ数・修正回数・塾の提出期限・オプション価格を1枚にする。営業資料と契約書の両方に入れる。決める人：佐久間さん・槻山さん、素材はカイカが用意。</li>
+<li><strong>催促と契約まわりの持ち分。</strong>初稿後の塾への催促、契約書の未返信フォロー、ドメイン移管の案内を誰が持つか。ポパー側に戻すなら、下田さん・根本さんの工数を確認する。</li>
+<li><strong>値引き案件の扱い。</strong>初期49,000円・29,000円・0円の案件でも同じスコープか、スコープを縮めるか。カイカ稼働の上限を初期費用の7割（98,000円なら約27時間）などで置くか。</li>
+<li><strong>仮サイト先行を標準にするか。</strong>宇宙叶Q の結果を見てからか、次案件から全件か。ビットスターの条件「仮サイト中は修正なし」を塾にどう説明するか。</li>
+<li><strong>ビットスターのキックオフ同席。</strong>次の2〜3案件で高山さんに同席してもらい、初稿後の修正往復が減るかを見る。費用が発生するなら、初期費用のうちいくらまでなら出せるか（カイカ稼働が5時間減れば12,500円の余地）。決める人：佐久間さん、ビットスターへの打診：槻山さん。</li>
+<li><strong>ビットスターへの依頼事項の確定。</strong>修正戻し2営業日、初稿の標準仕様、画像・イラスト超過単価、解約時のサーバー代とドメイン手数料。槻山さんが10月に投げている質問の回答期限を決める。</li>
+</ol>
+<h3>岡部さん・井口さんと</h3>
+<ol>
+<li><strong>案件別の稼働記録を始める。</strong>工程別（04 の8区分）で、1案件ごとに時間を残す。11月から2案件で試し、12月の打ち合わせで推定値を実測に置き換える。</li>
+<li><strong>構成案テンプレートと、ヒアリング項目の固定。</strong>岡部さんの直近の構成案（STERA、幸彩、西沢）から共通部分を抜き出す。</li>
+<li><strong>修正指示の書式を1つにする。</strong>ドキュメント・スライド・スプレッドシート・Dropbox に散っている形式を、ビットスターと合意した1形式に寄せる。</li>
+<li><strong>スコープ外の判断を誰がいつ言うか。</strong>修正3往復目、ページ追加、仕様変更が出た時点で、カイカから槻山さんに「オプション扱い」を提案する流れにするか。</li>
+</ol>
+
+<h2 id="ap"><span class="no">付録</span>案件一覧と主な引用</h2>
+<details><summary>案件一覧（2026年5月〜10月、Slack で判明した範囲）を開く</summary>
+<div class="wrap"><table>
+<thead><tr><th>塾</th><th>担当</th><th>キックオフ</th><th>公開・状態</th><th>初期費用</th><th>メモ</th></tr></thead>
+<tbody>
+<tr><td>読解アルゴ塾（桜進学会）</td><td>佐久間・槻山</td><td>5月</td><td>公開済、9月から月額</td><td class="n">—</td><td>第1号案件</td></tr>
+<tr><td>YOU-YOU スクール</td><td>佐久間</td><td>5月</td><td>公開済</td><td class="n">—</td><td>イラスト10種をプレミアム内で</td></tr>
+<tr><td>学習塾 MINORIA</td><td>槻山</td><td>6月</td><td>9/1 公開</td><td class="n">—</td><td>英検会場のため納期固定。ロゴ20,000円</td></tr>
+<tr><td>Manabill（高松商事）</td><td>岡部</td><td>6/29</td><td>8/28 公開</td><td class="n">98,000</td><td>事例記事あり</td></tr>
+<tr><td>スタディパワー</td><td>槻山</td><td>7/13</td><td>8/31 公開</td><td class="n">98,000</td><td>ブログ移行40,000円の扱い</td></tr>
+<tr><td>アップ進学ゼミ</td><td>井口</td><td>6/24</td><td>10/9 初納品</td><td class="n">—</td><td>夏期講習で原稿遅延、DNS 切替トラブル</td></tr>
+<tr><td>ユメカナ（ミライ塾）</td><td>井口</td><td>7/1</td><td>未公開（修正中）</td><td class="n">98,000</td><td>AuthCode 期限1か月</td></tr>
+<tr><td>飛翔（鳥取）</td><td>井口</td><td>7/31</td><td>未公開</td><td class="n">—</td><td>9月に修正多数、GA アカウント混乱</td></tr>
+<tr><td>学習塾 Roots from BOSTON</td><td>井口</td><td>7/13</td><td>未公開（停滞）</td><td class="n">118,000→49,000</td><td>個人契約と法人契約の不整合</td></tr>
+<tr><td>スタディメイト</td><td>岡部</td><td>8/12</td><td>10/14 納品</td><td class="n">—</td><td>vercel.app のまま。旧サイト削除不可</td></tr>
+<tr><td>ラリュミエール高等学院</td><td>岡部</td><td>8/21</td><td>9/8 で停滞</td><td class="n">49,000</td><td>初稿で未確定13項目</td></tr>
+<tr><td>まなサポ</td><td>岡部</td><td>8/13</td><td>停滞</td><td class="n">—</td><td>初稿後に返事なし</td></tr>
+<tr><td>かしわや学習会</td><td>井口</td><td>9/8</td><td>受注前ロスト</td><td class="n">29,000</td><td>塾閉鎖の可能性</td></tr>
+<tr><td>幸彩学習塾</td><td>岡部</td><td>10/6</td><td>制作中</td><td class="n">—</td><td></td></tr>
+<tr><td>西沢学習塾</td><td>岡部</td><td>10/8</td><td>制作中（10/23 第一版）</td><td class="n">—</td><td>IG サンプルも依頼</td></tr>
+<tr><td>V-follows アツギトレリス校</td><td>岡部</td><td>10/8</td><td>修正3/6（11/15 切替目標）</td><td class="n">—</td><td>既存サイト再現、ドメイン移管を先生が実施</td></tr>
+<tr><td>宇宙叶Q（中桐まどか様）</td><td>岡部・井口</td><td>10/26</td><td>仮サイト12月、本サイト2027年3月</td><td class="n">49,000</td><td>二段構えの初適用</td></tr>
+<tr><td>STERA（2サイト）</td><td>岡部</td><td>10/21</td><td>構成案作成中</td><td class="n">68,000×2</td><td>FC 脱退サイトと新塾サイト</td></tr>
+<tr><td>ECC ベストワン川口校</td><td>下田・佐久間</td><td>—</td><td>10/22 受注</td><td class="n">0</td><td>月額9,800円、2年後買取49,000円</td></tr>
+<tr><td>ゼロプラス（京都）</td><td>下田</td><td>—</td><td>10/28 受注</td><td class="n">48,000</td><td>12月末完成希望</td></tr>
+<tr><td>早稲田トップスクール</td><td>佐久間</td><td>10/27</td><td>仮受注</td><td class="n">—</td><td>契約書未締結</td></tr>
+<tr><td>蛍雪ゼミナール</td><td>佐久間→井口</td><td>—</td><td>見積依頼</td><td class="n">—</td><td>2027年3月、企業サイト＋塾サイト</td></tr>
+</tbody>
+</table></div>
+<p class="note">初期費用は Slack に記載のあった案件のみ。「—」は未確認。ビットスターへの支払いはプレミアプラン月額6,800円（初期0円）が基本。</p>
+</details>
+<details><summary>主な引用（原文）を開く</summary>
+<div class="q">【役割イメージ】※案件数により様子見ながら 営業：佐久間（天神）／マーケコンサル：佐久間 or 槻山／構成：岡部／制作ディレクション：岡部／進行・修正：井口<b>佐久間さん 2026年5月28日 #サイト制作ディレクション</b></div>
+<div class="q">サイトのキックオフですが、現在岡部さんか私のどちらかで参加しているのですが、できる限り2人で参加し、岡部さんに構成→初稿まで、初稿から納品までを井口で担当させていただければと思いますが、よろしいでしょうか…？<b>井口さん 2026年8月20日</b></div>
+<div class="q">あとはまじで修正のラリーが多いので（すみません）現場としては速さと内容含めたやりやすさを気にしています<b>槻山さん 2026年8月24日</b></div>
+<div class="q">ヒアリングフォーム、ワイヤーフレーム、AI画像資料、現サイトと情報源が分散しており、漏れが発生しやすく<b>ビットスター 今地さん 2026年9月4日</b></div>
+<div class="q">今月は、時給対応分だけで、今日の稼働予定分を含めて38時間程度<b>岡部さん 2026年9月30日（記事2本・CMS 登録4本は別）</b></div>
+<div class="q">仮サイトを年内リリース…本サイトリリースまでを役務にしたい（仮サイトからの追加追加で課金はなるべくさけたい）<b>佐久間さん 2026年10月8日</b></div>
+<div class="q">この内容事前に伺ってましたでしょうか。何ができて何ができないのかわかっておりません<b>槻山さん 2026年10月19日（ドメイン移管の AuthCode をビットスターが預からない件）</b></div>
+<div class="q">納品早めるのにMTG増えて、調整工数が増えてきました<b>槻山さん 2026年10月28日</b></div>
+<div class="q">下田くん webサイト商談はもう任せます！！！あと運用はどこまで取るか相談しよう<b>佐久間さん 2026年10月28日</b></div>
+</details>
+
+<footer class="end">本資料は株式会社カイカが打ち合わせ用に作成した叩き台です。金額は税抜、時間は推定を含みます。稼働時間の実測は11月以降に案件別で記録し、12月に置き換える前提です。デザインフォーマット：コミル版（formats/comiru）。</footer>
+</main>
+</div>
