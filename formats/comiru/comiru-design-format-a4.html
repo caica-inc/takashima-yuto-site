@@ -1,475 +1,505 @@
 <!doctype html>
 <html lang="ja"><head><meta charset="utf-8">
-<title>コミル デザインフォーマット（A4横）</title>
+<title>コミル デザインフォーマット（A4横・ゆとり版）</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700&family=Noto+Sans+JP:wght@400;500;700&family=Barlow:wght@500;600;700&display=swap">
 <style>
-
-/* 関東建設マネジメント向け資料（2026-09-08 pptx）から実測した体裁 */
+/* ============================================================
+   コミル デザインフォーマット 第3版（ゆとり版）  A4横
+   カイカ版の資料に近い余白・文字量。1ページに言うことは1つ。
+   ============================================================ */
 :root{
-  --navy:#1E2761;      /* 見出し・箱内の文字・まとめ帯 */
-  --navy2:#3A4A8C;     /* 矢印・チップ */
-  --title:#2E4A9C;     /* タイトル帯の文字（tx2 75%） */
-  --box:#EEF2FA;       /* 箱の地 */
-  --box2:#DCE5F6;      /* 強調箱の地 */
-  --box3:#F7F9FD;      /* 薄い箱 */
-  --line:#C5CFE4;      /* 罫 */
-  --ink:#2B2B2B;       /* 本文 */
-  --mute:#5A5A5A;      /* 補足・注記 */
-  --red:#FF0000;       /* 案・注意 */
+  --ink:#231F20; --ink2:#55595E; --ink3:#8A8F96;
+  --paper:#FFFFFF; --box:#F4F4F1; --box2:#FFF6CF; --box3:#FAFAF8;
+  --line:#DADCD8; --line2:#E6E7E3;
+  --yellow:#FFD12A; --red:#C9463D;
   --jp:"Yu Gothic","YuGothic","游ゴシック","Noto Sans JP","Hiragino Sans",sans-serif;
   --en:"Arial","Barlow","Helvetica Neue",sans-serif;
+  --mL:24mm; --mR:24mm; --mT:16mm; --mB:14mm;
 }
 @page{size:A4 landscape;margin:0}
 *{box-sizing:border-box}
-html,body{margin:0;padding:0;background:#fff;color:var(--ink);font-family:var(--jp);font-size:11pt;line-height:1.55;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-.pg{width:297mm;height:210mm;padding:0 20mm 9mm;page-break-after:always;break-after:page;overflow:hidden;display:flex;flex-direction:column;position:relative;background:#fff}
+html,body{margin:0;padding:0;background:#fff;color:var(--ink);font-family:var(--jp);font-size:11.5pt;line-height:1.8;-webkit-print-color-adjust:exact;print-color-adjust:exact;font-feature-settings:"palt" 1}
+.pg{width:297mm;height:210mm;padding:var(--mT) var(--mR) var(--mB) var(--mL);page-break-after:always;break-after:page;overflow:hidden;display:flex;flex-direction:column;position:relative;background:#fff}
 .pg:last-child{page-break-after:auto;break-after:auto}
-/* タイトル帯：左上から 14.3mm 高、下に紺→薄青のグラデーション線 */
-.tb{height:14.3mm;display:flex;align-items:flex-end;justify-content:space-between;padding-bottom:2.2mm;margin:0 -2mm 6mm;position:relative}
-.tb::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1pt;background:var(--line)}
-.tb h1::after{content:"";display:block;height:2.2px;background:var(--navy2);margin-top:1.6mm;border-radius:2px}
-.tb .pn{align-self:flex-end}
-.tb h1{font-size:17pt;font-weight:700;color:var(--title);margin:0;letter-spacing:.02em;line-height:1.2}
-.tb .ref{font-size:12pt;font-weight:700;color:var(--mute);letter-spacing:.1em}
-.tb .pn{font-family:var(--en);font-size:9pt;color:var(--mute)}
-.body{flex:1;min-height:0;display:flex;flex-direction:column;gap:4mm}
+/* 上部：資料名（小さく）、右にページ番号 */
+.tb{display:flex;align-items:center;justify-content:space-between;font-size:9pt;color:var(--ink3);letter-spacing:.04em;margin-bottom:12mm}
+.tb .nm{display:flex;align-items:center;gap:2.2mm}
+.tb .nm::before{content:"";width:2.4mm;height:2.4mm;border-radius:50%;background:var(--yellow)}
+.tb .pn{font-family:var(--en)}
+.tb .ref{font-size:9pt;color:var(--ink3)}
+.body{flex:1;min-height:0;display:flex;flex-direction:column;gap:8mm}
 .body>*{flex-shrink:0}
-h2{font-size:18pt;font-weight:700;color:var(--navy);margin:0;line-height:1.25;display:flex;align-items:center;gap:3mm}
-h2 .hn{font-family:var(--en);font-size:9.5pt;font-weight:700;letter-spacing:.12em;background:var(--box2);color:var(--navy);border-radius:99px;padding:.6mm 3mm;flex:none}
-.lead{font-size:12pt;font-weight:400;color:var(--ink);margin:0;line-height:1.55;padding-left:.2em}
+h2{font-size:22pt;font-weight:700;margin:0;line-height:1.35;display:flex;align-items:center;gap:4mm;letter-spacing:.01em}
+h2 .hn{font-family:var(--en);font-size:9.5pt;font-weight:700;letter-spacing:.14em;background:var(--box2);color:var(--ink);border-radius:99px;padding:.8mm 3.4mm;flex:none}
+.lead{font-size:13pt;line-height:1.85;margin:0;max-width:40em;color:var(--ink)}
 p{margin:0}
-.num{display:flex;align-items:center;gap:3mm;margin:0}
-.num i{width:7mm;height:7mm;border-radius:50%;background:var(--navy);color:#fff;font-family:var(--en);font-weight:700;font-size:11.6pt;display:flex;align-items:center;justify-content:center;font-style:normal;flex:none}
-.num b{font-size:12pt;font-weight:700;color:var(--navy)}
-.note{font-size:8.8pt;color:var(--mute);line-height:1.5}
-.note.red{color:var(--red);font-weight:700}
-.cols{display:grid;gap:5mm;min-height:0}
-.c2{grid-template-columns:1fr 1fr}.c3{grid-template-columns:1fr 1fr 1fr}.c21{grid-template-columns:1.3fr 1fr}.c12{grid-template-columns:1fr 1.3fr}
+.prose{font-size:11.5pt;line-height:1.85;max-width:40em}
+.prose p+p{margin-top:4mm}
+.note{font-size:9pt;color:var(--ink2);line-height:1.65}
+.note.red{color:var(--red)}
+.num{display:flex;align-items:center;gap:3.2mm;margin:0}
+.num i{width:7mm;height:7mm;border-radius:50%;background:var(--yellow);color:var(--ink);font-family:var(--en);font-weight:700;font-size:10.5pt;display:flex;align-items:center;justify-content:center;font-style:normal;flex:none}
+.num b{font-size:12.5pt;font-weight:700}
+.cols{display:grid;gap:8mm;min-height:0}
+.c2{grid-template-columns:1fr 1fr}.c3{grid-template-columns:1fr 1fr 1fr}
 /* 箱 */
-.bx{background:var(--box);border:0;border-radius:3mm;padding:3mm 4mm;color:var(--navy);font-weight:700;font-size:11pt;line-height:1.4;min-width:0;position:relative}
+.bx{background:var(--box);border-radius:4mm;padding:6mm 7mm;font-size:11pt;font-weight:700;line-height:1.6;min-width:0;position:relative}
 .bx.hl{background:var(--box2)}
 .bx.lt{background:var(--box3)}
-.bx.ol{background:#fff;border:1pt solid var(--line)}
-.bx small{display:block;font-weight:400;font-size:9pt;color:var(--ink);margin-top:1mm;line-height:1.45}
-.bx .chip{position:absolute;left:3mm;top:-3.2mm;background:var(--navy2);color:#fff;font-size:8.5pt;font-weight:700;padding:.4mm 2.8mm;border-radius:99px;line-height:1.4;white-space:nowrap}
-.bx .chip.alt{background:#fff;color:var(--navy2);border:1pt solid var(--navy2)}
+.bx small{display:block;font-weight:400;font-size:10pt;color:var(--ink2);margin-top:2mm;line-height:1.7}
+.bx .chip{position:absolute;left:5mm;top:-3.4mm;background:var(--yellow);color:var(--ink);font-size:8.5pt;font-weight:700;padding:.5mm 3mm;border-radius:99px;line-height:1.5;white-space:nowrap;font-family:var(--en);letter-spacing:.06em}
 /* 矢印フロー */
-.flow{display:flex;align-items:stretch;gap:0;margin-top:4mm}
-.flow .bx{flex:1;display:flex;flex-direction:column;justify-content:center;text-align:center}
-.flow .ar{width:6mm;flex:none;display:flex;align-items:center;justify-content:center;color:var(--navy2)}
+.flow{display:flex;align-items:stretch;gap:0;margin-top:5mm}
+.flow .bx{flex:1;display:flex;flex-direction:column;justify-content:center;text-align:center;padding:6mm 4mm}
+.flow .ar{width:8mm;flex:none;display:flex;align-items:center;justify-content:center;color:var(--ink)}
 .flow .ar svg{width:6mm;height:4mm}
-/* 注記箱（罫のみ） */
-.nb{background:var(--box3);border:1pt solid var(--line);border-radius:3mm;padding:2.4mm 3.5mm;font-size:9.4pt;line-height:1.5;min-width:0}
-.nb b{display:block;color:var(--navy);font-weight:700}
-/* まとめ帯 */
-.sum{background:var(--navy);color:#fff;font-weight:700;font-size:11pt;padding:2.2mm 5mm;line-height:1.4;margin-top:auto;border-radius:99px}
-.sum span{font-weight:400;opacity:.85;margin-right:2mm}
+/* 注記箱 */
+.nb{background:var(--box3);border:1pt solid var(--line);border-radius:4mm;padding:5mm 6mm;font-size:10.5pt;line-height:1.7;min-width:0}
+.nb b{display:block;font-weight:700;margin-bottom:1mm}
+/* ひとこと */
+.sum{margin-top:auto;background:var(--yellow);color:var(--ink);border-radius:99px;padding:3.2mm 7mm;font-size:11.5pt;font-weight:700;line-height:1.5}
+.sum span{font-weight:400;opacity:.7;margin-right:2.5mm}
 /* 表 */
-table{border-collapse:collapse;width:100%;font-size:9.9pt;line-height:1.45}
-th,td{padding:1.8mm 2.5mm;border:0;border-bottom:1pt solid var(--line);text-align:left;vertical-align:top}
-th{background:var(--box);color:var(--navy);font-weight:700;white-space:nowrap;border-radius:0}
+table{border-collapse:collapse;width:100%;font-size:10.5pt;line-height:1.6}
+th,td{padding:3mm 4mm;border:0;border-bottom:1pt solid var(--line);text-align:left;vertical-align:top}
+th{background:var(--box);font-weight:700;white-space:nowrap}
 td.n,th.n{text-align:right;white-space:nowrap;font-family:var(--en)}
-td.k{font-weight:700;color:var(--navy);white-space:nowrap}
-td.c{text-align:center;font-family:var(--en);font-weight:700;white-space:nowrap;font-size:8.6pt}
-td.c.R{background:var(--box2);color:var(--navy)}
-tr.t td{font-weight:700;background:var(--box2);color:var(--navy)}
-table.s{font-size:8.8pt}table.s th,table.s td{padding:1.2mm 2mm}
-table.xs{font-size:8.4pt}table.xs th,table.xs td{padding:1mm 1.8mm}
-/* 数値 */
-.kp{display:grid;grid-template-columns:repeat(6,1fr);gap:4mm}
-.kp .bx{text-align:left;padding:2.5mm 3.5mm}
-.kp .v{font-family:var(--en);font-size:19pt;font-weight:600;line-height:1.1;margin:.5mm 0}
-.kp .v small{display:inline;font-family:var(--jp);font-size:9pt;font-weight:700;color:var(--navy);margin-left:1mm}
-.kp .l{font-size:8.8pt;font-weight:700}
-.kp .s{font-size:8pt;font-weight:400;color:var(--mute)}
-.bar{display:grid;grid-template-columns:32mm 1fr 44mm;gap:3mm;align-items:center;font-size:9pt;margin:1.2mm 0}
-.bar .t{height:3.2mm;background:var(--box);border:0;border-radius:99px;position:relative;overflow:hidden}
-.bar .t i{position:absolute;left:0;top:0;bottom:0;background:var(--navy2)}
-.bar .t i.k{background:#9AA3B8}
-.bar .n{font-family:var(--en);color:var(--mute);white-space:nowrap}
-/* 2x2 */
-.mx{display:grid;grid-template-columns:1fr 1fr;gap:3mm}
-.mx .bx{font-weight:400;color:var(--ink);font-size:9pt;padding:2.5mm 3.5mm}
-.mx .bx b.h{display:block;color:var(--navy);font-size:9.5pt;margin-bottom:1mm}
-.mx ul{margin:0;padding-left:1.1em}.mx li{margin-bottom:.8mm}
-ul.pl{margin:0;padding-left:1.1em;font-size:10pt;line-height:1.5}
-ul.pl li{margin-bottom:1mm}
-.q{font-size:9.5pt;line-height:1.45;border-left:3px solid var(--navy2);padding-left:3mm}
-.q b{display:block;color:var(--mute);font-weight:400;font-size:8.5pt}
-.tree{display:grid;grid-template-columns:1fr 1fr;gap:4mm}
-.tree .bx{font-weight:400;color:var(--ink);font-size:9pt;padding:1.8mm 3.5mm}
-.tree .bx b.h{margin-bottom:1mm}
-.tree .bx b.h{display:flex;align-items:center;gap:2mm;color:var(--navy);font-size:11pt;margin-bottom:1.5mm}
-.tree .bx b.h i{width:6mm;height:6mm;border-radius:50%;background:var(--navy);color:#fff;font-family:var(--en);font-style:normal;font-size:9pt;display:flex;align-items:center;justify-content:center}
-.tree ul{margin:0;padding-left:1.1em}.tree li{margin-bottom:.8mm}
-.tree .ev{color:var(--mute);font-size:.93em}
-
-/* コミル配色（確定値） */
-:root{--navy:#231F20;--navy2:#55595E;--title:#231F20;--box:#F4F4F1;--box2:#FFF6CF;--box3:#FAFAF8;--line:#DADCD8;--ink:#231F20;--mute:#55595E;--red:#C9463D;--yellow:#FFD12A}
-.tb::after{background:#E6E7E3}
-.tb h1::after{background:#FFD12A}
-.num i,.tree .bx b.h i{background:#FFD12A;color:#231F20}
-.bx .chip{background:#FFD12A;color:#231F20}
-.sum{background:#FFD12A;color:#231F20}
-.sum span{color:#231F20;opacity:.75}
-.flow .ar{color:#231F20}
-.bar .t i{background:#FFD12A}
+td.k{font-weight:700;white-space:nowrap}
+td.c{text-align:center;white-space:nowrap}
+td.c.R{background:var(--box2)}
+tr.t td{font-weight:700;background:var(--box2)}
+table.s{font-size:9.8pt}table.s th,table.s td{padding:2.4mm 3.5mm}
+/* 数字タイル */
+.kp{display:grid;grid-template-columns:repeat(4,1fr);gap:7mm}
+.kp .bx{padding:5mm 6mm}
+.kp .l{font-size:9.5pt;font-weight:700}
+.kp .v{font-family:var(--en);font-size:26pt;font-weight:600;line-height:1.1;margin:1mm 0}
+.kp .v small{display:inline;font-family:var(--jp);font-size:10pt;font-weight:700;margin-left:1.2mm}
+.kp .s{font-size:9pt;font-weight:400;color:var(--ink2)}
+.kp .bx.hl{background:var(--yellow)}
+/* バー */
+.bar{display:grid;grid-template-columns:36mm 1fr 46mm;gap:4mm;align-items:center;font-size:10.5pt;margin:2.2mm 0}
+.bar .t{height:4mm;background:var(--box);border-radius:99px;position:relative;overflow:hidden}
+.bar .t i{position:absolute;left:0;top:0;bottom:0;background:var(--yellow)}
 .bar .t i.k{background:#9A9EA3}
-th{background:#F4F4F1;color:#231F20}
-td.c.R{background:#FFF6CF}
-tr.t td{background:#FFF6CF}
-.q{border-left-color:#FFD12A}
-.kp .bx.hl{background:#FFD12A}
-/* 仕様ページ用 */
-.sw{display:grid;grid-template-columns:repeat(6,1fr);gap:3mm}
-.chip2{border-radius:3mm;overflow:hidden;background:#fff;border:1pt solid var(--line)}
-.chip2 .f{height:14mm}
-.chip2 .m{padding:2mm 3mm;font-size:8.6pt;line-height:1.4}
+.bar .n{font-family:var(--en);color:var(--ink2);white-space:nowrap}
+/* 引用 */
+.q{font-size:11pt;line-height:1.75;border-left:3px solid var(--yellow);padding-left:5mm;max-width:40em}
+.q b{display:block;color:var(--ink3);font-weight:400;font-size:9pt;margin-top:1mm}
+ul.pl{margin:0;padding-left:1.2em;font-size:11pt;line-height:1.8}
+ul.pl li{margin-bottom:1.5mm}
+/* 表紙 */
+.cover{justify-content:center;padding-left:28mm}
+.cover .eyebrow{font-size:10pt;letter-spacing:.14em;color:var(--ink2);display:flex;align-items:center;gap:2.5mm;font-family:var(--en)}
+.cover .eyebrow::before{content:"";width:3mm;height:3mm;border-radius:50%;background:var(--yellow)}
+.cover h1{font-size:30pt;font-weight:700;line-height:1.4;margin:8mm 0 6mm;max-width:22em;letter-spacing:.01em}
+.cover h1 .mk{background:linear-gradient(transparent 68%,var(--yellow) 68%,var(--yellow) 94%,transparent 94%);padding:0 .05em}
+.cover .lede{font-size:13pt;color:var(--ink2);max-width:42em;line-height:1.85}
+.cover .meta{margin-top:14mm;font-size:9.5pt;color:var(--ink3);display:flex;gap:10mm;flex-wrap:wrap}
+.cover .meta b{color:var(--ink2);font-weight:500;margin-right:1.5mm}
+/* 仕様用 */
+.sw{display:grid;grid-template-columns:repeat(4,1fr);gap:7mm}
+.chip2{border-radius:4mm;overflow:hidden;background:#fff;border:1pt solid var(--line)}
+.chip2 .f{height:20mm}
+.chip2 .m{padding:3.5mm 5mm;font-size:10pt;line-height:1.55}
 .chip2 .m b{display:block}
-.chip2 .m span{font-family:var(--en);color:var(--mute)}
-.chip2 .m i{display:block;font-style:normal;color:var(--mute);font-size:8pt;margin-top:.5mm}
-.spec{font-family:var(--en);color:var(--mute);font-size:8.5pt}
-.anno{position:absolute;font-family:var(--en);font-size:7.5pt;color:var(--red);background:#fff;border:1pt solid var(--red);border-radius:99px;padding:0 1.8mm;line-height:1.5}
-.demo{border:1pt dashed var(--line);border-radius:3mm;padding:4mm;position:relative;background:#fff}
-.ba{display:grid;grid-template-columns:1fr 1fr;gap:3mm}
-.ba .nb b{color:var(--mute)}
-.ba .nb.ok b{color:var(--navy)}
+.chip2 .m span{font-family:var(--en);color:var(--ink3)}
+.chip2 .m i{display:block;font-style:normal;color:var(--ink2);font-size:9.3pt;margin-top:1mm}
+.spec{font-family:var(--en);color:var(--ink3);font-size:9pt}
+.demo{border:1pt dashed var(--line);border-radius:4mm;padding:5mm 6mm;position:relative;background:#fff}
+.anno{position:absolute;font-family:var(--en);font-size:8pt;color:var(--red);background:#fff;border:1pt solid var(--red);border-radius:99px;padding:0 2mm;line-height:1.6}
+.thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:5mm 7mm}
+.th{border:1pt solid var(--line);border-radius:3mm;padding:2.6mm;background:#fff;aspect-ratio:297/210;max-width:48mm;display:flex;flex-direction:column;gap:1.4mm;font-size:6.5pt;color:var(--ink3)}
+.th .l{display:flex;justify-content:space-between}.th .l::before{content:"● 資料名"}
+.th .h{height:2.6mm;width:60%;background:var(--ink);border-radius:1mm;opacity:.85}
+.th .p{height:1.6mm;width:80%;background:var(--line);border-radius:1mm}
+.th .b{flex:1;display:grid;gap:1.4mm}
+.th .b div{background:var(--box);border-radius:1.2mm}
+.th .b .y{background:var(--box2)}
+.th .b .t{background:#fff;border:1pt solid var(--line)}
+.th .s{height:3mm;background:var(--yellow);border-radius:99px;margin-top:auto}
+.thcap{font-size:9pt;line-height:1.45;margin-top:1.5mm;color:var(--ink)}
+.thcap b{display:block}
+.ph{color:var(--ink3)}
 
 </style></head><body>
 
-<!-- 1 -->
+<!-- 表紙 -->
+<section class="pg cover">
+  <div class="eyebrow">COMIRU / コミサポ　資料の型</div>
+  <h1>コミル デザインフォーマット<br><span class="mk">ゆとり版</span>（第3版）</h1>
+  <p class="lede">ポパー・コミル・コミサポ向けの相談メモを、同じ見た目・同じ書き方で作るための型です。1ページに言うことは1つ。余白で読ませます。色は白・墨・コミルイエロー・グレーだけ。言葉は仲間に話す調子で、根拠は削りません。</p>
+  <div class="meta"><span><b>作成</b>株式会社カイカ 高嶌悠人　2026年10月28日</span><span><b>状態</b>型だけ。中身はこの型に合わせて後から載せる</span></div>
+</section>
+
+<!-- 01 -->
 <section class="pg">
-  <div class="tb"><h1>コミル デザインフォーマット　資料の型と書き方（第2版）</h1><span class="pn">1</span></div>
+  <div class="tb"><span class="nm">コミル デザインフォーマット ゆとり版</span><span class="pn">2</span></div>
   <div class="body">
-    <h2><span class="hn">01</span>この型について</h2>
-    <p class="lead">ポパー・コミル・コミサポ向けの相談メモや整理資料を、同じ見た目・同じ書き方で作るための型です。骨格は関東建設マネジメント向け資料から借り、色と言葉をコミルに合わせています。このページ自体がその型で組まれています。</p>
+    <h2><span class="hn">01</span>この型の考え方</h2>
+    <p class="lead">カイカの資料と同じように、余白を多めに取り、1ページで言うことを1つに絞ります。詰め込みたくなったらページを増やします。</p>
     <div class="cols c3">
-      <div class="bx">どこから来た型か<small>骨格（タイトル帯、章ごとの1ページ、数字と箱と矢印、ページ下のまとめ）は 2026-09-08 の関東建設マネジメント向け資料から。色は Comiru の印刷物（白書・チラシ）の実測値。文体は「友人・仲間に相談する」調子。</small></div>
-      <div class="bx hl">変えないこと<small>A4横、1ページ1テーマ、左上に資料名、章番号のピル、冒頭に1〜2文のリード、ページ下の「ひとこと」帯。色は白・墨・コミルイエロー・グレーの4系統だけ。赤は注意書きにだけ。</small></div>
-      <div class="bx">毎回変えていいこと<small>章の数と順番、箱や表の組み合わせ、「ひとこと」の文言、参考ページの有無。内容に合わせて部品を選ぶ。部品は5〜6ページのカタログから。</small></div>
+      <div class="bx">1ページに1つ<small>見出し、リード（1〜2文）、部品は1つか2つ、最後にひとこと。本文は 1ページ 400〜700字まで。</small></div>
+      <div class="bx hl">余白は削らない<small>左右 24mm、上 16mm、下 14mm。部品の間は 8mm。文字を小さくして収めるくらいなら、ページを分ける。</small></div>
+      <div class="bx">色は4系統、黄は少なく<small>白・墨・コミルイエロー・グレー。黄は1ページに2か所まで。赤は「※」の注意書きだけ。</small></div>
     </div>
-    <div class="num"><i>1</i><b>3つの約束</b></div>
-    <div class="cols c3">
-      <div class="nb"><b>やわらかく、でも言い切る</b>です・ます調で、相手の名前は「さん」。ただし「〜かもしれません」「〜な気がします」は使わない。根拠を添えて言い切る。</div>
-      <div class="nb"><b>数字と根拠を削らない</b>見た目を軽くするために根拠を落とさない。発言は「誰が・いつ・何と」で引用し、推定には「推定」「目安」と書く。</div>
-      <div class="nb"><b>1ページで1つのことを言う</b>見出し→リード→本体→ひとこと、で1ページ。入りきらなければページを分ける。文字を小さくして詰め込まない。</div>
-    </div>
-    <div class="sum"><span>ひとこと｜</span>型は「関東建設の骨格 × コミルの色 × 仲間に話す言葉」。この3つがそろっていれば、誰が作っても同じ資料に見える</div>
+    <div class="sum"><span>ひとこと｜</span>迷ったら減らす。ページは増やしていい</div>
   </div>
 </section>
 
-<!-- 2 -->
+<!-- 02 -->
 <section class="pg">
-  <div class="tb"><h1>コミル デザインフォーマット　資料の型と書き方（第2版）</h1><span class="pn">2</span></div>
+  <div class="tb"><span class="nm">コミル デザインフォーマット ゆとり版</span><span class="pn">3</span></div>
   <div class="body">
     <h2><span class="hn">02</span>ページの骨格</h2>
-    <p class="lead">A4横（297×210mm）、左右20mm・下9mmの余白。上から「タイトル帯」「章見出し」「リード」「本体」「ひとこと帯」の順に固定です。</p>
-    <div class="cols" style="grid-template-columns:1.4fr 1fr">
-      <div class="demo" style="height:112mm;padding:3mm 4mm 3mm;display:flex;flex-direction:column;gap:2.5mm">
-        <div style="height:8mm;display:flex;align-items:flex-end;justify-content:space-between;border-bottom:1pt solid var(--line);padding-bottom:1mm;position:relative"><span style="font-weight:700;font-size:10pt;border-bottom:2px solid var(--yellow);padding-bottom:.6mm">資料名（タイトル帯）</span><span class="spec">ページ番号</span><span class="anno" style="right:22mm;top:-2mm">A</span></div>
-        <div style="display:flex;align-items:center;gap:2mm;position:relative"><span class="hn" style="font-family:var(--en);font-size:7.5pt;font-weight:700;background:var(--box2);border-radius:99px;padding:.3mm 2mm">01</span><span style="font-weight:700;font-size:11pt">章見出し</span><span class="anno" style="right:0;top:0">B</span></div>
-        <div style="font-size:8pt;color:var(--ink);position:relative">リード（1〜2文。このページで言いたいことを先に書く）<span class="anno" style="right:0;top:-1mm">C</span></div>
-        <div style="flex:1;display:grid;grid-template-columns:1fr 1fr;gap:2.5mm;position:relative">
-          <div class="bx" style="font-size:8pt;padding:2mm 2.5mm">箱（本体の部品）<small style="font-size:7.5pt">数字タイル、矢印フロー、表、注記箱などを組み合わせる</small></div>
-          <div class="nb" style="font-size:7.5pt">注記箱（罫のみ・薄い地）</div>
-          <span class="anno" style="right:0;top:-1mm">D</span>
-        </div>
-        <div class="sum" style="font-size:8pt;padding:1.2mm 3mm;position:relative"><span>ひとこと｜</span>このページの結論を1文<span class="anno" style="right:2mm;top:-3mm">E</span></div>
+    <p class="lead">上から「資料名（小さく）」「章見出し」「リード」「本体」「ひとこと」。この順番だけ固定です。</p>
+    <div class="cols" style="grid-template-columns:1.25fr 1fr">
+      <div class="demo" style="height:98mm;display:flex;flex-direction:column;gap:5mm;padding:7mm">
+        <div style="display:flex;justify-content:space-between;font-size:8pt;color:var(--ink3);position:relative"><span>● 資料名</span><span class="spec">2</span><span class="anno" style="right:10mm;top:-1mm">A</span></div>
+        <div style="display:flex;align-items:center;gap:3mm;font-size:14pt;font-weight:700;position:relative"><span style="font-family:var(--en);font-size:7.5pt;background:var(--box2);border-radius:99px;padding:.5mm 2.5mm;letter-spacing:.14em">01</span>章見出し<span class="anno" style="right:0;top:1mm">B</span></div>
+        <div style="font-size:9pt;max-width:40em;position:relative">リード。このページで言いたいことを1〜2文で先に書く。<span class="anno" style="right:0;top:0">C</span></div>
+        <div style="flex:1;display:grid;grid-template-columns:1fr 1fr;gap:5mm;position:relative"><div class="bx" style="font-size:9pt;padding:4mm 5mm">部品（1つか2つ）</div><div class="nb" style="font-size:8.5pt">注記箱</div><span class="anno" style="right:0;top:-2mm">D</span></div>
+        <div class="sum" style="font-size:8.5pt;padding:1.6mm 4mm;margin-top:0;position:relative"><span>ひとこと｜</span>このページの結論を1文<span class="anno" style="right:3mm;top:-3.5mm">E</span></div>
       </div>
-      <div>
-        <table class="s">
-          <thead><tr><th>記号</th><th>部位</th><th>決まり</th></tr></thead>
-          <tbody>
-            <tr><td class="c">A</td><td class="k">タイトル帯</td><td>資料名 17pt 太字・墨。文字幅だけにコミルイエローの下線 2.2px。帯の下に薄グレー 1pt 線。右端にページ番号 9pt グレー。参考ページは「参考メモ」の文字に置き換える</td></tr>
-            <tr><td class="c">B</td><td class="k">章見出し</td><td>18pt 太字・墨。先頭に淡黄のピル「01」（Arial 9.5pt）。全角数字「１.」は使わない</td></tr>
-            <tr><td class="c">C</td><td class="k">リード</td><td>12pt・本文色・太字にしない。1〜2文で結論を先に。3行を超えたら本体へ</td></tr>
-            <tr><td class="c">D</td><td class="k">本体</td><td>番号丸（黄・7mm）＋小見出し 12pt で区切る。部品は2〜3列のグリッドに置く。本文 11pt、表 9.9pt、注記 8.8pt</td></tr>
-            <tr><td class="c">E</td><td class="k">ひとこと帯</td><td>ページ最下部。コミルイエローの地に墨 11pt 太字、角は丸（ピル）。「ひとこと｜」のあとに結論を1文。参考ページには付けない</td></tr>
-          </tbody>
-        </table>
-        <p class="note" style="margin-top:2mm">※ 部品が入りきらないときは文字を小さくせずページを分ける。1ページの文字量は本文換算で 900〜1,200 字が目安</p>
-      </div>
+      <table class="s">
+        <thead><tr><th>記号</th><th>部位</th><th>決まり</th></tr></thead>
+        <tbody>
+          <tr><td class="c">A</td><td class="k">資料名</td><td>9pt グレー、先頭に黄の点。右端にページ番号。大きなタイトル帯は置かない</td></tr>
+          <tr><td class="c">B</td><td class="k">章見出し</td><td>22pt 太字。先頭に淡黄のピル「01」</td></tr>
+          <tr><td class="c">C</td><td class="k">リード</td><td>13pt、太字にしない、40字幅まで。1〜2文</td></tr>
+          <tr><td class="c">D</td><td class="k">本体</td><td>部品は1つか2つ。間は 8mm。本文 11.5pt、行間 1.8</td></tr>
+          <tr><td class="c">E</td><td class="k">ひとこと</td><td>黄の帯、墨 11.5pt。結論を1文。参考ページには付けない</td></tr>
+        </tbody>
+      </table>
     </div>
-    <div class="sum"><span>ひとこと｜</span>上から「名前・章・結論・本体・ひとこと」。この順番だけ守れば、ページの中身が違っても同じ資料に見える</div>
+    <div class="sum"><span>ひとこと｜</span>順番だけ守れば、中身が違っても同じ資料に見える</div>
   </div>
 </section>
 
-<!-- 3 -->
+<!-- 03 -->
 <section class="pg">
-  <div class="tb"><h1>コミル デザインフォーマット　資料の型と書き方（第2版）</h1><span class="pn">3</span></div>
+  <div class="tb"><span class="nm">コミル デザインフォーマット ゆとり版</span><span class="pn">4</span></div>
   <div class="body">
     <h2><span class="hn">03</span>色</h2>
-    <p class="lead">白・墨・コミルイエロー・グレーの4系統だけで組みます。黄は「目を止める場所」にだけ置き、1ページに2〜3か所まで。黄の上の文字は必ず墨です。</p>
+    <p class="lead">使う色は7つだけ。黄は「目を止める場所」にだけ置きます。黄の上の文字は必ず墨です。</p>
     <div class="sw">
-      <div class="chip2"><div class="f" style="background:#FFFFFF;border-bottom:1pt solid var(--line)"></div><div class="m"><b>白</b><span>#FFFFFF</span><i>ページの地、箱の内側の白</i></div></div>
-      <div class="chip2"><div class="f" style="background:#231F20"></div><div class="m"><b>墨</b><span>#231F20</span><i>本文・見出し・箱の見出し・タイトル。純黒は使わない</i></div></div>
-      <div class="chip2"><div class="f" style="background:#FFD12A"></div><div class="m"><b>コミルイエロー</b><span>#FFD12A</span><i>章ピル・番号丸・チップ・強調タイル・ひとこと帯・タイトル下線・バー</i></div></div>
-      <div class="chip2"><div class="f" style="background:#FFF6CF"></div><div class="m"><b>イエロー淡</b><span>#FFF6CF</span><i>強調したい箱の地、表の合計行、「やる」の欄</i></div></div>
-      <div class="chip2"><div class="f" style="background:#F4F4F1"></div><div class="m"><b>グレー淡</b><span>#F4F4F1</span><i>ふつうの箱の地、表の見出し行</i></div></div>
-      <div class="chip2"><div class="f" style="background:#FAFAF8"></div><div class="m"><b>紙</b><span>#FAFAF8</span><i>注記箱の地</i></div></div>
-    </div>
-    <div class="sw">
-      <div class="chip2"><div class="f" style="background:#55595E"></div><div class="m"><b>グレー濃</b><span>#55595E</span><i>補足文・注記・矢印・ページ番号</i></div></div>
-      <div class="chip2"><div class="f" style="background:#9A9EA3"></div><div class="m"><b>グレー</b><span>#9A9EA3</span><i>バーの「未完」部分</i></div></div>
+      <div class="chip2"><div class="f" style="background:#231F20"></div><div class="m"><b>墨</b><span>#231F20</span><i>文字すべて。純黒は使わない</i></div></div>
+      <div class="chip2"><div class="f" style="background:#FFD12A"></div><div class="m"><b>コミルイエロー</b><span>#FFD12A</span><i>番号丸、チップ、強調タイル、ひとこと帯、バー</i></div></div>
+      <div class="chip2"><div class="f" style="background:#FFF6CF"></div><div class="m"><b>イエロー淡</b><span>#FFF6CF</span><i>章ピル、強調する箱、表の合計行</i></div></div>
+      <div class="chip2"><div class="f" style="background:#F4F4F1"></div><div class="m"><b>グレー淡</b><span>#F4F4F1</span><i>ふつうの箱、表の見出し行</i></div></div>
+      <div class="chip2"><div class="f" style="background:#55595E"></div><div class="m"><b>グレー濃</b><span>#55595E</span><i>補足文、注記、箱の本文</i></div></div>
       <div class="chip2"><div class="f" style="background:#DADCD8"></div><div class="m"><b>罫</b><span>#DADCD8</span><i>表の横罫、注記箱の枠</i></div></div>
-      <div class="chip2"><div class="f" style="background:#E6E7E3"></div><div class="m"><b>タイトル帯の線</b><span>#E6E7E3</span><i>帯の下の全幅 1pt</i></div></div>
-      <div class="chip2"><div class="f" style="background:#C9463D"></div><div class="m"><b>赤（例外）</b><span>#C9463D</span><i>「※」の注意書き、変更点の赤字、「（いない）」だけ</i></div></div>
-      <div class="chip2"><div class="f" style="background:linear-gradient(90deg,#FFFFFF 70%,#231F20 70%,#231F20 90%,#FFD12A 90%)"></div><div class="m"><b>使う比率の目安</b><span>70 / 20 / 8 / 2</span><i>白 70%・墨 20%・グレー 8%・黄 2%</i></div></div>
+      <div class="chip2"><div class="f" style="background:#C9463D"></div><div class="m"><b>赤（例外）</b><span>#C9463D</span><i>「※」の注意書きと、変更点の赤字だけ</i></div></div>
+      <div class="chip2"><div class="f" style="background:linear-gradient(90deg,#fff 72%,#231F20 72%,#231F20 90%,#FFD12A 90%)"></div><div class="m"><b>比率の目安</b><span>72 / 18 / 8 / 2</span><i>白・墨・グレー・黄</i></div></div>
     </div>
-    <div class="cols c3">
-      <div class="nb"><b>黄を置く場所</b>章ピル、番号丸、チップ、1ページに1枚だけの強調タイル、ひとこと帯、タイトル下線、バーの塗り。本文の文字色には使わない（読めない）。</div>
-      <div class="nb"><b>黄の上の文字</b>必ず墨 #231F20。白文字は禁止。「ひとこと｜」のラベルは墨の75%で少し引く。</div>
-      <div class="nb"><b>良い・注意・リスクの表し方</b>色で分けない。箱の見出しとチップの文言で分ける。赤は「※」と変更点の赤字だけに残し、カードの左罫のような使い方はしない。</div>
-    </div>
-    <div class="sum"><span>ひとこと｜</span>迷ったら黄を減らす。黄が2か所以下のページは、たいてい読みやすい</div>
+    <div class="sum"><span>ひとこと｜</span>黄が2か所以下のページは、たいてい読みやすい</div>
   </div>
 </section>
 
-<!-- 4 -->
+<!-- 04 -->
 <section class="pg">
-  <div class="tb"><h1>コミル デザインフォーマット　資料の型と書き方（第2版）</h1><span class="pn">4</span></div>
+  <div class="tb"><span class="nm">コミル デザインフォーマット ゆとり版</span><span class="pn">5</span></div>
   <div class="body">
     <h2><span class="hn">04</span>文字</h2>
-    <p class="lead">和文は游ゴシック（なければ Noto Sans JP）、数字と英字は Arial（なければ Barlow）。丸ゴシックやポップ体は使いません。やわらかさは書体ではなく、角丸と黄色と言葉で出します。</p>
-    <div class="cols" style="grid-template-columns:1.1fr 1fr">
-      <table class="s">
-        <thead><tr><th>役割</th><th>書体</th><th class="n">サイズ</th><th>色・備考</th></tr></thead>
+    <p class="lead">和文は游ゴシック（なければ Noto Sans JP）、数字と英字は Arial。丸ゴシックは使いません。</p>
+    <div class="cols c2">
+      <table class="s" style="font-size:9.5pt">
+        <thead><tr><th>役割</th><th class="n">サイズ</th><th>決まり</th></tr></thead>
         <tbody>
-          <tr><td class="k">資料名（タイトル帯）</td><td>游ゴシック 太字</td><td class="n">17pt</td><td>墨。文字幅に黄の下線</td></tr>
-          <tr><td class="k">章見出し</td><td>游ゴシック 太字</td><td class="n">18pt</td><td>墨。先頭に淡黄ピル（Arial 9.5pt）</td></tr>
-          <tr><td class="k">リード</td><td>游ゴシック</td><td class="n">12pt</td><td>本文色。太字にしない</td></tr>
-          <tr><td class="k">小見出し（番号丸の横）</td><td>游ゴシック 太字</td><td class="n">12pt</td><td>墨。番号は Arial 11.6pt</td></tr>
-          <tr><td class="k">本文・箱の見出し</td><td>游ゴシック</td><td class="n">11pt</td><td>箱の見出しは太字・墨、箱の本文は 9pt</td></tr>
-          <tr><td class="k">表</td><td>游ゴシック</td><td class="n">9.9pt</td><td>数値列は Arial・右寄せ。密な表は 8.8pt</td></tr>
-          <tr><td class="k">数字タイルの値</td><td>Arial 600</td><td class="n">19pt</td><td>単位は 9pt 太字で添える</td></tr>
-          <tr><td class="k">チップ・ピル</td><td>Arial 太字</td><td class="n">8.5〜9.5pt</td><td>字間 .1em</td></tr>
-          <tr><td class="k">注記「※」</td><td>游ゴシック</td><td class="n">8.8pt</td><td>グレー濃。注意は赤</td></tr>
-          <tr><td class="k">ひとこと帯</td><td>游ゴシック 太字</td><td class="n">11pt</td><td>墨（黄地）</td></tr>
+          <tr><td class="k">表紙の題名</td><td class="n">30pt</td><td>太字。キーワード1語にだけ黄のマーカー</td></tr>
+          <tr><td class="k">章見出し</td><td class="n">22pt</td><td>太字。先頭に淡黄のピル</td></tr>
+          <tr><td class="k">リード</td><td class="n">13pt</td><td>太字にしない。行間 1.85</td></tr>
+          <tr><td class="k">小見出し</td><td class="n">12.5pt</td><td>黄の番号丸の横に</td></tr>
+          <tr><td class="k">本文・箱の見出し</td><td class="n">11.5pt / 11pt</td><td>箱の本文は 10pt グレー濃</td></tr>
+          <tr><td class="k">表</td><td class="n">10.5pt</td><td>密な表は 9.8pt まで。数値は Arial 右寄せ</td></tr>
+          <tr><td class="k">数字タイルの値 ／ 注記「※」</td><td class="n">26pt ／ 9pt</td><td>Arial。注記はグレー濃、注意は赤</td></tr>
         </tbody>
       </table>
-      <div style="display:flex;flex-direction:column;gap:3mm">
-        <div class="demo"><div class="spec">資料名 17pt</div><div style="font-size:17pt;font-weight:700;line-height:1.3">コミサポ　塾サイト制作、どうすれば12時間で回せるか</div></div>
-        <div class="demo"><div class="spec">章見出し 18pt ＋ ピル</div><div style="font-size:18pt;font-weight:700;display:flex;align-items:center;gap:3mm"><span style="font-family:var(--en);font-size:9.5pt;background:var(--box2);border-radius:99px;padding:.6mm 3mm;letter-spacing:.12em">07</span>なぜ12時間に収まらないのか</div></div>
-        <div class="demo"><div class="spec">リード 12pt ／ 本文 11pt ／ 数字は Arial</div><div style="font-size:12pt;line-height:1.55">初期費用 <span style="font-family:var(--en);font-weight:600">98,000</span>円だと、カイカの稼働は <span style="font-family:var(--en);font-weight:600">39</span> 時間が上限です。</div><div style="font-size:11pt;margin-top:1mm;color:var(--ink)">本文はこの大きさ。1文は20〜40字で切り、括弧やダッシュで補足を挟まない。</div></div>
-        <div class="demo"><div class="spec">数字タイル 19pt</div><div style="font-family:var(--en);font-size:19pt;font-weight:600;line-height:1.1">11<span style="font-family:var(--jp);font-size:9pt;font-weight:700;margin-left:1mm">〜12.5 h</span></div></div>
+      <div style="display:flex;flex-direction:column;gap:5mm">
+        <div class="demo"><div class="spec">章見出し 22pt</div><div style="font-size:20pt;font-weight:700;display:flex;align-items:center;gap:4mm;line-height:1.3"><span style="font-family:var(--en);font-size:9.5pt;background:var(--box2);border-radius:99px;padding:.8mm 3.4mm;letter-spacing:.14em">07</span>なぜ12時間に収まらないのか</div></div>
+        <div class="demo"><div class="spec">リード 13pt ／ 本文 11.5pt</div><div style="font-size:13pt;line-height:1.85">初期費用 <span style="font-family:var(--en);font-weight:600">98,000</span>円だと、カイカの稼働は <span style="font-family:var(--en);font-weight:600">39</span> 時間が上限です。</div><div style="font-size:11.5pt;line-height:1.7;margin-top:1.5mm;color:var(--ink2)">本文はこの大きさ。1文は20〜40字で切る。</div></div>
       </div>
     </div>
-    <div class="sum"><span>ひとこと｜</span>書体は2つ、サイズは5段階。見出しを大きくするより、リードを短くする方が読みやすくなる</div>
+    <div class="sum"><span>ひとこと｜</span>サイズは6段階。大きくするより、文を短くする</div>
   </div>
 </section>
 
-<!-- 5 -->
+<!-- 05 -->
 <section class="pg">
-  <div class="tb"><h1>コミル デザインフォーマット　資料の型と書き方（第2版）</h1><span class="pn">5</span></div>
+  <div class="tb"><span class="nm">コミル デザインフォーマット ゆとり版</span><span class="pn">6</span></div>
   <div class="body">
-    <h2><span class="hn">05</span>部品カタログ①　箱・チップ・矢印・注記</h2>
-    <p class="lead">本体で使う部品はこの2ページの中から選びます。どれも角丸3mm、罫なし（注記箱だけ細い罫）。影やグラデーションは使いません。</p>
-    <div class="num"><i>1</i><b>箱（3種）とチップ</b></div>
+    <h2><span class="hn">05</span>部品　箱・矢印・注記</h2>
+    <p class="lead">角丸 4mm、罫なし、影なし。箱には「誰が」をチップで、「大事さ」を淡黄で示します。</p>
     <div class="cols c3">
-      <div class="bx"><span class="chip">POPER</span>ふつうの箱<small>地はグレー淡 #F4F4F1。見出しは太字・墨 11pt、本文は 9pt。左上にチップを乗せると「誰が」を示せる</small></div>
-      <div class="bx hl"><span class="chip">CAICA + POPER</span>強調する箱<small>地はイエロー淡 #FFF6CF。1列に1つまで。やってみたいこと、効果の大きい象限、キックオフなど</small></div>
-      <div class="bx ol"><span class="chip alt">任意</span>白い箱<small>地は白、罫は薄グレー。並べたときに「他と性質が違う」ことを示すときだけ</small></div>
+      <div class="bx"><span class="chip">POPER</span>ふつうの箱<small>地はグレー淡。見出しは太字、本文はグレー濃 10pt。</small></div>
+      <div class="bx hl"><span class="chip">CAICA</span>強調する箱<small>地はイエロー淡。1列に1つまで。</small></div>
+      <div class="nb"><b>注記箱</b>薄い地と細い罫。「見えてきたこと」「高嶌の見立て」のような補足に。</div>
     </div>
-    <div class="num"><i>2</i><b>矢印フロー（流れを示すとき）</b></div>
-    <div class="flow" style="margin-top:3mm">
-      <div class="bx"><span class="chip">POPER</span>セールス<small>商談で条件を説明</small></div>
+    <div class="flow">
+      <div class="bx"><span class="chip">POPER</span>セールス<small>条件を説明</small></div>
       <div class="ar"><svg viewBox="0 0 24 16"><path d="M0 8h16M12 2l8 6-8 6" fill="none" stroke="currentColor" stroke-width="2.2"/></svg></div>
-      <div class="bx"><span class="chip">POPER</span>契約<small>締結してから日程調整</small></div>
+      <div class="bx"><span class="chip">POPER</span>契約<small>締結してから日程</small></div>
       <div class="ar"><svg viewBox="0 0 24 16"><path d="M0 8h16M12 2l8 6-8 6" fill="none" stroke="currentColor" stroke-width="2.2"/></svg></div>
-      <div class="bx hl"><span class="chip">POPER + CAICA</span>キックオフ<small>強調したい工程は淡黄に</small></div>
+      <div class="bx hl"><span class="chip">ALL</span>キックオフ<small>強調は淡黄</small></div>
       <div class="ar"><svg viewBox="0 0 24 16"><path d="M0 8h16M12 2l8 6-8 6" fill="none" stroke="currentColor" stroke-width="2.2"/></svg></div>
-      <div class="bx"><span class="chip">CAICA</span>制作進行<small><span style="color:var(--red)">変更点は赤字で</span></small></div>
-      <div class="ar"><svg viewBox="0 0 24 16"><path d="M0 8h16M12 2l8 6-8 6" fill="none" stroke="currentColor" stroke-width="2.2"/></svg></div>
-      <div class="bx"><span class="chip">ALL</span>納品<small>4〜6個まで。7個以上は2段に</small></div>
+      <div class="bx"><span class="chip">CAICA</span>制作進行<small><span style="color:var(--red)">変更点は赤字</span></small></div>
     </div>
-    <div class="num"><i>3</i><b>注記箱と引用</b></div>
-    <div class="cols c3">
-      <div class="nb"><b>注記箱</b>薄い地と細い罫。「見えてきたこと」「高嶌の見立て」「気になっていること」のように、本体の横に置く補足に使う。見出しは太字・墨。</div>
-      <div class="q">サイトの案件増えてきて、スライドに修正点ごとに書き出すという作業がとても時間がかかり<b>井口さん 2026年10月28日（LINE）</b></div>
-      <div class="nb"><b>「※」の注記</b><p class="note" style="margin-top:1mm">※ 本文より小さくグレーで。出典・集計条件・未確認を書く</p><p class="note red" style="margin-top:1mm">※ 注意してほしいことだけ赤。1ページに1つまで</p></div>
-    </div>
-    <div class="sum"><span>ひとこと｜</span>箱は「誰が」をチップで、「大事さ」を淡黄で示す。それ以外の飾りはいらない</div>
+    <div class="sum"><span>ひとこと｜</span>矢印は4〜5個まで。それ以上は2ページに分ける</div>
   </div>
 </section>
 
-<!-- 6 -->
+<!-- 06 -->
 <section class="pg">
-  <div class="tb"><h1>コミル デザインフォーマット　資料の型と書き方（第2版）</h1><span class="pn">6</span></div>
+  <div class="tb"><span class="nm">コミル デザインフォーマット ゆとり版</span><span class="pn">7</span></div>
   <div class="body">
-    <h2><span class="hn">06</span>部品カタログ②　数字・表・バー・2×2</h2>
-    <p class="lead">数字が主役のときだけ数字タイルを使い、比べるときは表、経過はバー、優先順位は2×2。どれも角丸と横罫だけで作ります。</p>
-    <div class="num"><i>1</i><b>数字タイル（6列まで。強調は1列に1枚）</b></div>
+    <h2><span class="hn">06</span>部品　数字・表・バー</h2>
+    <p class="lead">数字が主役のときだけ数字タイル。比べるときは表、経過はバー。1ページに置くのはどれか1つです。</p>
     <div class="kp">
-      <div class="bx"><div class="l">目標</div><div class="v">10<small>〜12 h</small></div><div class="s">1案件・カイカ稼働</div></div>
-      <div class="bx hl"><div class="l">実測</div><div class="v">11<small>〜12.5 h</small></div><div class="s">強調は黄地・墨文字</div></div>
+      <div class="bx"><div class="l">目標</div><div class="v">12<small>h</small></div><div class="s">1案件・カイカ稼働</div></div>
+      <div class="bx hl"><div class="l">実測</div><div class="v">11<small>〜12.5 h</small></div><div class="s">強調は黄地。1列に1枚</div></div>
       <div class="bx"><div class="l">上限</div><div class="v">39<small>h</small></div><div class="s">98,000 ÷ 2,500</div></div>
-      <div class="bx"><div class="l">ラベルは 8.8pt</div><div class="v">6<small>件</small></div><div class="s">補足は 8pt グレー</div></div>
-      <div class="bx"><div class="l">単位は</div><div class="v">72,000<small>円</small></div><div class="s">値の右に小さく</div></div>
       <div class="bx"><div class="l">推定なら</div><div class="v">20<small>h 超</small></div><div class="s">「推定」「目安」と書く</div></div>
     </div>
-    <div class="cols" style="grid-template-columns:1.2fr 1fr 1fr">
-      <div>
-        <div class="num"><i>2</i><b>表（横罫のみ）</b></div>
-        <table class="s" style="margin-top:2mm">
-          <thead><tr><th>工程</th><th class="n">順調</th><th class="n">実態</th><th>理由</th></tr></thead>
-          <tbody>
-            <tr><td class="k">構成案</td><td class="n">4.0</td><td class="n">6.0</td><td>見出し行はグレー淡</td></tr>
-            <tr><td class="k">修正指示</td><td class="n">3.0</td><td class="n">8.0</td><td>数値は Arial 右寄せ</td></tr>
-            <tr class="t"><td>合計</td><td class="n">13.5</td><td class="n">29.0</td><td>合計行は淡黄・太字</td></tr>
-          </tbody>
-        </table>
-        <table class="s" style="margin-top:2mm">
-          <thead><tr><th>工程</th><th>佐久間</th><th>槻山</th><th>岡部・井口</th></tr></thead>
-          <tbody>
-            <tr><td class="k">キックオフ</td><td class="c">やる</td><td class="c R">やる・決める</td><td class="c R">やる</td></tr>
-            <tr><td class="k">範囲外の判断</td><td class="c" style="color:var(--red)">（いない）</td><td class="c">相談</td><td class="c">相談</td></tr>
-          </tbody>
-        </table>
-        <p class="note" style="margin-top:1mm">※ 役割は R/A/C/I と書かず「やる・決める・相談・cc」。塗りのある欄が「やる」</p>
-      </div>
-      <div>
-        <div class="num"><i>3</i><b>バー（経過・日数）</b></div>
-        <div style="margin-top:2mm">
-          <div class="bar"><span>Manabill</span><div class="t"><i style="width:36%"></i></div><span class="n">60日</span></div>
-          <div class="bar"><span>スタディメイト</span><div class="t"><i style="width:38%"></i></div><span class="n">63日</span></div>
-          <div class="bar"><span>アップ進学ゼミ</span><div class="t"><i style="width:64%"></i></div><span class="n">107日</span></div>
-          <div class="bar"><span>ユメカナ</span><div class="t"><i class="k" style="width:72%"></i></div><span class="n">119日以上</span></div>
-        </div>
-        <p class="note" style="margin-top:1mm">※ 完了は黄、未完はグレー。目盛りは付けず、右に数値</p>
-      </div>
-      <div>
-        <div class="num"><i>4</i><b>2×2（優先順位）</b></div>
-        <div class="mx" style="margin-top:2mm">
-          <div class="bx hl"><b class="h">効果 大 × すぐできる</b><ul><li>①まずやる</li></ul></div>
-          <div class="bx"><b class="h">効果 大 × 準備が要る</b><ul><li>④次にやる</li></ul></div>
-          <div class="bx lt"><b class="h">効果 小 × すぐ</b><ul><li>⑧ついでに</li></ul></div>
-          <div class="bx lt"><b class="h">効果 小 × 準備</b><ul><li>⑫保留</li></ul></div>
-        </div>
-        <p class="note" style="margin-top:1mm">※ 左上だけ淡黄。下段は紙色で軽く</p>
-      </div>
-    </div>
-    <div class="sum"><span>ひとこと｜</span>部品は「数字・表・バー・2×2・箱・矢印・注記・引用」の8つだけ。足りなければ文章で書く</div>
-  </div>
-</section>
-
-<!-- 7 -->
-<section class="pg">
-  <div class="tb"><h1>コミル デザインフォーマット　資料の型と書き方（第2版）</h1><span class="pn">7</span></div>
-  <div class="body">
-    <h2><span class="hn">07</span>言葉の決まり　やわらかく、でも中身はしっかり</h2>
-    <p class="lead">相手は佐久間さん・槻山さんのような仲間です。かしこまった言い回しをやめる代わりに、根拠と数字は減らさず、推量で逃げません。</p>
     <div class="cols c2">
+      <table class="s">
+        <thead><tr><th>工程</th><th class="n">順調</th><th class="n">実態</th><th>理由</th></tr></thead>
+        <tbody>
+          <tr><td class="k">構成案</td><td class="n">4.0</td><td class="n">6.0</td><td>見出し行はグレー淡</td></tr>
+          <tr><td class="k">修正指示</td><td class="n">3.0</td><td class="n">8.0</td><td>数値は Arial 右寄せ</td></tr>
+          <tr class="t"><td>合計</td><td class="n">13.5</td><td class="n">29.0</td><td>合計行は淡黄</td></tr>
+        </tbody>
+      </table>
       <div>
-        <div class="num"><i>1</i><b>言い換えの例</b></div>
-        <table class="s" style="margin-top:2mm">
-          <thead><tr><th>かたい</th><th>この型</th></tr></thead>
-          <tbody>
-            <tr><td>エグゼクティブサマリー</td><td class="k">このメモでやりたいこと</td></tr>
-            <tr><td>提言／施策／打ち手</td><td class="k">やってみたいこと／やれそうなこと</td></tr>
-            <tr><td>意思決定事項</td><td class="k">一緒に決めたいこと</td></tr>
-            <tr><td>リスクと前提</td><td class="k">気になっていること</td></tr>
-            <tr><td>To-Be／あるべき姿</td><td class="k">こう変えたい</td></tr>
-            <tr><td>スコープ／スコープ外</td><td class="k">「ここまで」／「範囲外」</td></tr>
-            <tr><td>R／A／C／I</td><td class="k">やる／決める／相談／cc</td></tr>
-            <tr><td>〈参　考〉</td><td class="k">参考メモ</td></tr>
-            <tr><td>まとめ｜</td><td class="k">ひとこと｜</td></tr>
-            <tr><td>高嶌の提案</td><td class="k">高嶌の考え（ひっくり返してもらって大丈夫です）</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div>
-        <div class="num"><i>2</i><b>やわらかさと、しっかりさの線引き</b></div>
-        <div class="ba" style="margin-top:2mm">
-          <div class="nb"><b>× 推量で逃げる</b>差分は「ずれの調整」に消えていそうです。この3つが大きいと見ています。</div>
-          <div class="nb ok"><b>○ 根拠を添えて言い切る</b>差分は「ずれの調整」に消えています。この3つが主因です（根拠は7〜8ページ）。</div>
-          <div class="nb"><b>× 根拠を落として軽くする</b>修正のやり取りが多い。</div>
-          <div class="nb ok"><b>○ 発言と日付を残す</b>槻山さん 8/24「まじで修正のラリーが多い」。井口さん 9/7「修正の量やばw」。</div>
-          <div class="nb"><b>× 相手を評価する</b>ビットスターの対応が遅い。</div>
-          <div class="nb ok"><b>○ 起きた事実を書く</b>10/26〜27 の休暇で待ちが出た。定例（水17時）は解除提案が出ている。</div>
-        </div>
-        <ul class="pl" style="margin-top:3mm">
-          <li>です・ます調。見出し・箱・表の中は体言止め。</li>
-          <li>人は「姓＋さん」。会社は ポパー／コミル／カイカ／ビットスター の短い呼び方。</li>
-          <li>数字は半角・3桁区切り。時間は「h」、金額は税込・税抜を注記に。</li>
-          <li>推定は「推定」「目安」と書く。発言は「誰が・いつ・何と」。</li>
-          <li>絵文字、感嘆符、ダッシュ、括弧の中の補足は使わない。</li>
-        </ul>
+        <div class="bar"><span>Manabill</span><div class="t"><i style="width:36%"></i></div><span class="n">60日</span></div>
+        <div class="bar"><span>スタディメイト</span><div class="t"><i style="width:38%"></i></div><span class="n">63日</span></div>
+        <div class="bar"><span>ユメカナ</span><div class="t"><i class="k" style="width:72%"></i></div><span class="n">119日以上（未完）</span></div>
+        <p class="note" style="margin-top:2mm">※ 完了は黄、未完はグレー。目盛りは付けず、右に数値</p>
       </div>
     </div>
-    <div class="sum"><span>ひとこと｜</span>やわらかくするのは言葉の温度。根拠の量と言い切りの強さは、かたい資料と同じ</div>
+    <div class="sum"><span>ひとこと｜</span>役割の表は R/A/C/I と書かず「やる・決める・相談・cc」</div>
   </div>
 </section>
 
-<!-- 8 -->
+<!-- 07 -->
 <section class="pg">
-  <div class="tb"><h1>コミル デザインフォーマット　資料の型と書き方（第2版）</h1><span class="pn">8</span></div>
+  <div class="tb"><span class="nm">コミル デザインフォーマット ゆとり版</span><span class="pn">8</span></div>
   <div class="body">
-    <h2><span class="hn">08</span>資料の組み立て方</h2>
-    <p class="lead">相談メモは「やりたいこと→今の姿→引っかかり→原因→やれそうなこと→こう変えたい→進め方→決めたいこと→参考」の順で組みます。章は増減して構いませんが、最初と最後は固定です。</p>
-    <div class="flow" style="margin-top:2mm">
-      <div class="bx hl"><span class="chip">固定</span>01 やりたいこと<small>目的、今の数字、やってみたいこと3つ、読み方</small></div>
-      <div class="ar"><svg viewBox="0 0 24 16"><path d="M0 8h16M12 2l8 6-8 6" fill="none" stroke="currentColor" stroke-width="2.2"/></svg></div>
-      <div class="bx">今の姿<small>流れ、分担、やる人と決める人、数字、実測。事実だけ</small></div>
-      <div class="ar"><svg viewBox="0 0 24 16"><path d="M0 8h16M12 2l8 6-8 6" fill="none" stroke="currentColor" stroke-width="2.2"/></svg></div>
-      <div class="bx">引っかかりと原因<small>観点ごとの表、工程別の時間と根拠</small></div>
-      <div class="ar"><svg viewBox="0 0 24 16"><path d="M0 8h16M12 2l8 6-8 6" fill="none" stroke="currentColor" stroke-width="2.2"/></svg></div>
-      <div class="bx">やれそうなこと<small>2×2、削減見込み、「ここまで」の案、変えたあとの流れ</small></div>
-      <div class="ar"><svg viewBox="0 0 24 16"><path d="M0 8h16M12 2l8 6-8 6" fill="none" stroke="currentColor" stroke-width="2.2"/></svg></div>
-      <div class="bx hl"><span class="chip">固定</span>進め方・決めたいこと<small>時期の矢印、見る数字、気になること、決めたい表</small></div>
-      <div class="ar"><svg viewBox="0 0 24 16"><path d="M0 8h16M12 2l8 6-8 6" fill="none" stroke="currentColor" stroke-width="2.2"/></svg></div>
-      <div class="bx"><span class="chip alt">任意</span>参考メモ<small>一覧、原文の引用、前提と出典</small></div>
+    <h2><span class="hn">07</span>言葉</h2>
+    <p class="lead">相手は仲間です。かしこまった言い回しをやめる代わりに、根拠と数字は減らさず、推量で逃げません。</p>
+    <div class="cols c2">
+      <table class="s" style="font-size:9.5pt">
+        <thead><tr><th>かたい</th><th>この型</th></tr></thead>
+        <tbody>
+          <tr><td>エグゼクティブサマリー</td><td class="k">このメモでやりたいこと</td></tr>
+          <tr><td>提言／施策／打ち手</td><td class="k">やってみたいこと</td></tr>
+          <tr><td>意思決定事項</td><td class="k">一緒に決めたいこと</td></tr>
+          <tr><td>リスクと前提</td><td class="k">気になっていること</td></tr>
+          <tr><td>スコープ／スコープ外</td><td class="k">「ここまで」／「範囲外」</td></tr>
+          <tr><td>R／A／C／I</td><td class="k">やる／決める／相談／cc</td></tr>
+          <tr><td>まとめ｜</td><td class="k">ひとこと｜</td></tr>
+        </tbody>
+      </table>
+      <div style="display:flex;flex-direction:column;gap:4mm">
+        <div class="nb" style="padding:3.5mm 5mm"><b>× 推量で逃げる</b>差分は「ずれの調整」に消えていそうです。</div>
+        <div class="nb" style="border-color:var(--yellow);padding:3.5mm 5mm"><b>○ 根拠を添えて言い切る</b>差分は「ずれの調整」に消えています（根拠は7〜8ページ）。</div>
+        <div class="nb" style="padding:3.5mm 5mm"><b>× 相手を評価する</b>ビットスターの対応が遅い。</div>
+        <div class="nb" style="border-color:var(--yellow);padding:3.5mm 5mm"><b>○ 起きた事実を書く</b>10/26〜27 の休暇で待ちが出た。</div>
+      </div>
     </div>
-    <div class="cols c3">
-      <div class="nb"><b>1ページ目に必ず入れるもの</b>目的の1文、今の数字（6枚まで）、やってみたいこと（3つまで）、このメモの読み方（ページ対応）、叩き台であることの注記。</div>
-      <div class="nb"><b>決めたいことの表</b>列は「#／決めたいこと／選択肢／高嶌の考え／決める人／いつまでに」。相手に見せる版では「高嶌の考え」を空欄にしてもよい。</div>
-      <div class="nb"><b>参考メモのページ</b>タイトル帯の右を「参考メモ」にし、ひとこと帯は付けない。出典・前提・限界はここにまとめ、本文のページには「※」で最小限。</div>
-    </div>
-    <div class="num"><i>1</i><b>作り方</b></div>
-    <p style="font-size:10pt;line-height:1.5">原稿は HTML（formats/comiru の .src.html）で書き、<span class="spec">node build-a4-pdf.js kcmcomiru</span> で A4横の PDF にします。各ページの部品が入りきらないとビルド時に「overflow」と出るので、そのときは文字を小さくせずページを分けます。色だけ関東建設マネジメントの紺に戻すときは <span class="spec">kcm</span>、同じ原稿から出せます。</p>
-    <div class="sum"><span>ひとこと｜</span>最初のページで「何を決めたいか」、最後のページで「誰がいつ決めるか」。間は自由</div>
+    <div class="sum"><span>ひとこと｜</span>やわらかくするのは言葉の温度。根拠の量は、かたい資料と同じ</div>
   </div>
 </section>
 
-<!-- 9 -->
+<!-- 08 ひな形 -->
 <section class="pg">
-  <div class="tb"><h1>コミル デザインフォーマット　資料の型と書き方（第2版）</h1><span class="pn">9</span></div>
+  <div class="tb"><span class="nm">コミル デザインフォーマット ゆとり版</span><span class="pn">9</span></div>
+  <div class="body">
+    <h2><span class="hn">08</span>ページのひな形</h2>
+    <p class="lead">相談メモはこの8種類のページを並べて作ります。次のページから、それぞれの実寸のひな形です。</p>
+    <div class="thumbs" style="gap:4mm 7mm">
+      <div><div class="th" style="justify-content:center;gap:2mm;padding-left:6mm"><div class="h" style="width:70%;height:3.4mm"></div><div class="p" style="width:85%"></div><div class="p" style="width:60%"></div></div><p class="thcap"><b>1 表紙</b>題名、ひとこと説明、作成者と日付</p></div>
+      <div><div class="th"><div class="l"><span>2</span></div><div class="h"></div><div class="p"></div><div class="b" style="grid-template-columns:1fr 1fr 1fr"><div class="y"></div><div></div><div></div></div><div class="s"></div></div><p class="thcap"><b>2 やりたいこと</b>目的、やってみたいこと3つ</p></div>
+      <div><div class="th"><div class="l"><span>3</span></div><div class="h"></div><div class="p"></div><div class="b" style="grid-template-columns:repeat(4,1fr);grid-template-rows:1fr 1.3fr"><div></div><div class="y"></div><div></div><div></div><div style="grid-column:1/5" class="t"></div></div><div class="s"></div></div><p class="thcap"><b>3 数字</b>数字タイル4枚と表1つ</p></div>
+      <div><div class="th"><div class="l"><span>4</span></div><div class="h"></div><div class="p"></div><div class="b" style="grid-template-columns:repeat(4,1fr)"><div></div><div></div><div class="y"></div><div></div></div><div class="s"></div></div><p class="thcap"><b>4 流れ</b>矢印フロー4〜5個と注記</p></div>
+      <div><div class="th"><div class="l"><span>5</span></div><div class="h"></div><div class="p"></div><div class="b" style="grid-template-columns:1fr"><div class="t"></div></div><div class="s"></div></div><p class="thcap"><b>5 表</b>役割分担、課題一覧など1表だけ</p></div>
+      <div><div class="th"><div class="l"><span>6</span></div><div class="h"></div><div class="p"></div><div class="b" style="grid-template-columns:1.2fr 1fr"><div class="t"></div><div></div></div><div class="s"></div></div><p class="thcap"><b>6 文章＋箱</b>左に本文、右に箱や注記</p></div>
+      <div><div class="th"><div class="l"><span>7</span></div><div class="h"></div><div class="p"></div><div class="b" style="grid-template-columns:1fr"><div class="t"></div></div><div class="s"></div></div><p class="thcap"><b>7 一緒に決めたいこと</b>決めたいこと・選択肢・決める人・いつまでに</p></div>
+      <div><div class="th"><div class="l"><span>参考</span></div><div class="h"></div><div class="b" style="grid-template-columns:1fr 1fr"><div class="t"></div><div class="t"></div></div></div><p class="thcap"><b>8 参考メモ</b>引用、一覧、前提。ひとこと帯なし</p></div>
+    </div>
+    <div class="sum"><span>ひとこと｜</span>8種類を組み合わせる。新しい形のページは作らない</div>
+  </div>
+</section>
+
+<!-- ひな形 2 やりたいこと -->
+<section class="pg">
+  <div class="tb"><span class="nm">（資料名）</span><span class="pn">2</span></div>
+  <div class="body">
+    <h2><span class="hn">01</span><span class="ph">このメモでやりたいこと</span></h2>
+    <p class="lead ph">（目的を1〜2文。何を、どのくらい、いつまでに。）</p>
+    <div class="cols c3">
+      <div class="bx hl"><span class="chip">1</span><span class="ph">やってみたいこと①</span><small class="ph">（何をするか1文、どう効くか1文）</small></div>
+      <div class="bx"><span class="chip">2</span><span class="ph">やってみたいこと②</span><small class="ph">（同上）</small></div>
+      <div class="bx"><span class="chip">3</span><span class="ph">やってみたいこと③</span><small class="ph">（同上）</small></div>
+    </div>
+    <div class="nb ph"><b>このメモの読み方</b>（2〜3ページ：今の姿／4〜5ページ：原因／6〜7ページ：やれそうなこと／8ページ：決めたいこと）</div>
+    <div class="sum"><span>ひとこと｜</span><span class="ph">（このメモ全体の結論を1文）</span></div>
+  </div>
+</section>
+
+<!-- ひな形 3 数字 -->
+<section class="pg">
+  <div class="tb"><span class="nm">（資料名）</span><span class="pn">3</span></div>
+  <div class="body">
+    <h2><span class="hn">02</span><span class="ph">数字で見ると</span></h2>
+    <p class="lead ph">（数字から言えることを1〜2文。）</p>
+    <div class="kp">
+      <div class="bx"><div class="l ph">（ラベル）</div><div class="v ph">00<small>単位</small></div><div class="s ph">（補足）</div></div>
+      <div class="bx hl"><div class="l ph">（強調は1枚）</div><div class="v ph">00<small>単位</small></div><div class="s ph">（補足）</div></div>
+      <div class="bx"><div class="l ph">（ラベル）</div><div class="v ph">00<small>単位</small></div><div class="s ph">（補足）</div></div>
+      <div class="bx"><div class="l ph">（ラベル）</div><div class="v ph">00<small>単位</small></div><div class="s ph">（補足）</div></div>
+    </div>
+    <table class="s">
+      <thead><tr><th class="ph">指標</th><th class="n ph">目標</th><th class="n ph">今</th><th class="ph">根拠</th></tr></thead>
+      <tbody>
+        <tr><td class="k ph">（指標）</td><td class="n ph">00</td><td class="n ph">00</td><td class="ph">（誰の記録か、いつの数字か）</td></tr>
+        <tr><td class="k ph">（指標）</td><td class="n ph">00</td><td class="n ph">00</td><td class="ph">（同上）</td></tr>
+        <tr><td class="k ph">（指標）</td><td class="n ph">00</td><td class="n ph">00</td><td class="ph">（同上）</td></tr>
+      </tbody>
+    </table>
+    <p class="note ph">※（推定の数字には「推定」「目安」。金額は税込・税抜を書く）</p>
+    <div class="sum"><span>ひとこと｜</span><span class="ph">（数字から言える結論を1文）</span></div>
+  </div>
+</section>
+
+<!-- ひな形 4 流れ -->
+<section class="pg">
+  <div class="tb"><span class="nm">（資料名）</span><span class="pn">4</span></div>
+  <div class="body">
+    <h2><span class="hn">03</span><span class="ph">今の流れ</span></h2>
+    <p class="lead ph">（流れ全体を1〜2文で。誰が前に立ち、誰が一緒にいるか。）</p>
+    <div class="flow">
+      <div class="bx"><span class="chip">誰が</span><span class="ph">工程1</span><small class="ph">（何をするか）</small></div>
+      <div class="ar"><svg viewBox="0 0 24 16"><path d="M0 8h16M12 2l8 6-8 6" fill="none" stroke="currentColor" stroke-width="2.2"/></svg></div>
+      <div class="bx"><span class="chip">誰が</span><span class="ph">工程2</span><small class="ph">（何をするか）</small></div>
+      <div class="ar"><svg viewBox="0 0 24 16"><path d="M0 8h16M12 2l8 6-8 6" fill="none" stroke="currentColor" stroke-width="2.2"/></svg></div>
+      <div class="bx hl"><span class="chip">誰が</span><span class="ph">工程3</span><small class="ph">（大事な工程は淡黄）</small></div>
+      <div class="ar"><svg viewBox="0 0 24 16"><path d="M0 8h16M12 2l8 6-8 6" fill="none" stroke="currentColor" stroke-width="2.2"/></svg></div>
+      <div class="bx"><span class="chip">誰が</span><span class="ph">工程4</span><small class="ph">（何をするか）</small></div>
+      <div class="ar"><svg viewBox="0 0 24 16"><path d="M0 8h16M12 2l8 6-8 6" fill="none" stroke="currentColor" stroke-width="2.2"/></svg></div>
+      <div class="bx"><span class="chip">誰が</span><span class="ph">工程5</span><small class="ph">（何をするか）</small></div>
+    </div>
+    <div class="cols c2">
+      <div class="nb ph"><b>決まりごと</b>（この流れで守っていること）</div>
+      <div class="nb ph"><b>引っかかっているところ</b>（流れの中で時間がかかる場所を1〜2文）</div>
+    </div>
+    <div class="sum"><span>ひとこと｜</span><span class="ph">（流れについての結論を1文）</span></div>
+  </div>
+</section>
+
+<!-- ひな形 5 表 -->
+<section class="pg">
+  <div class="tb"><span class="nm">（資料名）</span><span class="pn">5</span></div>
+  <div class="body">
+    <h2><span class="hn">04</span><span class="ph">誰が何を持っているか</span></h2>
+    <p class="lead ph">（表から読み取れることを1〜2文。）</p>
+    <table>
+      <thead><tr><th class="ph">工程</th><th class="ph">（人）</th><th class="ph">（人）</th><th class="ph">（人）</th><th class="ph">（人）</th></tr></thead>
+      <tbody>
+        <tr><td class="k ph">（工程）</td><td class="c R">やる</td><td class="c">相談</td><td class="c">cc</td><td class="c">—</td></tr>
+        <tr><td class="k ph">（工程）</td><td class="c">決める</td><td class="c R">やる</td><td class="c">cc</td><td class="c">相談</td></tr>
+        <tr><td class="k ph">（工程）</td><td class="c">cc</td><td class="c">cc</td><td class="c R">やる・決める</td><td class="c">相談</td></tr>
+        <tr><td class="k ph">（工程）</td><td class="c" style="color:var(--red)">（いない）</td><td class="c">相談</td><td class="c">相談</td><td class="c">—</td></tr>
+      </tbody>
+    </table>
+    <p class="note">やる＝手を動かす　決める＝最終的に判断する　相談＝聞かれたら答える　cc＝見ている。塗りのある欄が「やる」</p>
+    <div class="sum"><span>ひとこと｜</span><span class="ph">（表から言える結論を1文）</span></div>
+  </div>
+</section>
+
+<!-- ひな形 6 文章＋箱 -->
+<section class="pg">
+  <div class="tb"><span class="nm">（資料名）</span><span class="pn">6</span></div>
+  <div class="body">
+    <h2><span class="hn">05</span><span class="ph">なぜ時間がかかるのか</span></h2>
+    <p class="lead ph">（原因を1〜2文で。）</p>
+    <div class="cols" style="grid-template-columns:1.25fr 1fr">
+      <div class="prose ph">
+        <p>（本文。1段落 3〜5行。左の列には文章だけを置き、右の列に箱や注記を置く。）</p>
+        <p>（2段落目。発言を引くときは「誰が・いつ・何と」。）</p>
+        <p>（3段落目まで。それ以上はページを分ける。）</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:7mm">
+        <div class="bx hl ph"><span class="ph">見えてきたこと</span><small class="ph">（1〜2文）</small></div>
+        <div class="q ph">（引用の原文）<b>（誰が いつ）</b></div>
+      </div>
+    </div>
+    <div class="sum"><span>ひとこと｜</span><span class="ph">（原因についての結論を1文）</span></div>
+  </div>
+</section>
+
+<!-- ひな形 7 決めたいこと -->
+<section class="pg">
+  <div class="tb"><span class="nm">（資料名）</span><span class="pn">7</span></div>
+  <div class="body">
+    <h2><span class="hn">06</span><span class="ph">一緒に決めたいこと</span></h2>
+    <p class="lead ph">（決めたいことの数と、いつまでにを1文。「高嶌の考え」は叩き台なので、ひっくり返してもらって大丈夫です。）</p>
+    <table class="s">
+      <thead><tr><th>#</th><th>決めたいこと</th><th>選択肢</th><th>高嶌の考え</th><th>決める人</th><th>いつまでに</th></tr></thead>
+      <tbody>
+        <tr><td class="c">1</td><td class="k ph">（決めたいこと）</td><td class="ph">（A／B／C）</td><td class="ph">（どれか、理由を1文）</td><td class="ph">（人）</td><td class="ph">（時期）</td></tr>
+        <tr><td class="c">2</td><td class="k ph">（決めたいこと）</td><td class="ph">（A／B）</td><td class="ph">（同上）</td><td class="ph">（人）</td><td class="ph">（時期）</td></tr>
+        <tr><td class="c">3</td><td class="k ph">（決めたいこと）</td><td class="ph">（A／B）</td><td class="ph">（同上）</td><td class="ph">（人）</td><td class="ph">（時期）</td></tr>
+        <tr><td class="c">4</td><td class="k ph">（決めたいこと）</td><td class="ph">（A／B／C）</td><td class="ph">（同上）</td><td class="ph">（人）</td><td class="ph">（時期）</td></tr>
+        <tr><td class="c">5</td><td class="k ph">（決めたいこと）</td><td class="ph">（A／B）</td><td class="ph">（同上）</td><td class="ph">（人）</td><td class="ph">（時期）</td></tr>
+      </tbody>
+    </table>
+    <p class="note">※ 1ページに6項目まで。相手に見せる版では「高嶌の考え」を空欄にしてもよい</p>
+    <div class="sum"><span>ひとこと｜</span><span class="ph">（いつまでに何が決まれば次に進めるか）</span></div>
+  </div>
+</section>
+
+<!-- ひな形 8 参考 -->
+<section class="pg">
+  <div class="tb"><span class="nm">（資料名）</span><span class="ref">参考メモ</span></div>
+  <div class="body">
+    <h2><span class="hn">参考</span><span class="ph">みんなの言葉と、このメモの前提</span></h2>
+    <div class="cols c2">
+      <div style="display:flex;flex-direction:column;gap:6mm">
+        <div class="q ph">（引用の原文）<b>（誰が いつ どこで）</b></div>
+        <div class="q ph">（引用の原文）<b>（誰が いつ どこで）</b></div>
+        <div class="q ph">（引用の原文）<b>（誰が いつ どこで）</b></div>
+      </div>
+      <div class="nb ph"><b>このメモの前提</b>（出典、期間、推定の扱い、見られなかった資料、金額の税込・税抜）</div>
+    </div>
+  </div>
+</section>
+
+<!-- 09 チェック -->
+<section class="pg">
+  <div class="tb"><span class="nm">コミル デザインフォーマット ゆとり版</span><span class="pn">17</span></div>
   <div class="body">
     <h2><span class="hn">09</span>出す前のチェック</h2>
-    <p class="lead">PDF にする前に、この表を上から見ます。全部○なら出して大丈夫です。</p>
+    <p class="lead">PDF にする前に、上から見ます。全部○なら出して大丈夫です。</p>
     <div class="cols c2">
-      <table class="s">
-        <thead><tr><th style="width:8mm">✓</th><th>見た目</th></tr></thead>
-        <tbody>
-          <tr><td></td><td>タイトル帯の資料名が全ページ同じで、下線は文字幅だけ黄</td></tr>
-          <tr><td></td><td>章見出しの先頭がピル「01」で、全角「１.」が混ざっていない</td></tr>
-          <tr><td></td><td>リードが1〜2文で、太字になっていない</td></tr>
-          <tr><td></td><td>黄が1ページに3か所以下。黄の上の文字が全部墨</td></tr>
-          <tr><td></td><td>赤は「※」と変更点の赤字だけ。1ページに1つまで</td></tr>
-          <tr><td></td><td>箱に罫線がなく、角丸3mm。影・グラデーションがない</td></tr>
-          <tr><td></td><td>表は横罫のみ。数値列が Arial・右寄せ</td></tr>
-          <tr><td></td><td>ひとこと帯が本文のページ全部にあり、参考メモにはない</td></tr>
-          <tr><td></td><td>ビルドの overflow が 0。文字を小さくして収めていない</td></tr>
-          <tr><td></td><td>丸ゴシック・ポップ体・絵文字が入っていない</td></tr>
-        </tbody>
-      </table>
-      <table class="s">
-        <thead><tr><th style="width:8mm">✓</th><th>中身と言葉</th></tr></thead>
-        <tbody>
-          <tr><td></td><td>1ページ目に「やりたいこと」「今の数字」「やってみたいこと」「読み方」がある</td></tr>
-          <tr><td></td><td>最後の本文ページが「一緒に決めたいこと」で、決める人といつまでにがある</td></tr>
-          <tr><td></td><td>推定の数字に「推定」「目安」が付いている</td></tr>
-          <tr><td></td><td>引用に「誰が・いつ」がある。LINE や口頭はその旨を書く</td></tr>
-          <tr><td></td><td>「〜かもしれません」「〜な気がします」「〜そうです」が残っていない</td></tr>
-          <tr><td></td><td>人は「姓＋さん」、会社は短い呼び方で統一</td></tr>
-          <tr><td></td><td>R/A/C/I、スコープ、To-Be などの言葉を使っていない</td></tr>
-          <tr><td></td><td>相手を評価する文がなく、起きた事実だけ書いてある</td></tr>
-          <tr><td></td><td>金額の税込・税抜が注記にある</td></tr>
-          <tr><td></td><td>出典・前提・限界が参考メモにまとまっている</td></tr>
-        </tbody>
-      </table>
+      <ul class="pl">
+        <li>1ページに言うことが1つ。部品は2つまで</li>
+        <li>本文が 1ページ 700字以内。文字を小さくして収めていない</li>
+        <li>章見出しの先頭がピル「01」。リードは太字でない</li>
+        <li>黄が1ページに2か所以下。黄の上の文字は墨</li>
+        <li>赤は「※」と変更点だけ</li>
+        <li>ひとこと帯が本文のページ全部にあり、参考メモにはない</li>
+      </ul>
+      <ul class="pl">
+        <li>最初のページに「やりたいこと」、最後の本文ページに「一緒に決めたいこと」</li>
+        <li>推定に「推定」「目安」。引用に「誰が・いつ」</li>
+        <li>「〜かもしれません」「〜な気がします」が残っていない</li>
+        <li>R/A/C/I、スコープ、To-Be などを使っていない</li>
+        <li>相手を評価する文がない</li>
+        <li>出典・前提が参考メモにある</li>
+      </ul>
     </div>
-    <p class="note">第2版 2026年10月28日。第1版（縦長の Web 版）は、骨格をカイカ版に合わせた仕様だった。第2版は、コミサポ サイト制作の相談メモで実際に使った形を正として書き直したもの。</p>
-    <div class="sum"><span>ひとこと｜</span>見た目のチェックは10個、言葉のチェックも10個。出す前に3分で見られる量にしてある</div>
+    <p class="note">第3版（ゆとり版）2026年10月28日。第2版は1ページの文字量が多く窮屈だったため、カイカの資料に合わせて余白と文字量を見直した。</p>
+    <div class="sum"><span>ひとこと｜</span>チェックは12個。3分で見られる量にしてある</div>
   </div>
 </section>
 </body></html>

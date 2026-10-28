@@ -3,7 +3,7 @@ const FONTS='https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@5
 const THEMES={
   comiru:{src:'comisapo-site-flow-a4.src.html',out:'コミサポ_サイト制作工数整理_叩き台.pdf',html:'comisapo-site-flow-a4.html'},
   kcm:{src:'comisapo-site-flow-a4-kcm.src.html',out:'コミサポ_サイト制作工数整理_叩き台_KCM形式.pdf',html:'comisapo-site-flow-a4-kcm.html'},
-  format:{src:'comiru-design-format-a4.src.html',out:'コミル_デザインフォーマット_第2版.pdf',html:'comiru-design-format-a4.html',css:'comiru-format-a4.css'},
+  format:{src:'comiru-design-format-a4.src.html',out:'コミル_デザインフォーマット_ゆとり版.pdf',html:'comiru-design-format-a4.html',css:'comiru-format-a4.css'},
   kcmcomiru:{src:'comisapo-site-flow-a4-kcm.src.html',out:'コミサポ_サイト制作工数整理_叩き台（KCM体裁・コミル配色）.pdf',html:'comisapo-site-flow-a4-kcm-comiru.html',override:`
 /* theme: KCM体裁 × コミル配色 */
 :root{--navy:#231F20;--navy2:#55595E;--title:#231F20;--box:#F4F4F1;--box2:#FFF6CF;--box3:#FAFAF8;--line:#DADCD8;--ink:#231F20;--mute:#55595E;--red:#C9463D}
