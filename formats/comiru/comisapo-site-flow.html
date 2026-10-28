@@ -278,31 +278,40 @@ td.r.R{background:var(--yellow-soft)}
 </table></div>
 
 <h2 id="s2"><span class="no">02</span>現状（As-Is）</h2>
-<h3>プロセスと担当（11工程）</h3>
+<h3>基本の流れ（6フェーズ）</h3>
+<p>現在の進め方を、営業から納品までの6フェーズに整理しました。ポパーが商談で条件を説明し契約を結んでからキックオフに入り、以降の制作進行はカイカが前面に立ち、やり取りにはポパー担当が常に同席する、という形です。</p>
 <div class="flow">
-<div class="step"><b>営業・商談</b><span>調整アポで60分枠。架電とセミナー経由。</span><em class="who">POPER 佐久間・下田</em></div>
-<div class="step"><b>受注・契約書</b><span>#コミサポβ に受注投稿。根本さんが法務へ依頼、クラウドサイン。</span><em class="who">POPER 根本・法務</em></div>
-<div class="step"><b>キックオフ 60分</b><span>佐久間さんが引き継ぎ、槻山さんが契約確認、岡部さん・井口さんがヒアリング。ビットスターは不参加。</span><em class="who">POPER + CAICA</em></div>
-<div class="step"><b>ヒアリング整理</b><span>入力フォーマット（スプレッドシート）へ。コピーは槻山さん案、佐久間さん確認。</span><em class="who">CAICA + POPER</em></div>
-<div class="step"><b>構成案</b><span>Google ドキュメント／スライドで全ページ分。参考サイトとデザイン指示を同梱。</span><em class="who">CAICA 岡部</em></div>
-<div class="step"><b>ビットスター発注</b><span>#bitstar_制作関連 に案件スレッド。石橋さんが個別発注ワークフロー。</span><em class="who">POPER + CAICA</em></div>
-<div class="step"><b>初稿（5営業日）</b><span>Vercel のテスト URL で提出。構成案の反映をもって初稿扱い。</span><em class="who">BITSTAR</em></div>
-<div class="step"><b>塾確認・修正</b><span>修正指示をドキュメントにまとめてビットスターへ。プラン上限は修正6回。</span><em class="who">CAICA 井口 ⇄ 塾 ⇄ BITSTAR</em></div>
-<div class="step"><b>公開・納品</b><span>フォーム動作、ファビコン、インデックス確認。納品後チェック。</span><em class="who">CAICA + BITSTAR</em></div>
-<div class="step"><b>ドメイン・メール</b><span>DNS 切替、ドメイン移管、旧サイト停止。塾側作業が多い。</span><em class="who">塾 + BITSTAR + CAICA</em></div>
-<div class="step"><b>納品後</b><span>GTM / GA / サチコ設置（ポパー側で開始予定）、事例記事、月額課金開始。</span><em class="who">POPER + CAICA</em></div>
+<div class="step"><b>セールス</b><span>商談で制約と条件面（スコープ、料金、期間、塾側の作業）を説明する。方向付けの一次情報はここで取る。</span><em class="who">POPER 佐久間 → 下田</em></div>
+<div class="step"><b>契約</b><span>契約書を締結してから、初回ミーティングの日程を調整する。契約前に制作へ入らない。</span><em class="who">POPER 根本・法務</em></div>
+<div class="step"><b>キックオフ 60〜90分</b><span>セールスで聞いた内容と方向付けを引き継ぎ、具体的なサイト制作に踏み込む。佐久間さんから槻山さんへ引き継ぎ済みで、ポパー窓口は槻山さん。</span><em class="who">POPER 槻山 + CAICA 岡部・井口</em></div>
+<div class="step"><b>方向性の具体化・ワイヤー</b><span>デザインの方向性を具体化し、ワイヤーフレーム（構成案）に落とす。ビットスターへ発注する。</span><em class="who">CAICA 岡部（ディレクション）</em></div>
+<div class="step"><b>初稿チェック・塾展開・修正往復</b><span>ビットスターの初稿をチェックし、問題なければ塾へ展開。返答がなければメッセージ・電話でリマインド。2往復に収めたいが実態は3〜4往復。</span><em class="who">CAICA 井口（制作進行） ⇄ 塾 ⇄ BITSTAR</em></div>
+<div class="step"><b>納品</b><span>公開前チェック、公開、ドメイン・メールの切替、GA 設置、月額課金の開始。</span><em class="who">CAICA + BITSTAR + POPER</em></div>
 </div>
+<h3>フェーズごとの持ち分（現状）</h3>
+<div class="wrap"><table>
+<thead><tr><th>フェーズ</th><th>ポパー</th><th>カイカ 岡部さん（ディレクション）</th><th>カイカ 井口さん（制作進行）</th><th>ビットスター</th><th>塾</th><th>主なツール</th></tr></thead>
+<tbody>
+<tr><td class="k">1 セールス</td><td>佐久間さん（→下田さん）が商談。条件・制約の説明。SF に商談登録</td><td>—</td><td>—</td><td>—</td><td>要望を話す</td><td>調整アポ、SF</td></tr>
+<tr><td class="k">2 契約</td><td>受注投稿→根本さんが法務へ→クラウドサイン。顧客 Slack 開設。ビットスターへ個別発注（石橋さん）</td><td>—</td><td>—</td><td>発注受領</td><td>署名</td><td>#コミサポβ、クラウドサイン、発注ワークフロー</td></tr>
+<tr><td class="k">3 キックオフ</td><td>佐久間さんが引き継ぎ、槻山さんが窓口として契約内容を確認。コピー案</td><td>ヒアリング（デザインの方向性）</td><td>ヒアリング（進行・素材・期限）</td><td>不参加</td><td>希望・素材の状況を話す</td><td>入力フォーマット（スプレッドシート）、議事</td></tr>
+<tr><td class="k">4 ワイヤー・発注</td><td>コピーの確認（佐久間さん）</td><td>方向性の具体化、ワイヤーフレーム（構成案）作成、参考サイト</td><td>—</td><td>構成案を受領、制作開始</td><td>構成案の確認</td><td>Google ドキュメント／スライド、#bitstar_制作関連</td></tr>
+<tr><td class="k">5 初稿〜修正</td><td>やり取りに同席（cc）。契約・請求まわりの質問に回答</td><td>デザイン面の判断を相談されたら回答</td><td>初稿チェック、塾へ展開、リマインド（メッセージ・電話）、修正指示の作成とビットスターへの送付</td><td>初稿5営業日、修正反映（上限6回）</td><td>確認・修正依頼。返事が遅れがち</td><td>顧客 Slack、修正指示ドキュメント、Vercel テスト URL</td></tr>
+<tr><td class="k">6 納品</td><td>請求開始、GA 設置（移行中）、事例記事の確認</td><td>納品後チェック、事例記事</td><td>公開前チェック、ドメイン・メール案内</td><td>公開、DNS 値の案内</td><td>DNS 設定、旧サイト停止</td><td>#bitstar_制作関連、顧客 Slack</td></tr>
+</tbody>
+</table></div>
+<p class="note">やり取りの原則：塾・ビットスターとのテキストのやり取りには、ポパー側の担当（佐久間さん、槻山さん）が常に入った状態で、カイカ側（主に井口さん）が実際のやり取りを行う。ポパーが見えない場所でカイカが塾と約束をしない、という設計になっている。一方で、この形だとカイカの往復がそのまま工数になり、ポパー側は「見ている」だけで止める役割を持っていない。04 の原因分析と 06 の To-Be はこの点を扱う。</p>
 <h3>RACI（現状）</h3>
-<p class="note">R＝実行、A＝説明責任、C＝相談、I＝報告。黄色は R。現状は「塾への催促」「ドメイン案内」「スコープ外の判断」の A が空いており、結果としてカイカが R を引き受けている。</p>
+<p class="note">R＝実行、A＝説明責任、C＝相談、I＝報告。黄色は R。ポパー担当はすべてのやり取りに cc で入っている（I）が、「塾への催促」「ドメイン案内」「スコープ外の判断」の A は空いており、結果としてカイカが R を引き受けている。</p>
 <div class="wrap"><table>
 <thead><tr><th>工程</th><th>佐久間・下田</th><th>槻山</th><th>根本・法務</th><th>岡部・井口</th><th>ビットスター</th><th>塾</th></tr></thead>
 <tbody>
 <tr><td class="k">営業・受注</td><td class="r R">R/A</td><td class="r">I</td><td class="r">I</td><td class="r">I</td><td class="r">—</td><td class="r">C</td></tr>
 <tr><td class="k">契約書・請求</td><td class="r">A</td><td class="r">C</td><td class="r R">R</td><td class="r">I</td><td class="r">I</td><td class="r">C</td></tr>
 <tr><td class="k">キックオフ</td><td class="r">R</td><td class="r R">R/A</td><td class="r">—</td><td class="r R">R</td><td class="r">—</td><td class="r">C</td></tr>
-<tr><td class="k">構成案・コピー</td><td class="r">C</td><td class="r">C</td><td class="r">—</td><td class="r R">R/A</td><td class="r">I</td><td class="r">C</td></tr>
-<tr><td class="k">初稿・修正</td><td class="r">—</td><td class="r">C</td><td class="r">—</td><td class="r R">R/A</td><td class="r R">R</td><td class="r">C</td></tr>
-<tr><td class="k">塾への催促</td><td class="r">—</td><td class="r">C</td><td class="r">—</td><td class="r R">R</td><td class="r">—</td><td class="r">—</td></tr>
+<tr><td class="k">方向性・ワイヤー・コピー</td><td class="r">C（コピー）</td><td class="r">C</td><td class="r">—</td><td class="r R">R/A（岡部）</td><td class="r">I</td><td class="r">C</td></tr>
+<tr><td class="k">初稿チェック・修正往復</td><td class="r">I（cc）</td><td class="r">I（cc）</td><td class="r">—</td><td class="r R">R/A（井口）</td><td class="r R">R</td><td class="r">C</td></tr>
+<tr><td class="k">塾への催促（メッセージ・電話）</td><td class="r">I（cc）</td><td class="r">I（cc）</td><td class="r">—</td><td class="r R">R（井口）</td><td class="r">—</td><td class="r">—</td></tr>
 <tr><td class="k">ドメイン・メール</td><td class="r">—</td><td class="r">C</td><td class="r">—</td><td class="r R">R</td><td class="r">C</td><td class="r R">R</td></tr>
 <tr><td class="k">スコープ外の判断</td><td class="r">（A 不在）</td><td class="r">C</td><td class="r">—</td><td class="r">C</td><td class="r">—</td><td class="r">—</td></tr>
 <tr><td class="k">GA・事例・請求開始</td><td class="r">A</td><td class="r R">R</td><td class="r R">R</td><td class="r">R</td><td class="r">I</td><td class="r">I</td></tr>
@@ -335,7 +344,7 @@ td.r.R{background:var(--yellow-soft)}
 <tr><td class="k">カイカ稼働／案件</td><td class="n">10〜12 h</td><td class="n">20〜30 h</td><td class="n">+10〜18 h</td><td>岡部さん9月申告38h ÷ 稼働案件4〜5件 × 公開まで2〜3か月</td></tr>
 <tr><td class="k">カイカ費用／初期費用</td><td class="n">≦30%</td><td class="n">50〜77%</td><td class="n">+20〜47pt</td><td>98,000円に対し50,000〜75,000円。半額案件では100%超</td></tr>
 <tr><td class="k">キックオフ→公開</td><td class="n">45日</td><td class="n">49〜107日</td><td class="n">+4〜62日</td><td>上の日数グラフ。未公開3件は90日超</td></tr>
-<tr><td class="k">初稿後の修正往復</td><td class="n">2回</td><td class="n">3〜6回</td><td class="n">+1〜4回</td><td>プラン上限6回に達する案件あり（アップ進学ゼミ「修正回数×2」、V-follows 修正3/6）</td></tr>
+<tr><td class="k">初稿後の修正往復</td><td class="n">2回</td><td class="n">3〜4回（多いと6回）</td><td class="n">+1〜4回</td><td>プラン上限6回に達する案件あり（アップ進学ゼミ「修正回数×2」、V-follows 修正3/6）</td></tr>
 <tr><td class="k">情報の正本</td><td class="n">1つ</td><td class="n">4〜5つ</td><td class="n">—</td><td>フォーム、入力フォーマット、構成案、修正指示（3形式）、顧客 Slack</td></tr>
 </tbody>
 </table></div>
@@ -381,7 +390,7 @@ td.r.R{background:var(--yellow-soft)}
 <tr><td class="k">ヒアリング整理・コピー確認</td><td>A/C</td><td class="n">1.5</td><td class="n">3.0</td><td>原稿が揃わず再ヒアリング</td></tr>
 <tr><td class="k">構成案作成</td><td>A</td><td class="n">4.0</td><td class="n">6.0</td><td>既存サイト再現（V-follows）、参考サイト調査</td></tr>
 <tr><td class="k">発注・初稿確認</td><td>A/B</td><td class="n">1.0</td><td class="n">2.0</td><td>反映漏れの洗い出し</td></tr>
-<tr><td class="k">塾確認・修正指示（1往復1〜1.5h）</td><td>B</td><td class="n">3.0</td><td class="n">8.0</td><td>2往復か6往復か</td></tr>
+<tr><td class="k">塾確認・修正指示（1往復1〜1.5h）</td><td>B</td><td class="n">3.0</td><td class="n">8.0</td><td>目標2往復、実態3〜4往復、多いと6往復</td></tr>
 <tr><td class="k">塾への催促・個別 MTG</td><td>C</td><td class="n">0.5</td><td class="n">3.0</td><td>初稿後の停滞</td></tr>
 <tr><td class="k">公開・ドメイン・メール</td><td>D</td><td class="n">1.0</td><td class="n">3.0</td><td>DNS、移管、旧サイト</td></tr>
 <tr><td class="k">納品後チェック・GA・事例</td><td>D</td><td class="n">1.0</td><td class="n">2.0</td><td>GA はポパー側へ移行中</td></tr>
@@ -432,7 +441,7 @@ td.r.R{background:var(--yellow-soft)}
 <tr><td class="k">キックオフ</td><td class="r">R</td><td class="r R">R/A</td><td class="r">—</td><td class="r R">R</td><td class="r R">R</td><td class="r">C</td><td>ビットスター同席、スケジュール固定</td></tr>
 <tr><td class="k">構成案・コピー</td><td class="r">C</td><td class="r">C</td><td class="r">—</td><td class="r R">R/A</td><td class="r">C</td><td class="r">C</td><td>テンプレート化、正本は構成案のみ</td></tr>
 <tr><td class="k">初稿・修正（2往復）</td><td class="r">—</td><td class="r">C</td><td class="r">—</td><td class="r R">R/A</td><td class="r R">R</td><td class="r">C</td><td>修正指示は1形式</td></tr>
-<tr><td class="k">塾への催促</td><td class="r R">R</td><td class="r">A</td><td class="r">—</td><td class="r">I</td><td class="r">—</td><td class="r">—</td><td>ポパー側へ。期限超過は仮サイト公開</td></tr>
+<tr><td class="k">塾への催促</td><td class="r R">R</td><td class="r">A</td><td class="r">—</td><td class="r">I</td><td class="r">—</td><td class="r">—</td><td>cc で見ているポパーが、2回目以降のリマインドを引き取る。期限超過は仮サイト公開</td></tr>
 <tr><td class="k">ドメイン・メール</td><td class="r">—</td><td class="r R">R/A</td><td class="r">—</td><td class="r">I</td><td class="r">C</td><td class="r R">R</td><td>場合分け表をビットスターに作ってもらい、案内はポパー</td></tr>
 <tr><td class="k">スコープ外の判断</td><td class="r R">A</td><td class="r R">R</td><td class="r">—</td><td class="r">C（検知して報告）</td><td class="r">—</td><td class="r">—</td><td>A を置く。カイカは「3往復目です」と報告するだけ</td></tr>
 <tr><td class="k">GA・事例・請求開始</td><td class="r">A</td><td class="r R">R</td><td class="r R">R</td><td class="r">R（事例）</td><td class="r">I</td><td class="r">I</td><td>計測はポパーアカウント</td></tr>
